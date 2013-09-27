@@ -34,12 +34,16 @@ public class EnemyMainLogic : MonoBehaviour {
 	
 	
 	private float mAttackTime;
+    private Mob mob;
 	
 	
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("player").transform;
 		enemyAnimationScript = (EnemyAnimationControl)this.transform.FindChild(modelName).GetComponent<EnemyAnimationControl>();
+        mob = gameObject.AddComponent<Mob>();
+        mob.Init(SceneObjType.Mob, CombatUtility.GenNextMobID());
+        SceneMng.instance.AddSceneObj(mob);
 	}
 	
 	// Update is called once per frame

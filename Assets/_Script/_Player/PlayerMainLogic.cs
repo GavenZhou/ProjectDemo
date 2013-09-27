@@ -25,6 +25,8 @@ public class PlayerMainLogic : MonoBehaviour {
 	private PlayerMoveBase moveBaseScript;
 	
 	private PlayerColliderBase colliderBaseScript;
+
+    private Player player;
 	
 	
 	// Use this for initialization
@@ -34,6 +36,9 @@ public class PlayerMainLogic : MonoBehaviour {
 		moveBaseScript = (PlayerMoveBase)this.GetComponent<PlayerMoveBase>();
 		
 		colliderBaseScript = (PlayerColliderBase)this.GetComponent<PlayerColliderBase>();
+        player = gameObject.AddComponent<Player>();
+        player.type = SceneObjType.Player;
+        player.id = 1000;
 	}
 	
 	// Update is called once per frame
@@ -318,6 +323,19 @@ public class PlayerMainLogic : MonoBehaviour {
 		enemy.y = transform.position.y;
 		transform.LookAt(enemy);
 	}
-	
-	
+
+    public void OnStartToAttack(int attackId)
+    {
+
+    }
+
+    public void OnAttackFinish(int attackId)
+    {
+
+    }
+
+    public void OnAttackAnimationFinish(int attackId)
+    {
+
+    }
 }

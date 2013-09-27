@@ -57,8 +57,8 @@ public static class CombatUtility {
                     Vector3 v = vec - _pos;
                     v = Vector3.Normalize(new Vector3(v.x, 0, v.z));
                     float dot = Vector3.Dot(v, param.dir);
-                    float ang = Mathf.Acos(dot) * Mathf.Rad2Deg;
-                    return true;
+                    float r = Mathf.Acos(dot);
+                    return r > 0 && r < param.radius / 2;
                 }
                 return false;
             };
@@ -95,6 +95,17 @@ public static class CombatUtility {
         }
         return objs;
     }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // 怪物生成
+    ///////////////////////////////////////////////////////////////////////////////
+
+    static int mobID = 0;
+    public static int GenNextMobID() {
+        return ++mobID;
+    }
+
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // 掉落计算

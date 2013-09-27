@@ -46,6 +46,11 @@ public class SceneObj : MonoBehaviour {
     // public
     ///////////////////////////////////////////////////////////////////////////////
 
+    public virtual void Init(SceneObjType _type, int _id) {
+        type = _type;
+        id = _id;
+    }
+
     public void Destroy() {
 #if DebugOutput
         Debug.Log("Destroy SceneObj (" + type + ", " + id + ")");

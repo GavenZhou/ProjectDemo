@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using GameBaseData;
 
 public class PlayerAnimationControl : MonoBehaviour {
@@ -30,6 +30,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 	AnimationState mJump;
 	
 	private PlayerMoveBase moveScript;
+    private PlayerMainLogic main;
 	
 	// Use this for initialization
 	void Start () {
@@ -38,6 +39,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 		
 		//get the move script
 		moveScript = (PlayerMoveBase)this.transform.parent.GetComponent<PlayerMoveBase>();
+        main = transform.root.GetComponent<PlayerMainLogic>();
 	}
 
 	
@@ -194,6 +196,8 @@ public class PlayerAnimationControl : MonoBehaviour {
 	//todo
 	void AttackFinish(int attackId)
 	{
+        main.OnAttackFinish(attackId);
+
 		switch(attackId)
 		{
 		case 1:
@@ -213,6 +217,8 @@ public class PlayerAnimationControl : MonoBehaviour {
 	
 	void AttackAnimationFinish(int attackId)
 	{
+        main.OnAttackAnimationFinish(attackId);
+
 		switch(attackId)
 		{
 		case 1:
@@ -232,14 +238,14 @@ public class PlayerAnimationControl : MonoBehaviour {
 	
 	void StartToAttack(int attackId)
 	{
+        main.OnStartToAttack(attackId);
+
 		switch(attackId)
 		{
 		case 1:
 			break;
-			
 		case 2:
 			break;
-			
 		case 3:
 			break;
 		}

@@ -1,32 +1,41 @@
 using UnityEngine;
 using System.Collections;
 
-public class TestScene : Level {
+public class TestScene : MonoBehaviour {
 
-    new void Awake() {
-        base.Awake();
-        levelName = GameLevel.TestScene.ToString();
+    void Awake() {
+        SceneMng scene = new SceneMng();
+        scene.Init();
+    }
+
+    new void Start() {
+        InvokeRepeating("UpdateFPS", 0.0f, 1.0f);
     }
 
     void OnGUI() {
-
-        GUI.Label(new Rect(Screen.width / 2 - 40, Screen.height / 2 - 15, 80, 30), levelName);
+        GUI.Label(new Rect(0, Screen.height - 20, 100, 20), "fps: " + fps.ToString());
     }
 
-    protected override void EnterRuningState() {
-        base.EnterRuningState();
+    new void Update() {
+        ++frames;
+        if (Time.timeScale != timeScale) {
+            Time.timeScale = timeScale;
+        }
+    }
 
-        if (Input.GetKeyUp(KeyCode.F1)) {
-            Game.instance.LoadLevel("Test");
-        }
-        else if (Input.GetKeyUp(KeyCode.F2)) {
-            Game.instance.LoadLevel("Login");
-        }
-        else if (Input.GetKeyUp(KeyCode.F3)) {
-            Game.instance.LoadLevel("Strategy");
-        }
-        else if (Input.GetKeyUp(KeyCode.F4)) {
-            Game.instance.LoadLevel("Battle");
-        }
+    // ------------------------------------------------------------------ 
+    // frame control
+    // ------------------------------------------------------------------
+
+    protected int frames = 0;
+    protected float fps = 0.0f;
+    protected float lastInterval = 0.0f;
+    public float timeScale = 1.0f;
+
+    void UpdateFPS () {
+        float timeNow = Time.realtimeSinceStartup;
+        fps = frames / (timeNow - lastInterval);
+        frames = 0;
+        lastInterval = timeNow;
     }
 }
