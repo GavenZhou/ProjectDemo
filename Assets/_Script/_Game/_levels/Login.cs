@@ -1,0 +1,25 @@
+using UnityEngine;
+using System.Collections;
+
+public class Login : Level
+{
+    ///////////////////////////////////////////////////////////////////////////////
+    // Properties
+    ///////////////////////////////////////////////////////////////////////////////
+
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Function
+    ///////////////////////////////////////////////////////////////////////////////
+    new void Awake() {
+        base.Awake();
+        levelName = GameLevel.Login.ToString();
+    }
+
+    void OnGUI() {
+
+        if (GUI.Button(new Rect(Screen.width / 2 - 40, Screen.height / 2 - 15, 80, 30), levelName)) {
+            Game.instance.LoadLevel(GameLevel.Map.ToString());
+        }
+    }
+}
