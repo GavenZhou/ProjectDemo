@@ -4,12 +4,15 @@
 Library/
 Temp/
 Build/
+Debug/
 xcodeProject/
 
 # Mono develop
 *.csproj
 *.sln
+*.suo
 *.userprefs
 
 # Emacs
 ~#*
+
