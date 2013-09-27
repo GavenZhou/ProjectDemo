@@ -28,12 +28,12 @@ Material:
     m_Floats:
       data:
         first:
-          name: _Shininess
-        second: .699999988
-      data:
-        first:
           name: _EmissionLM
         second: 0
+      data:
+        first:
+          name: _Shininess
+        second: .699999988
     m_Colors:
       data:
         first:
@@ -46,4 +46,4 @@ Material:
       data:
         first:
           name: _Emission
-        second: {r: .365671635, g: .360213846, b: .360213846, a: 0}
+        second: {r: .611940265, g: .611940265, b: .611940265, a: 0}
