@@ -40102,6 +40102,13 @@ AnimationClip:
     classID: 4
     script: {fileID: 0}
   m_Events:
+  - time: .433333337
+    functionName: StartToAttack
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 1
+    messageOptions: 0
   - time: .683333337
     functionName: AttackFinish
     data: 

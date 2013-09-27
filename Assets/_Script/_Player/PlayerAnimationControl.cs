@@ -228,4 +228,21 @@ public class PlayerAnimationControl : MonoBehaviour {
 			break;
 		}
 	}
+	
+	
+	void StartToAttack(int attackId)
+	{
+		switch(attackId)
+		{
+		case 1:
+			break;
+			
+		case 2:
+			break;
+			
+		case 3:
+			break;
+		}
+	}
+	
 }
