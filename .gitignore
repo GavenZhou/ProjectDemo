@@ -1,0 +1,15 @@
+# Unity .gitignore file.
+.DS_Store
+*.pidb
+Library/
+Temp/
+Build/
+xcodeProject/
+
+# Mono develop
+*.csproj
+*.sln
+*.userprefs
+
+# Emacs
+~#*
