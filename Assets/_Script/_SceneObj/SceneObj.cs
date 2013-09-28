@@ -4,6 +4,7 @@ using System.Collections;
 
 public enum SceneObjType {
     None,
+    InteractiveObj,
     DropItem,
     Mob,
     Player,
@@ -28,7 +29,7 @@ public class SceneObj : MonoBehaviour {
     // properties
     ///////////////////////////////////////////////////////////////////////////////
 
-    ObjectID OID {
+    public ObjectID OID {
         get { return new ObjectID((int)type, id); }
     }
 
@@ -46,8 +47,7 @@ public class SceneObj : MonoBehaviour {
     // public
     ///////////////////////////////////////////////////////////////////////////////
 
-    public virtual void Init(SceneObjType _type, int _id) {
-        type = _type;
+    public virtual void Init(int _id) {
         id = _id;
     }
 

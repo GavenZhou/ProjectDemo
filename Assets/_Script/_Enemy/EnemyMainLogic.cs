@@ -42,7 +42,7 @@ public class EnemyMainLogic : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag("player").transform;
 		enemyAnimationScript = (EnemyAnimationControl)this.transform.FindChild(modelName).GetComponent<EnemyAnimationControl>();
         mob = gameObject.AddComponent<Mob>();
-        mob.Init(SceneObjType.Mob, CombatUtility.GenNextMobID());
+        mob.Init(CombatUtility.GenNextMobID());
         SceneMng.instance.AddSceneObj(mob);
 	}
 	

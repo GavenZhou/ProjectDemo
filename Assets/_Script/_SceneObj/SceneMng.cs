@@ -65,6 +65,10 @@ public class SceneMng {
         }
         sceneObjs.Add(oid, _obj);
         _obj.scene = this;
+
+#if DebugOutput
+        Debug.Log("add scene obj id:" + _obj.OID.GetHashCode());
+#endif
     }
 
     public void RemoveSceneObj(SceneObj _obj) {

@@ -51,7 +51,7 @@ public class PlayerColliderBase : MonoBehaviour {
 			Vector3 startPos = transform.position;
 			startPos.y = targetPos.y;
 			attackHit = Physics.RaycastAll(startPos,targetPos-startPos, Vector3.Distance(targetPos,startPos));
-			Debug.DrawLine(startPos,targetPos,Color.red);
+			//Debug.DrawLine(startPos,targetPos,Color.red);
 			foreach(RaycastHit hit1 in attackHit)
 			{
 				if(hit1.transform != null)

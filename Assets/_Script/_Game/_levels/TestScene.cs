@@ -18,9 +18,9 @@ public class TestScene : MonoBehaviour {
 
     new void Update() {
         ++frames;
-        if (Time.timeScale != timeScale) {
-            Time.timeScale = timeScale;
-        }
+        //if (Time.timeScale != timeScale) {
+        //    Time.timeScale = timeScale;
+        //}
     }
 
     // ------------------------------------------------------------------ 
@@ -30,7 +30,7 @@ public class TestScene : MonoBehaviour {
     protected int frames = 0;
     protected float fps = 0.0f;
     protected float lastInterval = 0.0f;
-    public float timeScale = 1.0f;
+//    public float timeScale = 1.0f;
 
     void UpdateFPS () {
         float timeNow = Time.realtimeSinceStartup;

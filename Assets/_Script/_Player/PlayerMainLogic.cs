@@ -37,8 +37,7 @@ public class PlayerMainLogic : MonoBehaviour {
 		
 		colliderBaseScript = (PlayerColliderBase)this.GetComponent<PlayerColliderBase>();
         player = gameObject.AddComponent<Player>();
-        player.type = SceneObjType.Player;
-        player.id = 1000;
+        player.Init(1000);
 	}
 	
 	// Update is called once per frame
@@ -352,7 +351,7 @@ public class PlayerMainLogic : MonoBehaviour {
 
     public void OnStartToAttack(int attackId)
     {
-
+        player.Attack();
     }
 
     public void OnAttackFinish(int attackId)
