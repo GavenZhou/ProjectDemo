@@ -19,12 +19,13 @@ public class PlayerAnimationControl : MonoBehaviour {
 	AnimationState mRun;
 	AnimationState mWalk;
 	AnimationState mIdel;
+	AnimationState mSkillIdel;
 	AnimationState mAttack1;
 	AnimationState mAttack2;
 	AnimationState mAttack3;
+	AnimationState mSkill1;
 	AnimationState mBeHit;
 	AnimationState mDie;
-	AnimationState mSkill;
 	AnimationState mRush;
 	AnimationState mCatch;
 	AnimationState mJump;
@@ -70,8 +71,14 @@ public class PlayerAnimationControl : MonoBehaviour {
 		mAttack3 = this.animation["gongji3Edit"];
 		mAttack3.layer = 3;
 		
+		mSkillIdel = this.animation["gongjidaijiEdit"];
+		mSkillIdel.layer = 4;
+		
+		mSkill1 = this.animation["jineng"];
+		mSkill1.layer = 5;
+		
 		mBeHit = this.animation["beiji"];
-		mBeHit.layer = 4;
+		mBeHit.layer = 5;
 		
 		mDie = this.animation["siwang"];
 		mDie.layer = 10;
@@ -130,6 +137,12 @@ public class PlayerAnimationControl : MonoBehaviour {
 			PlayAnimation(mAttack3,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
+
+		case PlayerDataClass.PlayerActionCommand.Player_Skill1:
+			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
+			PlayAnimation(mSkill1,immedilate);
+			PlayerDataClass.PlayerNextActionReset();
+			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Player_BeHit:
 			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.BeHit);
@@ -146,6 +159,12 @@ public class PlayerAnimationControl : MonoBehaviour {
 		case PlayerDataClass.PlayerActionCommand.Player_Idel:
 			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
 			PlayAnimation(mIdel,immedilate);
+			PlayerDataClass.PlayerNextActionReset();
+			break;
+			
+		case PlayerDataClass.PlayerActionCommand.Plyaer_SkillIdel:
+			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
+			PlayAnimation(mSkillIdel,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
@@ -243,6 +262,11 @@ public class PlayerAnimationControl : MonoBehaviour {
 		case 3:
 			break;
 		}
+	}
+	
+	void SkillIdelFinish()
+	{
+		//ready to start skill
 	}
 	
 }
