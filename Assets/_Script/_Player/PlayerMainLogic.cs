@@ -215,6 +215,17 @@ public class PlayerMainLogic : MonoBehaviour {
 		switch(mTouchState)
 		{
 		case TouchState.AFingerOneTap:
+			
+			byte skillId = IsTouchSkillBtn(InputStateClass.touchPointPos);
+			
+			if(skillId != 0)
+			{
+				Time.timeScale = 0.5f;
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Plyaer_SkillIdel,true);
+				mTouchState = TouchState.None;
+				return;
+			}
+			
 			targetPos = RayColliderByTapPos(InputStateClass.touchPointPos);
 			
 			if(targetPos != Vector3.zero)
@@ -281,6 +292,21 @@ public class PlayerMainLogic : MonoBehaviour {
 		default:
 			break;
 		}
+	}
+	
+	
+	byte IsTouchSkillBtn(Vector3 pos)
+	{
+		Ray ray1 = Camera.mainCamera.ScreenPointToRay(pos);
+		hit = Physics.RaycastAll(ray1,100);
+		foreach(RaycastHit hit1 in hit)
+		{
+			if(hit1.transform.tag == "skill1")
+				return 1;
+			else if(hit1.transform.tag == "skill2")
+				return 2;
+		}
+		return 0;
 	}
 	
 	

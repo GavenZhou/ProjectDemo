@@ -87,37 +87,44 @@ public class EnemyAnimationControl : MonoBehaviour {
 		switch(mainLogicScript.mState)
 		{
 		case EnemyMainLogic.EnemyState.Attack:
+			Debug.Log("mAttack");
 			PlayAnimation(mAttack,immedilate);
 			ChangeMoveState(EnemyMoveBase.EnemyMovementState.Attack);
 			break;
 
 		case EnemyMainLogic.EnemyState.BeHit:
 			PlayAnimation(mBeHit,immedilate);
+			Debug.Log("mBeHit");
 			ChangeMoveState(EnemyMoveBase.EnemyMovementState.BeHit);
 			break;
 			
 		case EnemyMainLogic.EnemyState.Die:
-			PlayAnimation(mAttack,immedilate);
+			PlayAnimation(mDie,immedilate);
+			Debug.Log("mDie");
 			ChangeMoveState(EnemyMoveBase.EnemyMovementState.Idel);
 			break;
 			
 		case EnemyMainLogic.EnemyState.Hover:
 			PlayAnimation(mWalk,immedilate);
+			Debug.Log("mWalk");
 			ChangeMoveState(EnemyMoveBase.EnemyMovementState.Idel);
 			break;
 			
 		case EnemyMainLogic.EnemyState.Idel:
 			PlayAnimation(mIdel,immedilate);
+			Debug.Log("mIdel");
 			ChangeMoveState(EnemyMoveBase.EnemyMovementState.Idel);
 			break;
 			
 		case EnemyMainLogic.EnemyState.Patrol:
 			PlayAnimation(mWalk,immedilate);
+			Debug.Log("mWalk");
 			ChangeMoveState(EnemyMoveBase.EnemyMovementState.Walk);
 			break;
 			
 		case EnemyMainLogic.EnemyState.Run:
 			PlayAnimation(mRun,immedilate);
+			Debug.Log("mRun");
 			ChangeMoveState(EnemyMoveBase.EnemyMovementState.Run);
 			break;	
 		}
