@@ -54,7 +54,7 @@ public static class CombatUtility {
                 v = Vector3.Normalize(new Vector3(v.x, 0, v.z));
                 float dot = Vector3.Dot(v, param.dir);
                 float r = Mathf.Acos(dot);
-                return r > 0 && r < param.radius / 2;
+                return r > 0 && r < param.radians / 2;
             }
             return false;
         };
@@ -70,11 +70,26 @@ public static class CombatUtility {
         param.y = _y;
         param.prep = (vec) => {
             vec.y = 0;
-            float xMin = Mathf.Min(param.pos.x - param.dir.x * _x, param.pos.x + param.dir.x * _x);
-            float xMax = Mathf.Max(param.pos.x - param.dir.x * _x, param.pos.x + param.dir.x * _x);
-            float zMin = Mathf.Min(param.pos.z, param.pos.z + param.dir.z * _y);
-            float zMax = Mathf.Max(param.pos.z, param.pos.z + param.dir.z * _y);
-            return /*(vec.x > xMin && vec.x < xMax) &&*/ (vec.z > zMin && vec.z < zMax);
+
+            Vector3 p = new Vector3(_pos.x, 0, _pos.z);
+            Debug.DrawLine(p, vec);
+            Debug.DrawLine(p, p + Vector3.right * 5, Color.red);
+            Debug.DrawLine(p, p + param.dir * 5, Color.red);
+            Vector3 up = Vector3.Cross(Vector3.right, param.dir);
+            float rot = Mathf.Acos(Vector3.Dot(Vector3.right, param.dir));
+            //if (up.y > 0) {
+            //    rot = -1 * rot;
+            //}
+
+            vec = Vector3.Distance(p, vec) * new Vector3(Mathf.Cos(rot), 0.0f, Mathf.Sin(rot));
+
+            Debug.DrawLine(p, vec);
+
+            float xMin = Mathf.Min(param.pos.x - _x, param.pos.x + _x);
+            float xMax = Mathf.Max(param.pos.x - _x, param.pos.x + _x);
+            float zMin = Mathf.Min(param.pos.z, param.pos.z + _y);
+            float zMax = Mathf.Max(param.pos.z, param.pos.z + _y);
+            return (vec.x > xMin && vec.x < xMax) && (vec.z > zMin && vec.z < zMax);
         };
         return param;
     }

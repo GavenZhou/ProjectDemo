@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 public class Player : Actor {
 
-    float attackRadius = 5;
-    float attackAngle = 90;
+    float attackRadius = 2.5f;
+    float attackAngle = 160;
     float attackX = 1.5f;
     float attackY = 5;
-    CombatUtility.AttackRangeType attackRangeType = CombatUtility.AttackRangeType.Rectangle;
+    public CombatUtility.AttackRangeType attackRangeType = CombatUtility.AttackRangeType.Circle;
 
     public List<Mob> interativeMobs = new List<Mob>();
 
@@ -18,11 +18,6 @@ public class Player : Actor {
 
     public void Attack() {
         Debug.Log("Attack");
-
-        //Vector3 _pos = transform.position;
-        //Vector3 _dir = transform.forward;
-        //CombatUtility.CombatParam_AttackRange param = CombatUtility.GetConeParam(_pos, _dir, 160 * Mathf.Deg2Rad, 10);
-        //interativeMobs = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
     }
 
     void OnDrawGizmos() {
@@ -32,38 +27,43 @@ public class Player : Actor {
         interativeMobs.Clear();
         Vector3 _pos = transform.position;
         Vector3 _dir = transform.forward;
-        //CombatUtility.CombatParam_AttackRange param = CombatUtility.GetConeParam(_pos, _dir, 160 * Mathf.Deg2Rad, 5);
-        //interativeMobs = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
 
 
         if (attackRangeType == CombatUtility.AttackRangeType.Cone) {
-            Gizmos.DrawLine(_pos + Vector3.up, _pos + _dir * attackRadius + Vector3.up);
-            Quaternion q1 = Quaternion.Euler(0, attackAngle / 2, 0);
-            Vector3 _left = q1* _dir;
-            Gizmos.DrawLine(_pos + Vector3.up, _pos + _left * attackRadius + Vector3.up);
-            Gizmos.DrawLine(_pos + _left * attackRadius + Vector3.up, _pos + _dir * attackRadius + Vector3.up);
-            Quaternion q2 = Quaternion.Euler(0, -attackAngle / 2, 0);
-            Vector3 _right = q2* _dir;
-            Gizmos.DrawLine(_pos + Vector3.up, _pos + _right * attackRadius + Vector3.up);
-            Gizmos.DrawLine(_pos + _right * attackRadius + Vector3.up, _pos + _dir * attackRadius + Vector3.up);
+            
+            Gizmos.DrawLine(_pos, _pos + _dir * attackRadius);
 
-            //CombatUtility.CombatParam_AttackRange param = CombatUtility.GetConeParam(_pos, _dir, 160 * Mathf.Deg2Rad, 5);
-            //interativeMobs = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
+            Quaternion q1 = Quaternion.Euler(0, attackAngle / 2, 0);
+            Vector3 _left = q1 * _dir;
+            Gizmos.DrawLine(_pos, _pos + _left * attackRadius);
+
+            Quaternion q2 = Quaternion.Euler(0, -attackAngle / 2, 0);
+            Vector3 _right = q2 * _dir;
+            Gizmos.DrawLine(_pos, _pos + _right * attackRadius);
+
+            GizmosHelper.DrawConeArc(Quaternion.identity, _pos, _dir, attackRadius, attackAngle);
+
+            CombatUtility.CombatParam_AttackRange param = CombatUtility.GetConeParam(_pos, _dir, attackAngle * Mathf.Deg2Rad, attackRadius);
+            interativeMobs = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
         }
         else if (attackRangeType == CombatUtility.AttackRangeType.Circle) {
+            
+            GizmosHelper.DrawCircle(Quaternion.identity, _pos, attackRadius);
+
             CombatUtility.CombatParam_AttackRange param = CombatUtility.GetCircleParam(_pos, attackRadius);
             interativeMobs = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
         }
         else if (attackRangeType == CombatUtility.AttackRangeType.Rectangle) {
+
             Vector3 _left = _pos + Vector3.Cross(transform.up, _dir) * attackX;
             Vector3 _right = _pos + Vector3.Cross(_dir, transform.up) * attackX;
 
-            Gizmos.DrawLine(_pos + Vector3.up, _pos + _dir * attackY + Vector3.up);
-            Gizmos.DrawLine(_left + Vector3.up, _left + _dir * attackY + Vector3.up);
-            Gizmos.DrawLine(_right + Vector3.up, _right + _dir * attackY + Vector3.up);
+            Gizmos.DrawLine(_pos, _pos + _dir * attackY);
+            Gizmos.DrawLine(_left, _left + _dir * attackY);
+            Gizmos.DrawLine(_right, _right + _dir * attackY);
             
-            Gizmos.DrawLine(_left + Vector3.up, _right + Vector3.up);
-            Gizmos.DrawLine(_left + _dir * attackY + Vector3.up, _right + _dir * attackY + Vector3.up);
+            Gizmos.DrawLine(_left, _right);
+            Gizmos.DrawLine(_left + _dir * attackY, _right + _dir * attackY);
 
             CombatUtility.CombatParam_AttackRange param = CombatUtility.GetRectangleParam(_pos, _dir, attackX, attackY);
             interativeMobs = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
