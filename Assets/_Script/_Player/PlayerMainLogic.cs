@@ -38,6 +38,7 @@ public class PlayerMainLogic : MonoBehaviour {
 		colliderBaseScript = (PlayerColliderBase)this.GetComponent<PlayerColliderBase>();
         player = gameObject.AddComponent<Player>();
         player.Init(1000);
+        SceneMng.instance.AddSceneObj(player);
 	}
 	
 	// Update is called once per frame
