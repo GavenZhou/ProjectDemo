@@ -9,4 +9,16 @@ public class Mob : Actor {
         base.Init(_id);
     }
 
+    public override void Attack() {
+        base.Attack();
+    }
+
+    public override void Hurt() {
+        base.Hurt();
+    }
+
+    public override void Dead() {
+        base.Dead();
+    }
+
 }

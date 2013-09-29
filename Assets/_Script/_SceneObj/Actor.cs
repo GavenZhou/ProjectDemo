@@ -27,4 +27,15 @@ public class Actor : SceneObj {
         get { return isDie; }
     }
 
+    public virtual void Attack() {
+
+    }
+
+    public virtual void Hurt() {
+
+    }
+
+    public virtual void Dead() {
+
+    }
 }

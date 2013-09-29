@@ -89,7 +89,7 @@ public static class CombatUtility {
             float xMax = Mathf.Max(param.pos.x - _x, param.pos.x + _x);
             float zMin = Mathf.Min(param.pos.z, param.pos.z + _y);
             float zMax = Mathf.Max(param.pos.z, param.pos.z + _y);
-            return (vec.x > xMin && vec.x < xMax) && (vec.z > zMin && vec.z < zMax);
+            return /*(vec.x > xMin && vec.x < xMax) && (vec.z > zMin && vec.z < zMax)*/ false;
         };
         return param;
     }

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 public class Player : Actor {
 
-    float attackRadius = 2.5f;
+    float attackRadius = 3.5f;
     float attackAngle = 160;
     float attackX = 1.5f;
     float attackY = 5;
-    public CombatUtility.AttackRangeType attackRangeType = CombatUtility.AttackRangeType.Circle;
+    public CombatUtility.AttackRangeType attackRangeType = CombatUtility.AttackRangeType.Cone;
 
     public List<Mob> interativeMobs = new List<Mob>();
 
@@ -16,8 +16,26 @@ public class Player : Actor {
         base.Init(_id);
     }
 
-    public void Attack() {
-        Debug.Log("Attack");
+    public override void Attack() {
+        base.Attack();
+
+        Vector3 _pos = transform.position;
+        Vector3 _dir = transform.forward;
+        CombatUtility.CombatParam_AttackRange param = CombatUtility.GetConeParam(_pos, _dir, attackAngle * Mathf.Deg2Rad, attackRadius);
+        List<Mob> targets = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
+        foreach (Mob m in targets) {
+            if (!m.IsDie) {
+                m.Hurt();
+            }
+        }
+    }
+
+    public override void Hurt() {
+        base.Hurt();
+    }
+
+    public override void Dead() {
+        base.Dead();
     }
 
     void OnDrawGizmos() {
