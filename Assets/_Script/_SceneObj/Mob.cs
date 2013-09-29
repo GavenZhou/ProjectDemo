@@ -25,7 +25,6 @@ public class Mob : Actor {
 
         Vector3 _pos = transform.position;
         Vector3 _dir = transform.forward;
-		enemyMainLogic.ChangeAnimationByState(EnemyMainLogic.EnemyState.BeHit,true);
         CombatUtility.CombatParam_AttackRange param = CombatUtility.GetConeParam(_pos, _dir, attackAngle * Mathf.Deg2Rad, attackRadius);
         List<Actor> targets = CombatUtility.GetInteractiveObjects<Actor>(SceneMng.instance, ref param);
         foreach (Actor actor in targets) {
@@ -35,9 +34,15 @@ public class Mob : Actor {
         }
     }
 
-    public override void Hurt(SceneObj _object) {
+    public override bool Hurt(SceneObj _object) {
         Hp -= 10;
-        base.Hurt(_object);
+        bool isdead = base.Hurt(_object);
+		Debug.Log("mState="+enemyMainLogic.mState);
+		if(isdead)
+			enemyMainLogic.mState = EnemyMainLogic.EnemyState.Die;
+		else
+			enemyMainLogic.ChangeAnimationByState(EnemyMainLogic.EnemyState.BeHit,true);
+		return isdead;
     }
 
     public override void Dead(SceneObj _object) {

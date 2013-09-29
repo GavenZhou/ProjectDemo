@@ -39,10 +39,15 @@ public class Player : Actor {
         }
     }
 
-    public override void Hurt(SceneObj _object) {
+    public override bool Hurt(SceneObj _object) {
         Hp -= 20;
-		playerMainLogic.ChangeAnimationByActionCmd(GameBaseData.PlayerDataClass.PlayerActionCommand.Player_BeHit,true);
-        base.Hurt(_object);
+        bool isdead = base.Hurt(_object);
+		Debug.Log(" i am hurt!!!!");
+		if(isdead)
+			playerMainLogic.ChangeAnimationByActionCmd(GameBaseData.PlayerDataClass.PlayerActionCommand.Player_BeHit,true);
+		else
+			playerMainLogic.ChangeAnimationByActionCmd(GameBaseData.PlayerDataClass.PlayerActionCommand.Player_Die,true);
+		return isdead;
     }
 
     public override void Dead(SceneObj _object) {

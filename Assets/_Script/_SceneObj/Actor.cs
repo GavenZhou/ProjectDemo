@@ -32,10 +32,12 @@ public class Actor : SceneObj {
 
     }
 
-    public virtual void Hurt(SceneObj _object) {
+    public virtual bool Hurt(SceneObj _object) {
         if (Hp <= 0) {
             Dead(_object);
+			return true;
         }
+		return false;
     }
 
     public virtual void Dead(SceneObj _object) {

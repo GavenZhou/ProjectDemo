@@ -101,7 +101,7 @@ public class EnemyAnimationControl : MonoBehaviour {
 		case EnemyMainLogic.EnemyState.Die:
 			PlayAnimation(mDie,immedilate);
 			Debug.Log("mDie");
-			ChangeMoveState(EnemyMoveBase.EnemyMovementState.Idel);
+			ChangeMoveState(EnemyMoveBase.EnemyMovementState.Dead);
 			break;
 			
 		case EnemyMainLogic.EnemyState.Hover:

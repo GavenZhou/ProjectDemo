@@ -258,7 +258,6 @@ public class PlayerAnimationControl : MonoBehaviour {
 	void StartToAttack(int attackId)
 	{
         main.OnStartToAttack(attackId);
-
 		switch(attackId)
 		{
 		case 1:

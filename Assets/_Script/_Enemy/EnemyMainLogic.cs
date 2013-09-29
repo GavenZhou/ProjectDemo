@@ -23,6 +23,7 @@ public class EnemyMainLogic : MonoBehaviour {
 		BeHit,
 		Die,
 		BeCatch,
+		Dead,
 	};
 	 
 	public EnemyState mState = EnemyState.Patrol;
@@ -31,6 +32,7 @@ public class EnemyMainLogic : MonoBehaviour {
 	
 	
 	private EnemyAnimationControl enemyAnimationScript;
+	private EnemyMoveBase enemyMoveBaseScript;
 	
 	
 	private float mAttackTime;
@@ -41,7 +43,8 @@ public class EnemyMainLogic : MonoBehaviour {
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("player").transform;
 		enemyAnimationScript = (EnemyAnimationControl)this.transform.FindChild(modelName).GetComponent<EnemyAnimationControl>();
-        mob = gameObject.AddComponent<Mob>();
+		enemyMoveBaseScript = (EnemyMoveBase)this.GetComponent<EnemyMoveBase>();
+		mob = gameObject.AddComponent<Mob>();
         mob.Init(CombatUtility.GenNextMobID());
         SceneMng.instance.AddSceneObj(mob);
 	}
@@ -49,6 +52,23 @@ public class EnemyMainLogic : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+		if(mState == EnemyState.Dead)
+		{
+			enemyAnimationScript.enabled = false;
+			this.transform.collider.enabled = false;
+			this.transform.rigidbody.isKinematic = true;
+			//enemyMoveBaseScript.enabled = false;
+			//Destroy(this.gameObject,2);
+			return;
+		}
+		
+		if(mState == EnemyState.Die)
+		{
+			Debug.Log("be dead");
+			ChangeAnimationByState(EnemyState.Die,true);
+			mState = EnemyState.Dead;
+			return;
+		}
 		switch(mState)
 		{
 		case EnemyState.Patrol:
@@ -79,7 +99,7 @@ public class EnemyMainLogic : MonoBehaviour {
 			}
 			if(IsReadyToAttack())
 			{
-				ChangeAnimationByState(EnemyState.Attack,true);
+				Attack(true);
 				return;
 			}
 			break;
@@ -99,13 +119,26 @@ public class EnemyMainLogic : MonoBehaviour {
 			}
 			if(IsReadyToAttack())
 			{
-				ChangeAnimationByState(EnemyState.Attack,false);
+				Attack(true);
 				return;
 			}
 			else
 			{
 				ChangeAnimationByState(EnemyState.Hover,false);
 			}
+			break;
+		}
+		
+		CheckEnemyMovementState();
+	}
+	
+	
+	void CheckEnemyMovementState()
+	{
+		switch(enemyMoveBaseScript.curMovementState)
+		{
+		case EnemyMoveBase.EnemyMovementState.BeHitOver:
+			mState = EnemyState.Hover;
 			break;
 		}
 	}
@@ -135,4 +168,13 @@ public class EnemyMainLogic : MonoBehaviour {
 		float dis = Vector3.Distance(this.transform.position, pos);
 		return dis;
 	}
+	
+	
+	void Attack(bool immedilate)
+	{
+		Debug.Log("xxxxxxasdasd");
+		ChangeAnimationByState(EnemyState.Attack,immedilate);
+		mob.Attack();
+	}
+	
 }
