@@ -54,16 +54,14 @@ public class EnemyMainLogic : MonoBehaviour {
 		case EnemyState.Patrol:
 			if(DistanceFromPlayer() < mPatrolAreaDistance)
 			{
-				mState = EnemyState.Run;
-				enemyAnimationScript.UpdateEnemyStateForAnimation(true);
+				ChangeAnimationByState(EnemyState.Run,true);
 			}
 			break;
 		
 		case EnemyState.Run:
 			if(DistanceFromPlayer() < mHoverAreaDistance)
 			{
-				mState = EnemyState.Hover;
-				enemyAnimationScript.UpdateEnemyStateForAnimation(true);
+				ChangeAnimationByState(EnemyState.Hover,true);
 			}
 			break;
 			
@@ -71,20 +69,17 @@ public class EnemyMainLogic : MonoBehaviour {
 			float dis = DistanceFromPlayer(); 
 			if(dis > mPatrolAreaDistance)
 			{
-				mState = EnemyState.Patrol;
-				enemyAnimationScript.UpdateEnemyStateForAnimation(true);
+				ChangeAnimationByState(EnemyState.Patrol,true);
 				return;
 			}
 			if(dis > mHoverAreaDistance)
 			{
-				mState = EnemyState.Run;
-				enemyAnimationScript.UpdateEnemyStateForAnimation(true);
+				ChangeAnimationByState(EnemyState.Run,true);
 				return;
 			}
 			if(IsReadyToAttack())
 			{
-				mState = EnemyState.Attack;
-				enemyAnimationScript.UpdateEnemyStateForAnimation(true);
+				ChangeAnimationByState(EnemyState.Attack,true);
 				return;
 			}
 			break;
@@ -94,29 +89,31 @@ public class EnemyMainLogic : MonoBehaviour {
 			float dis1 = DistanceFromPlayer(); 
 			if(dis1 > mPatrolAreaDistance)
 			{
-				mState = EnemyState.Patrol;
-				enemyAnimationScript.UpdateEnemyStateForAnimation(false);
+				ChangeAnimationByState(EnemyState.Patrol,false);
 				return;
 			}
 			if(dis1 > mHoverAreaDistance)
 			{
-				mState = EnemyState.Run;
-				enemyAnimationScript.UpdateEnemyStateForAnimation(false);
+				ChangeAnimationByState(EnemyState.Run,false);
 				return;
 			}
 			if(IsReadyToAttack())
 			{
-				mState = EnemyState.Attack;
-				enemyAnimationScript.UpdateEnemyStateForAnimation(false);
+				ChangeAnimationByState(EnemyState.Attack,false);
 				return;
 			}
 			else
 			{
-				mState = EnemyState.Hover;
-				enemyAnimationScript.UpdateEnemyStateForAnimation(false);
+				ChangeAnimationByState(EnemyState.Hover,false);
 			}
 			break;
 		}
+	}
+	
+	public void ChangeAnimationByState(EnemyState state, bool immedilate)
+	{
+		mState = state;
+		enemyAnimationScript.UpdateEnemyStateForAnimation(immedilate);
 	}
 	
 	bool IsReadyToAttack()

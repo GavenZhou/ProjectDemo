@@ -200,7 +200,7 @@ public class PlayerMainLogic : MonoBehaviour {
 	}
 	
 	
-	void ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand cmd, bool immedilate)
+	public void ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand cmd, bool immedilate)
 	{
 //		Debug.Log("ChangeAnimationByActionCmd =====  "+cmd);
 		PlayerDataClass.PlayerNextActionSet(cmd);

@@ -10,8 +10,12 @@ public class Player : Actor {
     public CombatUtility.AttackRangeType attackRangeType = CombatUtility.AttackRangeType.Cone;
 
     public List<Mob> interativeMobs = new List<Mob>();
+	
+	
+	PlayerMainLogic playerMainLogic;
 
     public override void Init(int _id) {
+		playerMainLogic = (PlayerMainLogic)this.transform.GetComponent<PlayerMainLogic>();
         type = SceneObjType.Player;
         base.Init(_id);
     }
@@ -32,6 +36,7 @@ public class Player : Actor {
 
     public override void Hurt() {
         base.Hurt();
+		playerMainLogic.ChangeAnimationByActionCmd(GameBaseData.PlayerDataClass.PlayerActionCommand.Player_BeHit,true);
     }
 
     public override void Dead() {
