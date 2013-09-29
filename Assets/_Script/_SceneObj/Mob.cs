@@ -7,6 +7,8 @@ public class Mob : Actor {
     float attackAngle = 120;
 
 	EnemyMainLogic enemyMainLogic;
+    AudioSource audioSource;
+    static AudioClip audioClipInjury = Resources.Load("Audio/injury", typeof(AudioClip)) as AudioClip;
 
     public override void Init(int _id) {
 
@@ -16,6 +18,7 @@ public class Mob : Actor {
         type = SceneObjType.Player;
         Hp = MaxHp = 100;
         enemyMainLogic = (EnemyMainLogic)this.transform.GetComponent<EnemyMainLogic>();
+        audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     public override void Attack() {
@@ -41,6 +44,8 @@ public class Mob : Actor {
 			enemyMainLogic.mState = EnemyMainLogic.EnemyState.Die;
 		else
 			enemyMainLogic.ChangeAnimationByState(EnemyMainLogic.EnemyState.BeHit,true);
+
+        audioSource.PlayOneShot(audioClipInjury);
 		return isdead;
     }
 
