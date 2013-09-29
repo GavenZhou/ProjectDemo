@@ -16,8 +16,6 @@ public class PlayerInputBase : MonoBehaviour {
 	
 	private Vector3 oldPos;
 	
-	private Vector3 oldSlashPos;
-	
 	// Use this for initialization
 	void Start () {
 		
@@ -36,7 +34,7 @@ public class PlayerInputBase : MonoBehaviour {
 			baseControlScript.GetInputState();
 			
 			InputStateClass.ClearTouchSlashPosArray();
-			oldSlashPos = Vector3.zero;
+			InputStateClass.oldSlashPos = Vector3.zero;
 			return;
 		}
 		
@@ -75,7 +73,7 @@ public class PlayerInputBase : MonoBehaviour {
 					baseControlScript.mTouchState = PlayerMainLogic.TouchState.AFingerDoubleTap;
 					Debug.Log(baseControlScript.mTouchState);
 					InputStateClass.touchPointPos = Input.mousePosition;
-					oldSlashPos = Input.mousePosition;
+					InputStateClass.oldSlashPos = Input.mousePosition;
 					InputStateClass.AddPointToSlashPosArray(Input.mousePosition);
 					return;
 				}
@@ -96,7 +94,7 @@ public class PlayerInputBase : MonoBehaviour {
 					Debug.Log(baseControlScript.mTouchState);
 					mOneClick = false;
 					
-					oldSlashPos = Input.mousePosition;
+					InputStateClass.oldSlashPos = Input.mousePosition;
 					InputStateClass.AddPointToSlashPosArray(Input.mousePosition);
 					return;
 				}
@@ -108,9 +106,9 @@ public class PlayerInputBase : MonoBehaviour {
 			if(Input.GetTouch(0).phase == TouchPhase.Moved)
 #endif	
 			{
-				if(Vector3.Distance(oldSlashPos, Input.mousePosition)  >= InputStateClass.DisPointToPoint)
+				if(Vector3.Distance(InputStateClass.oldSlashPos, Input.mousePosition)  >= InputStateClass.DisPointToPoint)
 				{
-					oldSlashPos = Input.mousePosition;
+					InputStateClass.oldSlashPos = Input.mousePosition;
 					InputStateClass.AddPointToSlashPosArray(Input.mousePosition);
 				}
 			}

@@ -269,7 +269,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			break;
 			
 		case TouchState.AFingerSlash:
-			targetPos = RayColliderByTapPos(InputStateClass.touchPointPos);
+			targetPos = RayColliderByTapPos(InputStateClass.oldSlashPos);
 			SetPlayerToRun(targetPos-this.transform.position);
 			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Rush,true);
 			colliderBaseScript.turnOnCatchRay = true;

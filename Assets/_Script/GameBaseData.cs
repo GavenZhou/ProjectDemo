@@ -82,6 +82,8 @@ namespace GameBaseData
 		//save the position for tap
 		public static Vector3 touchPointPos;
 		
+		public static Vector3 oldSlashPos;
+		
 		//save the position for slash touch
 		public static Vector3[] touchSlashPos = new Vector3[10];
 		

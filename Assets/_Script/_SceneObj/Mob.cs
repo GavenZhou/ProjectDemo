@@ -37,7 +37,6 @@ public class Mob : Actor {
     public override bool Hurt(SceneObj _object) {
         Hp -= 20;
         bool isdead = base.Hurt(_object);
-		Debug.Log("mState="+enemyMainLogic.mState);
 		if(isdead)
 			enemyMainLogic.mState = EnemyMainLogic.EnemyState.Die;
 		else
@@ -51,19 +50,19 @@ public class Mob : Actor {
 
     void OnDrawGizmos() {
 
-        //Gizmos.color = Color.red;
+        Gizmos.color = Color.red;
 
-        //Vector3 _pos = transform.position;
-        //Vector3 _dir = transform.forward;
+        Vector3 _pos = transform.position;
+        Vector3 _dir = transform.forward;
 
-        //Quaternion q1 = Quaternion.Euler(0, attackAngle / 2, 0);
-        //Vector3 _left = q1 * _dir;
-        //Gizmos.DrawLine(_pos, _pos + _left * attackRadius);
+        Quaternion q1 = Quaternion.Euler(0, attackAngle / 2, 0);
+        Vector3 _left = q1 * _dir;
+        Gizmos.DrawLine(_pos, _pos + _left * attackRadius);
 
-        //Quaternion q2 = Quaternion.Euler(0, -attackAngle / 2, 0);
-        //Vector3 _right = q2 * _dir;
-        //Gizmos.DrawLine(_pos, _pos + _right * attackRadius);
+        Quaternion q2 = Quaternion.Euler(0, -attackAngle / 2, 0);
+        Vector3 _right = q2 * _dir;
+        Gizmos.DrawLine(_pos, _pos + _right * attackRadius);
 
-        //GizmosHelper.DrawConeArc(Quaternion.identity, _pos, _dir, attackRadius, attackAngle);
+       	GizmosHelper.DrawConeArc(Quaternion.identity, _pos, _dir, attackRadius, attackAngle);
     }
 }

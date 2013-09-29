@@ -128,7 +128,6 @@ public class EnemyMainLogic : MonoBehaviour {
 			}
 			break;
 		}
-		
 		CheckEnemyMovementState();
 	}
 	
@@ -172,7 +171,7 @@ public class EnemyMainLogic : MonoBehaviour {
 	
 	void Attack(bool immedilate)
 	{
-		Debug.Log("xxxxxxasdasd");
+		Debug.Log("Monster attack now!!");
 		ChangeAnimationByState(EnemyState.Attack,immedilate);
 		mob.Attack();
 	}
