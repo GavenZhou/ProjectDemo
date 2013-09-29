@@ -40,7 +40,7 @@ public class Player : Actor {
     }
 
     public override void Hurt(SceneObj _object) {
-        Hp -= 10;
+        Hp -= 20;
 		playerMainLogic.ChangeAnimationByActionCmd(GameBaseData.PlayerDataClass.PlayerActionCommand.Player_BeHit,true);
         base.Hurt(_object);
     }
