@@ -52,9 +52,9 @@ public static class CombatUtility {
             if ((vec - param.pos).sqrMagnitude <= _radius * _radius) {
                 Vector3 v = vec - _pos;
                 v = Vector3.Normalize(new Vector3(v.x, 0, v.z));
-                float dot = Vector3.Dot(v, param.dir);
+                float dot = Mathf.Clamp01(Vector3.Dot(v, param.dir));
                 float r = Mathf.Acos(dot);
-                return r > 0 && r < param.radians / 2;
+                return r >= 0 && r <= param.radians / 2;
             }
             return false;
         };

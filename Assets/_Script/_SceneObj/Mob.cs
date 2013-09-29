@@ -48,21 +48,29 @@ public class Mob : Actor {
         base.Dead(_object);
     }
 
-    void OnDrawGizmos() {
+    //void OnDrawGizmos() {
 
-        Gizmos.color = Color.red;
+    //    Gizmos.color = Color.red;
 
-        Vector3 _pos = transform.position;
-        Vector3 _dir = transform.forward;
+    //    Vector3 _pos = transform.position;
+    //    Vector3 _dir = transform.forward;
 
-        Quaternion q1 = Quaternion.Euler(0, attackAngle / 2, 0);
-        Vector3 _left = q1 * _dir;
-        Gizmos.DrawLine(_pos, _pos + _left * attackRadius);
+    //    Quaternion q1 = Quaternion.Euler(0, attackAngle / 2, 0);
+    //    Vector3 _left = q1 * _dir;
+    //    Gizmos.DrawLine(_pos, _pos + _left * attackRadius);
 
-        Quaternion q2 = Quaternion.Euler(0, -attackAngle / 2, 0);
-        Vector3 _right = q2 * _dir;
-        Gizmos.DrawLine(_pos, _pos + _right * attackRadius);
+    //    Quaternion q2 = Quaternion.Euler(0, -attackAngle / 2, 0);
+    //    Vector3 _right = q2 * _dir;
+    //    Gizmos.DrawLine(_pos, _pos + _right * attackRadius);
 
-       	GizmosHelper.DrawConeArc(Quaternion.identity, _pos, _dir, attackRadius, attackAngle);
-    }
+    //    GizmosHelper.DrawConeArc(Quaternion.identity, _pos, _dir, attackRadius, attackAngle);
+
+    //    CombatUtility.CombatParam_AttackRange param = CombatUtility.GetConeParam(_pos, _dir, attackAngle * Mathf.Deg2Rad, attackRadius);
+    //    List<SceneObj> interatives = CombatUtility.GetInteractiveObjects<SceneObj>(SceneMng.instance, ref param);
+
+    //    Gizmos.color = Color.green;
+    //    foreach (SceneObj o in interatives) {
+    //        Gizmos.DrawWireSphere(o.transform.position + Vector3.up * 2.2f, 0.25f);
+    //    }
+    //}
 }
