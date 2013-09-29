@@ -2,30 +2,37 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class Mob : Actor {
+<<<<<<< HEAD
 	
-    float attackRadius = 3.5f;
-    float attackAngle = 60;
-
 	EnemyMainLogic enemyMainLogic;
 
     public override void Init(int _id) {
+		
+		enemyMainLogic = (EnemyMainLogic)this.transform.GetComponent<EnemyMainLogic>();
+        type = SceneObjType.Player;
+=======
 
-        // 
-        base.Init(_id); 
-        
+    float attackRadius = 3.5f;
+    float attackAngle = 60;
+
+
+    public override void Init(int _id) {
+>>>>>>> combat hurt.
+        base.Init(_id);
         type = SceneObjType.Player;
         Hp = MaxHp = 100;
-        enemyMainLogic = (EnemyMainLogic)this.transform.GetComponent<EnemyMainLogic>();
     }
 
     public override void Attack() {
-        
-        //
         base.Attack();
 
+<<<<<<< HEAD
+    public override void Hurt() {
+        base.Hurt();
+		enemyMainLogic.ChangeAnimationByState(EnemyMainLogic.EnemyState.BeHit,true);
+=======
         Vector3 _pos = transform.position;
         Vector3 _dir = transform.forward;
-		enemyMainLogic.ChangeAnimationByState(EnemyMainLogic.EnemyState.BeHit,true);
         CombatUtility.CombatParam_AttackRange param = CombatUtility.GetConeParam(_pos, _dir, attackAngle * Mathf.Deg2Rad, attackRadius);
         List<Actor> targets = CombatUtility.GetInteractiveObjects<Actor>(SceneMng.instance, ref param);
         foreach (Actor actor in targets) {
@@ -33,6 +40,7 @@ public class Mob : Actor {
                 actor.Hurt(this);
             }
         }
+>>>>>>> combat hurt.
     }
 
     public override void Hurt(SceneObj _object) {

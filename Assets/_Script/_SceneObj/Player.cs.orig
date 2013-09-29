@@ -11,21 +11,21 @@ public class Player : Actor {
 
     public List<Mob> interativeMobs = new List<Mob>();
 	
+	
 	PlayerMainLogic playerMainLogic;
 
     public override void Init(int _id) {
-
-        //
+<<<<<<< HEAD
+		playerMainLogic = (PlayerMainLogic)this.transform.GetComponent<PlayerMainLogic>();
+        type = SceneObjType.Player;
+=======
+>>>>>>> combat hurt.
         base.Init(_id);
-        
         Hp = MaxHp = 1000;
         type = SceneObjType.Player;
-		playerMainLogic = (PlayerMainLogic)this.transform.GetComponent<PlayerMainLogic>();
     }
 
     public override void Attack() {
-        
-        //
         base.Attack();
 
         Vector3 _pos = transform.position;
@@ -39,10 +39,15 @@ public class Player : Actor {
         }
     }
 
+<<<<<<< HEAD
+    public override void Hurt() {
+        base.Hurt();
+		playerMainLogic.ChangeAnimationByActionCmd(GameBaseData.PlayerDataClass.PlayerActionCommand.Player_BeHit,true);
+=======
     public override void Hurt(SceneObj _object) {
         Hp -= 10;
-		playerMainLogic.ChangeAnimationByActionCmd(GameBaseData.PlayerDataClass.PlayerActionCommand.Player_BeHit,true);
         base.Hurt(_object);
+>>>>>>> combat hurt.
     }
 
     public override void Dead(SceneObj _object) {
