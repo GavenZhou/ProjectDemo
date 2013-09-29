@@ -16,8 +16,9 @@ public class Player : Actor {
 
     public override void Init(int _id) {
 		playerMainLogic = (PlayerMainLogic)this.transform.GetComponent<PlayerMainLogic>();
-        type = SceneObjType.Player;
         base.Init(_id);
+        Hp = MaxHp = 1000;
+        type = SceneObjType.Player;
     }
 
     public override void Attack() {
@@ -29,18 +30,19 @@ public class Player : Actor {
         List<Mob> targets = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
         foreach (Mob m in targets) {
             if (!m.IsDie) {
-                m.Hurt();
+                m.Hurt(this);
             }
         }
     }
 
-    public override void Hurt() {
-        base.Hurt();
+    public override void Hurt(SceneObj _object) {
+        Hp -= 10;
 		playerMainLogic.ChangeAnimationByActionCmd(GameBaseData.PlayerDataClass.PlayerActionCommand.Player_BeHit,true);
+        base.Hurt(_object);
     }
 
-    public override void Dead() {
-        base.Dead();
+    public override void Dead(SceneObj _object) {
+        base.Dead(_object);
     }
 
     void OnDrawGizmos() {

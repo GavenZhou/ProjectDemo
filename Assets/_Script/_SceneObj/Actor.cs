@@ -25,17 +25,20 @@ public class Actor : SceneObj {
     private bool isDie;
     public bool IsDie {
         get { return isDie; }
+        protected set { isDie = value; }
     }
 
     public virtual void Attack() {
 
     }
 
-    public virtual void Hurt() {
-
+    public virtual void Hurt(SceneObj _object) {
+        if (Hp <= 0) {
+            Dead(_object);
+        }
     }
 
-    public virtual void Dead() {
-
+    public virtual void Dead(SceneObj _object) {
+        IsDie = true;
     }
 }
