@@ -69,7 +69,12 @@ public class Mob : Actor {
 
     private void UpdateHudText() {
         if (hudMesh != null) {
-            hudMesh.text = "<color=red>Mob:" + id + "</color> <color=red>" + Hp + "/" + MaxHp + "</color>";
+            if (Hp > 0) {
+                hudMesh.text = "<color=red>Mob:" + id + "</color> <color=red>" + Hp + "/" + MaxHp + "</color>";
+            }
+            else {
+                hudMesh.text = "";
+            }
         }
     }
 

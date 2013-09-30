@@ -28,7 +28,7 @@ public class PlayerMainLogic : MonoBehaviour {
 
     private Player player;
 
-    public GameObject sfx;
+    public GameObject[] sfx;
 	
 	
 	// Use this for initialization
@@ -354,9 +354,7 @@ public class PlayerMainLogic : MonoBehaviour {
 
     public void OnStartToAttack(int attackId)
     {
-        if (attackId == 1) {
-            sfx.GetComponent<particleControl>().turnOn = true;
-        }
+        sfx[attackId - 1].GetComponent<particleControl>().turnOn = true;
         player.Attack();
     }
 
