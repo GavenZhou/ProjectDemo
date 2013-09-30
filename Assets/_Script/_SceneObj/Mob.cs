@@ -8,6 +8,7 @@ public class Mob : Actor {
 
 	EnemyMainLogic enemyMainLogic;
     AudioSource audioSource;
+    TextMesh hudMesh;
     static AudioClip audioClipInjury = Resources.Load("Audio/injury", typeof(AudioClip)) as AudioClip;
 
     public override void Init(int _id) {
@@ -17,8 +18,12 @@ public class Mob : Actor {
         
         type = SceneObjType.Player;
         Hp = MaxHp = 100;
+
         enemyMainLogic = (EnemyMainLogic)this.transform.GetComponent<EnemyMainLogic>();
         audioSource = gameObject.AddComponent<AudioSource>();
+
+        InitHudText();
+        UpdateHudText();
     }
 
     public override void Attack() {
@@ -38,7 +43,8 @@ public class Mob : Actor {
     }
 
     public override bool Hurt(SceneObj _object) {
-        Hp -= 20;
+        Hp -= 15;
+        UpdateHudText();
         bool isdead = base.Hurt(_object);
 		if(isdead)
 			enemyMainLogic.mState = EnemyMainLogic.EnemyState.Die;
@@ -53,29 +59,45 @@ public class Mob : Actor {
         base.Dead(_object);
     }
 
-    //void OnDrawGizmos() {
+    private void InitHudText() {
+        Object prefab = Resources.Load("AssetSets/Prefab/hub");
+        GameObject hud = GameObject.Instantiate(prefab, transform.position, transform.rotation) as GameObject;
+        hud.transform.parent = gameObject.transform;
+        hud.transform.localPosition = new Vector3(0, 2, 0);
+        hudMesh = hud.GetComponent<TextMesh>() as TextMesh;
+    }
 
-    //    Gizmos.color = Color.red;
+    private void UpdateHudText() {
+        if (hudMesh != null) {
+            hudMesh.text = "<color=red>Mob:" + id + "</color> <color=red>" + Hp + "/" + MaxHp + "</color>";
+        }
+    }
 
-    //    Vector3 _pos = transform.position;
-    //    Vector3 _dir = transform.forward;
+#if false
+    void OnDrawGizmos() {
 
-    //    Quaternion q1 = Quaternion.Euler(0, attackAngle / 2, 0);
-    //    Vector3 _left = q1 * _dir;
-    //    Gizmos.DrawLine(_pos, _pos + _left * attackRadius);
+        Gizmos.color = Color.red;
 
-    //    Quaternion q2 = Quaternion.Euler(0, -attackAngle / 2, 0);
-    //    Vector3 _right = q2 * _dir;
-    //    Gizmos.DrawLine(_pos, _pos + _right * attackRadius);
+        Vector3 _pos = transform.position;
+        Vector3 _dir = transform.forward;
 
-    //    GizmosHelper.DrawConeArc(Quaternion.identity, _pos, _dir, attackRadius, attackAngle);
+        Quaternion q1 = Quaternion.Euler(0, attackAngle / 2, 0);
+        Vector3 _left = q1 * _dir;
+        Gizmos.DrawLine(_pos, _pos + _left * attackRadius);
 
-    //    CombatUtility.CombatParam_AttackRange param = CombatUtility.GetConeParam(_pos, _dir, attackAngle * Mathf.Deg2Rad, attackRadius);
-    //    List<SceneObj> interatives = CombatUtility.GetInteractiveObjects<SceneObj>(SceneMng.instance, ref param);
+        Quaternion q2 = Quaternion.Euler(0, -attackAngle / 2, 0);
+        Vector3 _right = q2 * _dir;
+        Gizmos.DrawLine(_pos, _pos + _right * attackRadius);
 
-    //    Gizmos.color = Color.green;
-    //    foreach (SceneObj o in interatives) {
-    //        Gizmos.DrawWireSphere(o.transform.position + Vector3.up * 2.2f, 0.25f);
-    //    }
-    //}
+        GizmosHelper.DrawConeArc(Quaternion.identity, _pos, _dir, attackRadius, attackAngle);
+
+        CombatUtility.CombatParam_AttackRange param = CombatUtility.GetConeParam(_pos, _dir, attackAngle * Mathf.Deg2Rad, attackRadius);
+        List<SceneObj> interatives = CombatUtility.GetInteractiveObjects<SceneObj>(SceneMng.instance, ref param);
+
+        Gizmos.color = Color.green;
+        foreach (SceneObj o in interatives) {
+            Gizmos.DrawWireSphere(o.transform.position + Vector3.up * 2.2f, 0.25f);
+        }
+    }
+#endif
 }
