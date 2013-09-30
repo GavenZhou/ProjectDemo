@@ -7,11 +7,11 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/_Scene/testScene.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scene/Launch.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scene/_Level/Battle.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scene/_Level/Login.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scene/_Level/Map.unity

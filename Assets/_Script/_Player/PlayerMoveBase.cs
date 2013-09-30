@@ -80,8 +80,8 @@ public class PlayerMoveBase : MonoBehaviour {
 		player_Attack3.acceleration = -90;
 		player_Attack3.leftTime = 0.6f;
 		
-		player_BeHit.startSpeed = -4;
-		player_BeHit.acceleration = 2.5f;
+		player_BeHit.startSpeed = 0;
+		player_BeHit.acceleration = 0;
 		player_BeHit.leftTime = 0.5f;
 		
 		player_Jump.startSpeed = 20;

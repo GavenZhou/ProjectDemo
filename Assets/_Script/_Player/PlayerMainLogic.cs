@@ -27,6 +27,8 @@ public class PlayerMainLogic : MonoBehaviour {
 	private PlayerColliderBase colliderBaseScript;
 
     private Player player;
+
+    public GameObject[] sfx;
 	
 	
 	// Use this for initialization
@@ -352,6 +354,7 @@ public class PlayerMainLogic : MonoBehaviour {
 
     public void OnStartToAttack(int attackId)
     {
+        sfx[attackId - 1].GetComponent<particleControl>().turnOn = true;
         player.Attack();
     }
 
