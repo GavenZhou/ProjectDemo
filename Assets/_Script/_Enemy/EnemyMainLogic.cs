@@ -149,7 +149,6 @@ public class EnemyMainLogic : MonoBehaviour {
 			mAttackTime = Time.time;
 			CancelInvoke("MobAttack");
 		}
-		
 		mState = state;
 		enemyAnimationScript.UpdateEnemyStateForAnimation(immedilate);
 	}
