@@ -5,9 +5,9 @@ public class Player : Actor {
 
     float attackRadius = 3.5f;
     float attackAngle = 160;
-    float attackX = 1.5f;
-    float attackY = 5;
-    public CombatUtility.AttackRangeType attackRangeType = CombatUtility.AttackRangeType.Cone;
+    float attackX = 0.5f;
+    float attackY = 10f;
+    public CombatUtility.AttackRangeType attackRangeType = CombatUtility.AttackRangeType.Rectangle;
 
     public List<Mob> interativeMobs = new List<Mob>();
 	
@@ -30,7 +30,21 @@ public class Player : Actor {
 
         Vector3 _pos = transform.position;
         Vector3 _dir = transform.forward;
-        CombatUtility.CombatParam_AttackRange param = CombatUtility.GetConeParam(_pos, _dir, attackAngle * Mathf.Deg2Rad, attackRadius);
+        CombatUtility.CombatParam_AttackRange param;
+
+        if (attackRangeType == CombatUtility.AttackRangeType.Cone) {
+            param = CombatUtility.GetConeParam(_pos, _dir, attackAngle * Mathf.Deg2Rad, attackRadius);
+        }
+        else if (attackRangeType == CombatUtility.AttackRangeType.Circle) {
+            param = CombatUtility.GetCircleParam(_pos, attackRadius);
+        }
+        else if (attackRangeType == CombatUtility.AttackRangeType.Rectangle) {
+            param = CombatUtility.GetRectangleParam(_pos, _dir, attackX, attackY);
+        }
+        else {
+            return;
+        }
+
         List<Mob> targets = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
         foreach (Mob m in targets) {
             if (!m.IsDie) {
@@ -42,7 +56,6 @@ public class Player : Actor {
     public override bool Hurt(SceneObj _object) {
         Hp -= 10;
         bool isdead = base.Hurt(_object);
-		Debug.Log(" i am hurt!!!!");
 		if(isdead)
 			playerMainLogic.ChangeAnimationByActionCmd(GameBaseData.PlayerDataClass.PlayerActionCommand.Player_Die,true);
 		else

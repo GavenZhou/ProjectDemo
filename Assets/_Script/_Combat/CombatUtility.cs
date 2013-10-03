@@ -69,27 +69,19 @@ public static class CombatUtility {
         param.x = _x;
         param.y = _y;
         param.prep = (vec) => {
-            vec.y = 0;
 
-            Vector3 p = new Vector3(_pos.x, 0, _pos.z);
-            Debug.DrawLine(p, vec);
-            Debug.DrawLine(p, p + Vector3.right * 5, Color.red);
-            Debug.DrawLine(p, p + param.dir * 5, Color.red);
-            Vector3 up = Vector3.Cross(Vector3.right, param.dir);
-            float rot = Mathf.Acos(Vector3.Dot(Vector3.right, param.dir));
-            //if (up.y > 0) {
-            //    rot = -1 * rot;
-            //}
+            Vector3 _left = _pos + Vector3.Cross(Vector3.up, _dir) * _x;
+            Vector3 _right = _pos + Vector3.Cross(_dir, Vector3.up) * _x;
+            Vector3 _leftFront = _left + _dir * _y;
+            Vector3 _rightFront = _right + _dir * _y;
 
-            vec = Vector3.Distance(p, vec) * new Vector3(Mathf.Cos(rot), 0.0f, Mathf.Sin(rot));
-
-            Debug.DrawLine(p, vec);
-
-            float xMin = Mathf.Min(param.pos.x - _x, param.pos.x + _x);
-            float xMax = Mathf.Max(param.pos.x - _x, param.pos.x + _x);
-            float zMin = Mathf.Min(param.pos.z, param.pos.z + _y);
-            float zMax = Mathf.Max(param.pos.z, param.pos.z + _y);
-            return /*(vec.x > xMin && vec.x < xMax) && (vec.z > zMin && vec.z < zMax)*/ false;
+            Vector2[] rect = new Vector2[4] {
+                new Vector2(_left.x, _left.z),
+                new Vector2(_leftFront.x, _leftFront.z),
+                new Vector2(_rightFront.x, _rightFront.z),
+                new Vector2(_right.x, _right.z)
+            };
+            return Misc.InsidePolygon(ref rect, 4, new Vector2(vec.x, vec.z));
         };
         return param;
     }
