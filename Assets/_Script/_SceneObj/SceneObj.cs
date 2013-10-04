@@ -58,6 +58,10 @@ public class SceneObj : MonoBehaviour {
         GameObject.Destroy(this);
     }
 
+    public virtual void OnDespawn() {
+
+    }
+    
 
     ///////////////////////////////////////////////////////////////////////////////
     // static

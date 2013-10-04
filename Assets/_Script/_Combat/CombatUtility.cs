@@ -18,43 +18,37 @@ public static class CombatUtility {
     public struct CombatParam_AttackRange {
 
         public AttackRangeType type;
-        public Vector3 pos;
-        public Vector3 dir;
-
-        public float radius;
-        public float radians;
-        public float x;
-        public float y;
-
         public Func<Vector3, bool> prep;
     }
 
     public static CombatParam_AttackRange GetCircleParam(Vector3 _pos, float _radius) {
+
+        //
         CombatParam_AttackRange param = new CombatParam_AttackRange();
+        
         param.type = AttackRangeType.Circle;
-        param.pos = _pos;
-        param.radius = _radius;
         param.prep = (vec) => {
             vec.y = 0;
-            return (vec - param.pos).sqrMagnitude <= _radius * _radius;
+            return (vec - _pos).sqrMagnitude <= _radius * _radius;
         };
         return param;
-    }
+    }   
 
     public static CombatParam_AttackRange GetConeParam(Vector3 _pos, Vector3 _dir, float _radians, float _radius) {
+
+        _dir = Vector3.Normalize(new Vector3(_dir.x, 0, _dir.z));
+        
+        //
         CombatParam_AttackRange param = new CombatParam_AttackRange();
+
         param.type = AttackRangeType.Cone;
-        param.pos = _pos;
-        param.radius = _radius;
-        param.dir = Vector3.Normalize(new Vector3(_dir.x, 0, _dir.z));
-        param.radians = _radians;
         param.prep = (vec) => {
-            if ((vec - param.pos).sqrMagnitude <= _radius * _radius) {
+            if ((vec - _pos).sqrMagnitude <= _radius * _radius) {
                 Vector3 v = vec - _pos;
                 v = Vector3.Normalize(new Vector3(v.x, 0, v.z));
-                float dot = Mathf.Clamp01(Vector3.Dot(v, param.dir));
+                float dot = Mathf.Clamp01(Vector3.Dot(v, _dir));
                 float r = Mathf.Acos(dot);
-                return r >= 0 && r <= param.radians / 2;
+                return r >= 0 && r <= _radians / 2;
             }
             return false;
         };
@@ -62,12 +56,13 @@ public static class CombatUtility {
     }
 
     public static CombatParam_AttackRange GetRectangleParam(Vector3 _pos, Vector3 _dir, float _x, float _y) {
+
+        _dir = Vector3.Normalize(new Vector3(_dir.x, 0, _dir.z));
+        
+        //        
         CombatParam_AttackRange param = new CombatParam_AttackRange();
+
         param.type = AttackRangeType.Rectangle;
-        param.pos = _pos;
-        param.dir = Vector3.Normalize(new Vector3(_dir.x, 0, _dir.z));
-        param.x = _x;
-        param.y = _y;
         param.prep = (vec) => {
 
             Vector3 _left = _pos + Vector3.Cross(Vector3.up, _dir) * _x;
@@ -105,9 +100,20 @@ public static class CombatUtility {
     ///////////////////////////////////////////////////////////////////////////////
 
     static int mobID = 0;
+    static Vector3[] mobSpawnLoctions
+        = {
+            new Vector3(-3.60f, 0, 6.94f),
+            new Vector3(-0.86f, 0, -8.60f),
+            new Vector3(7.79f, 0, -4.27f),
+            new Vector3(6.24f, 0, 5.57f),
+            new Vector3(-7.72f, 0, -2.00f),
+          };
+
     public static int GenNextMobID() {
         return ++mobID;
     }
+
+
 
 
 

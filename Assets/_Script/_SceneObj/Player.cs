@@ -7,7 +7,7 @@ public class Player : Actor {
     float attackAngle = 160;
     float attackX = 0.5f;
     float attackY = 10f;
-    public CombatUtility.AttackRangeType attackRangeType = CombatUtility.AttackRangeType.Rectangle;
+    public CombatUtility.AttackRangeType attackRangeType = CombatUtility.AttackRangeType.Cone;
 
     public List<Mob> interativeMobs = new List<Mob>();
 	

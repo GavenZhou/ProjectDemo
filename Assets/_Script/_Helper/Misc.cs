@@ -7,7 +7,7 @@ public static class Misc {
     {
         bool inside = false;
         int count1 = 0;
-        int count2 = 0;
+        int count2 = 0; 
 
         for (int i = 0, j = _N - 1; i < _N; j = i++)  {
 
