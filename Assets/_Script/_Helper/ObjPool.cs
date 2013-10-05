@@ -81,6 +81,7 @@ public class GameObjectPool {
             }
         }
         idx = size - 1;
+        Debug.Log(idx);
     }
 
     public void Clear() {
@@ -107,15 +108,15 @@ public class GameObjectPool {
             return null;
         }
 
-        GameObject result = data[idx];
+        GameObject result = data[idx]; Debug.Log(idx);
         --idx;
         return result;
     }
 
-    public GameObject Request(Vector2 _pos) {
+    public GameObject Request(Vector3 _pos) {
         GameObject result = Request();
         result.SetActive(true);
-        result.transform.position = new Vector3(_pos.x, _pos.y, result.transform.position.z);
+        result.transform.position = new Vector3(_pos.x, _pos.y, _pos.z);
         return result;
     }
 
@@ -133,7 +134,7 @@ public class GameObjectPool {
         return null;
     }
 
-    public T Request<T>(Vector2 _pos) where T : MonoBehaviour {
+    public T Request<T>(Vector3 _pos) where T : MonoBehaviour {
         GameObject go = Request(_pos);
         if (go)
             return go.GetComponent<T>();
@@ -149,7 +150,7 @@ public class GameObjectPool {
     }
 
     public void Return(GameObject _item) {
-        ++idx;
+        ++idx; Debug.Log(idx);
         data[idx] = _item;
     }
 }

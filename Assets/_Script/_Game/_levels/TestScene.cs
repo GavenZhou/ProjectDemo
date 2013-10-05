@@ -3,21 +3,29 @@ using System.Collections;
 
 public class TestScene : MonoBehaviour {
 
+    public static TestScene instance;
+
+    public float mobDetectorBegin = 10.0f;
+    public float mobDetectorSpan = 2.0f;
+    public float maxMobInScene = 10;
+    public float totalMobCount = 50;
+
     void Awake() {
+        instance = this;
         SceneMng scene = new SceneMng();
         scene.Init();
     }
 
-    new void Start() {
+    void Start() {
         InvokeRepeating("UpdateFPS", 0.0f, 1.0f);
-        InvokeRepeating("UpdateMobDetector", 10.0f, 2000.0f);
+        InvokeRepeating("UpdateMobDetector", mobDetectorBegin, mobDetectorSpan);
     }
 
     void OnGUI() {
         GUI.Label(new Rect(0, Screen.height - 20, 100, 20), "fps: " + fps.ToString());
     }
 
-    new void Update() {
+    void Update() {
         ++frames;
         //if (Time.timeScale != timeScale) {
         //    Time.timeScale = timeScale;

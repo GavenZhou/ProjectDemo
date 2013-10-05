@@ -59,7 +59,7 @@ public class Spawner : MonoBehaviour {
     public Mob SpawnMob(int _type, Vector3 _pos) {
 
         Mob mob;
-        if (_type == 1) {
+        if (_type == 0) {
             mob = mobPool1.Request<Mob>(_pos);
         }
         else {
@@ -71,7 +71,7 @@ public class Spawner : MonoBehaviour {
     public void DespawnMob(Mob _mob) {
        
         GameObjectPool pool;
-        if (_mob.mobTemplate == 1) {
+        if (_mob.mobTemplate == 0) {
             pool = mobPool1;
         }
         else {

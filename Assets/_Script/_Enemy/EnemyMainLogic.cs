@@ -38,18 +38,16 @@ public class EnemyMainLogic : MonoBehaviour {
 
 	
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		player = GameObject.FindGameObjectWithTag("player").transform;
 		enemyAnimationScript = GetComponentInChildren<EnemyAnimationControl>() as EnemyAnimationControl;
 		enemyMoveBaseScript = gameObject.GetComponent<EnemyMoveBase>() as EnemyMoveBase;
 		mob = gameObject.GetComponent<Mob>();
-        Debug.Log("Start");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
-        Debug.Log("Update");
 		if(mState == EnemyState.Dead)
 		{
 			enemyAnimationScript.enabled = false;
@@ -174,7 +172,7 @@ public class EnemyMainLogic : MonoBehaviour {
 	
 	void Attack(bool immedilate)
 	{
-		Debug.Log("Monster attack now!!");
+		//Debug.Log("Monster attack now!!");
 		ChangeAnimationByState(EnemyState.Attack,immedilate);
 		Invoke("MobAttack",0.8f);	
 	}

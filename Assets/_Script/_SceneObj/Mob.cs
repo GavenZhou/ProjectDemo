@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
+
 
 public class Mob : Actor {
 
@@ -38,6 +40,12 @@ public class Mob : Actor {
     // ------------------------------------------------------------------ 
     // mono
     // ------------------------------------------------------------------
+    protected void Awake() {
+
+        enemyMainLogic = transform.GetComponent<EnemyMainLogic>() as EnemyMainLogic;
+        audioSource = gameObject.AddComponent<AudioSource>();
+    }
+
     protected void Start() {
 
         this.Init(CombatUtility.GenNextMobID());
@@ -56,15 +64,17 @@ public class Mob : Actor {
         type = SceneObjType.Player;
         Hp = MaxHp = 100;
 
-        enemyMainLogic = (EnemyMainLogic)this.transform.GetComponent<EnemyMainLogic>();
-        audioSource = gameObject.AddComponent<AudioSource>();
-
         InitHudText();
     }
 
     public override void OnDespawn() {
         // 
         base.OnDespawn();
+
+        IsDie = false;
+        Hp = MaxHp;
+        gameObject.SetActive(false);
+        SceneMng.instance.RemoveSceneObj(this);
     }
 
     public override void Attack() {
@@ -98,11 +108,34 @@ public class Mob : Actor {
 
     public override void Dead(SceneObj _object) {
         base.Dead(_object);
+
+        StartCoroutine("Dead_Coroutine", 10.0f);
     }
 
     // ------------------------------------------------------------------ 
     // private
     // ------------------------------------------------------------------
+
+    IEnumerator Dead_Coroutine(float _f) {
+
+        yield return new WaitForSeconds(_f);
+
+        float timer = 0.0f;
+        float duration = 4.0f;
+        Vector3 start = transform.position;
+        Vector3 end = start + new Vector3( 0.0f, -2.0f, 0.0f );
+
+        while ( timer <= duration ) {
+            float ratio = timer / duration;
+            Vector3 pos = Vector3.Lerp(start, end, ratio);
+            transform.position = pos;
+
+            //
+            timer += Time.deltaTime;
+            yield return 0;
+        }
+        Spawner.instance.DespawnMob(this);
+    }
 
     void InitHudText() {
         hudMesh = gameObject.GetComponentInChildren<TextMesh>() as TextMesh;

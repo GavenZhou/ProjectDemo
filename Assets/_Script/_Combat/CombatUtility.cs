@@ -99,7 +99,7 @@ public static class CombatUtility {
     ///////////////////////////////////////////////////////////////////////////////
 
     static int mobID = 0;
-    static int minMobTemplate = 1, maxMobTemplate = 2;
+    static int maxMobTemplate = 2;
     static Vector3[] mobSpawnLoctions
         = {
             new Vector3(-3.60f, 0, 6.94f),
@@ -118,17 +118,16 @@ public static class CombatUtility {
 
         List<Vector3> locs = null;
         if (GetSuitableLocation(out locs)) {
-            int type = Random.Range(minMobTemplate, maxMobTemplate);
             int loction = Random.Range(0, locs.Count - 1);
-            return Spawner.instance.SpawnMob(type, locs[loction]);
+            return Spawner.instance.SpawnMob(Random.Range(0, maxMobTemplate), locs[loction]);
         }
         return null;
     }
 
     // 根据xxx算法检测mob生成时机
     public static bool MobGeneratorDetector() {
-        if (mobID < 50) {
-            if (SceneMng.instance.GetSceneObjs<Mob>().Count <= 5) {
+        if (mobID < TestScene.instance.totalMobCount) {
+            if (SceneMng.instance.GetSceneObjs<Mob>().Count < TestScene.instance.maxMobInScene) {
                 MobGenerator();
                 return true;
             }
@@ -136,14 +135,14 @@ public static class CombatUtility {
         return false;
     }
 
-    static float minDistance = 1.0f;
+    static float minDistance = 2.0f;
     static bool GetSuitableLocation(out List<Vector3> _locs) {
 
         _locs = new List<Vector3>();
         List<Mob> mobs = SceneMng.instance.GetSceneObjsWithPred<Mob>(m => !m.IsDie);
 
-        bool suitable = true;
         foreach (Vector3 vec in mobSpawnLoctions) {
+            bool suitable = true;
             foreach (Mob m in mobs) {
                 float magnitude = new Vector2(m.transform.position.x - vec.x, m.transform.position.z - vec.z).magnitude;
                 if (magnitude <= minDistance * minDistance) {

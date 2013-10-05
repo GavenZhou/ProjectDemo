@@ -1765,7 +1765,7 @@ MonoBehaviour:
   m_Name: 
   type: 3
   id: 0
-  mobTemplate: 2
+  mobTemplate: 1
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
