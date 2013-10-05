@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using System;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public static class CombatUtility {
 
@@ -18,7 +17,7 @@ public static class CombatUtility {
     public struct CombatParam_AttackRange {
 
         public AttackRangeType type;
-        public Func<Vector3, bool> prep;
+        public System.Func<Vector3, bool> prep;
     }
 
     public static CombatParam_AttackRange GetCircleParam(Vector3 _pos, float _radius) {
@@ -100,6 +99,7 @@ public static class CombatUtility {
     ///////////////////////////////////////////////////////////////////////////////
 
     static int mobID = 0;
+    static int minMobTemplate = 1, maxMobTemplate = 2;
     static Vector3[] mobSpawnLoctions
         = {
             new Vector3(-3.60f, 0, 6.94f),
@@ -113,8 +113,48 @@ public static class CombatUtility {
         return ++mobID;
     }
 
+    // 根据xxx算法在出生点随机生成mob, (待改进)
+    public static Mob MobGenerator() {
 
+        List<Vector3> locs = null;
+        if (GetSuitableLocation(out locs)) {
+            int type = Random.Range(minMobTemplate, maxMobTemplate);
+            int loction = Random.Range(0, locs.Count - 1);
+            return Spawner.instance.SpawnMob(type, locs[loction]);
+        }
+        return null;
+    }
 
+    // 根据xxx算法检测mob生成时机
+    public static bool MobGeneratorDetector() {
+        if (mobID < 50) {
+            if (SceneMng.instance.GetSceneObjs<Mob>().Count <= 5) {
+                MobGenerator();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static float minDistance = 1.0f;
+    static bool GetSuitableLocation(out List<Vector3> _locs) {
+
+        _locs = new List<Vector3>();
+        List<Mob> mobs = SceneMng.instance.GetSceneObjsWithPred<Mob>(m => !m.IsDie);
+
+        bool suitable = true;
+        foreach (Vector3 vec in mobSpawnLoctions) {
+            foreach (Mob m in mobs) {
+                float magnitude = new Vector2(m.transform.position.x - vec.x, m.transform.position.z - vec.z).magnitude;
+                if (magnitude <= minDistance * minDistance) {
+                    suitable = false;
+                    break;
+                }
+            }
+            if (suitable) _locs.Add(vec);
+        }
+        return _locs.Count != 0;
+    }
 
 
     ///////////////////////////////////////////////////////////////////////////////

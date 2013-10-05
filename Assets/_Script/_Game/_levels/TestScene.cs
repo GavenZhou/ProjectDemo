@@ -10,6 +10,7 @@ public class TestScene : MonoBehaviour {
 
     new void Start() {
         InvokeRepeating("UpdateFPS", 0.0f, 1.0f);
+        InvokeRepeating("UpdateMobDetector", 10.0f, 2000.0f);
     }
 
     void OnGUI() {
@@ -37,5 +38,9 @@ public class TestScene : MonoBehaviour {
         fps = frames / (timeNow - lastInterval);
         frames = 0;
         lastInterval = timeNow;
+    }
+
+    void UpdateMobDetector() {
+        CombatUtility.MobGeneratorDetector();
     }
 }

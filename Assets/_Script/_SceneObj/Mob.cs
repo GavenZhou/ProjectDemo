@@ -2,14 +2,51 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class Mob : Actor {
-	
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // variable
+    ///////////////////////////////////////////////////////////////////////////////
+    
+    public int mobTemplate = 0;
+
+    // ------------------------------------------------------------------ 
+    // private
+    // ------------------------------------------------------------------
+
     float attackRadius = 3.5f;
     float attackAngle = 120;
+
+    // ------------------------------------------------------------------ 
+    // reference
+    // ------------------------------------------------------------------
 
 	EnemyMainLogic enemyMainLogic;
     AudioSource audioSource;
     TextMesh hudMesh;
+
+    // ------------------------------------------------------------------ 
+    // static
+    // ------------------------------------------------------------------
+
     static AudioClip audioClipInjury = Resources.Load("Audio/injury", typeof(AudioClip)) as AudioClip;
+
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // function
+    ///////////////////////////////////////////////////////////////////////////////
+
+    // ------------------------------------------------------------------ 
+    // mono
+    // ------------------------------------------------------------------
+    protected void Start() {
+
+        this.Init(CombatUtility.GenNextMobID());
+        SceneMng.instance.AddSceneObj(this);
+    }
+
+    // ------------------------------------------------------------------ 
+    // virtual 
+    // ------------------------------------------------------------------
 
     public override void Init(int _id) {
 
@@ -23,7 +60,11 @@ public class Mob : Actor {
         audioSource = gameObject.AddComponent<AudioSource>();
 
         InitHudText();
-        UpdateHudText();
+    }
+
+    public override void OnDespawn() {
+        // 
+        base.OnDespawn();
     }
 
     public override void Attack() {
@@ -59,15 +100,16 @@ public class Mob : Actor {
         base.Dead(_object);
     }
 
-    private void InitHudText() {
-        Object prefab = Resources.Load("AssetSets/Prefab/hub");
-        GameObject hud = GameObject.Instantiate(prefab, transform.position, transform.rotation) as GameObject;
-        hud.transform.parent = gameObject.transform;
-        hud.transform.localPosition = new Vector3(0, 2, 0);
-        hudMesh = hud.GetComponent<TextMesh>() as TextMesh;
+    // ------------------------------------------------------------------ 
+    // private
+    // ------------------------------------------------------------------
+
+    void InitHudText() {
+        hudMesh = gameObject.GetComponentInChildren<TextMesh>() as TextMesh;
+        UpdateHudText();
     }
 
-    private void UpdateHudText() {
+    void UpdateHudText() {
         if (hudMesh != null) {
             if (Hp > 0) {
                 hudMesh.text = "<color=red>Mob:" + id + "</color> <color=red>" + Hp + "/" + MaxHp + "</color>";

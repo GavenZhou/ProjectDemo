@@ -99,4 +99,15 @@ public class SceneMng {
         }
         return lst;
     }
+
+    public List<T> GetSceneObjsWithPred<T>(System.Func<T, bool> _pred) where T : SceneObj {
+        List<T> lst = new List<T>();
+        foreach (SceneObj obj in sceneObjs.Values) {
+            T t = obj as T;
+            if (t != null && (_pred == null || _pred(t) == true)) {
+                lst.Add(obj as T);
+            }
+        }
+        return lst;
+    }
 }

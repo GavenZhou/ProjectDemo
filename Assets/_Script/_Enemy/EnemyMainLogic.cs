@@ -30,28 +30,26 @@ public class EnemyMainLogic : MonoBehaviour {
 	
 	private Transform player;
 	
-	
 	private EnemyAnimationControl enemyAnimationScript;
 	private EnemyMoveBase enemyMoveBaseScript;
-	
-	
-	private float mAttackTime;
     private Mob mob;
 	
+	private float mAttackTime;
+
 	
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("player").transform;
-		enemyAnimationScript = (EnemyAnimationControl)this.transform.FindChild(modelName).GetComponent<EnemyAnimationControl>();
-		enemyMoveBaseScript = (EnemyMoveBase)this.GetComponent<EnemyMoveBase>();
-		mob = gameObject.AddComponent<Mob>();
-        mob.Init(CombatUtility.GenNextMobID());
-        SceneMng.instance.AddSceneObj(mob);
+		enemyAnimationScript = GetComponentInChildren<EnemyAnimationControl>() as EnemyAnimationControl;
+		enemyMoveBaseScript = gameObject.GetComponent<EnemyMoveBase>() as EnemyMoveBase;
+		mob = gameObject.GetComponent<Mob>();
+        Debug.Log("Start");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+        Debug.Log("Update");
 		if(mState == EnemyState.Dead)
 		{
 			enemyAnimationScript.enabled = false;

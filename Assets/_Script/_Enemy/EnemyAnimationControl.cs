@@ -44,12 +44,11 @@ public class EnemyAnimationControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		
-		mainLogicScript = (EnemyMainLogic)this.transform.parent.GetComponent<EnemyMainLogic>();
-		
+		mainLogicScript = (EnemyMainLogic)this.transform.parent.GetComponent<EnemyMainLogic>();		
 		moveScript = (EnemyMoveBase)this.transform.parent.GetComponent<EnemyMoveBase>();
 		
 		InitalizeAnimationClips();
-	
+	    Debug.Log("EnemyAnimationControl.start");
 	}
 	
 	// Update is called once per frame

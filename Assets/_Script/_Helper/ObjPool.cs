@@ -114,6 +114,7 @@ public class GameObjectPool {
 
     public GameObject Request(Vector2 _pos) {
         GameObject result = Request();
+        result.SetActive(true);
         result.transform.position = new Vector3(_pos.x, _pos.y, result.transform.position.z);
         return result;
     }

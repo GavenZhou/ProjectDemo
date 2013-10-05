@@ -3,6 +3,16 @@ using System.Collections.Generic;
 
 public class Spawner : MonoBehaviour {
 
+    ///////////////////////////////////////////////////////////////////////////////
+    // static
+    ///////////////////////////////////////////////////////////////////////////////
+
+    public static Spawner instance;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // prefabs
+    ///////////////////////////////////////////////////////////////////////////////
+
     public GameObjectPool mobPool1;
     public GameObjectPool mobPool2;
 
@@ -11,11 +21,16 @@ public class Spawner : MonoBehaviour {
     // funcitons
     ///////////////////////////////////////////////////////////////////////////////
 
+    public void Start() {
+        instance = this;
+        Init();
+    }
+
     public void Init() {
     
         //
-        mobPool1.Init();
-        mobPool2.Init();
+        mobPool1.Init(true);
+        mobPool2.Init(true);
     }
 
     public void Reset() {
@@ -32,21 +47,40 @@ public class Spawner : MonoBehaviour {
         mobPool2.Clear();
     }
 
-    public GameObject SpawnMob(int _type, Vector3 _pos) {
 
-        GameObject go;
+    ///////////////////////////////////////////////////////////////////////////////
+    // Spawner & Despawner
+    ///////////////////////////////////////////////////////////////////////////////
+
+    // ------------------------------------------------------------------ 
+    // mob Spawner
+    // ------------------------------------------------------------------
+
+    public Mob SpawnMob(int _type, Vector3 _pos) {
+
+        Mob mob;
         if (_type == 1) {
-            go = mobPool1.Request(_pos);
+            mob = mobPool1.Request<Mob>(_pos);
         }
         else {
-            go = mobPool2.Request(_pos);
+            mob = mobPool2.Request<Mob>(_pos);
         }
-        return go;
+        return mob;
     }
 
     public void DespawnMob(Mob _mob) {
+       
+        GameObjectPool pool;
+        if (_mob.mobTemplate == 1) {
+            pool = mobPool1;
+        }
+        else {
+            pool = mobPool2;
+        }
         _mob.OnDespawn();
-        mobPool1.Return(_mob.gameObject);
+        pool.Return(_mob.gameObject);
     }
+
+
 }
 
