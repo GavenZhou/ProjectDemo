@@ -44,7 +44,14 @@ public class EnemyMainLogic : MonoBehaviour {
 		enemyMoveBaseScript = gameObject.GetComponent<EnemyMoveBase>() as EnemyMoveBase;
 		mob = gameObject.GetComponent<Mob>();
 	}
-	
+
+    public void Init() {
+        mState = EnemyState.Patrol;
+        transform.collider.enabled = true;
+        transform.rigidbody.isKinematic = false;
+        enemyAnimationScript.enabled = true;
+    }
+
 	// Update is called once per frame
 	void Update () {
 		

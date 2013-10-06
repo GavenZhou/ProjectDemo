@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 
 
-public class Mob : Actor {
+public class Mob : Actor, ISpawn {
 
     ///////////////////////////////////////////////////////////////////////////////
     // variable
@@ -48,8 +48,8 @@ public class Mob : Actor {
 
     protected void Start() {
 
-        this.Init(CombatUtility.GenNextMobID());
-        SceneMng.instance.AddSceneObj(this);
+        //this.Init(CombatUtility.GenNextMobID());
+        //SceneMng.instance.AddSceneObj(this);
     }
 
     // ------------------------------------------------------------------ 
@@ -61,18 +61,23 @@ public class Mob : Actor {
         // 
         base.Init(_id); 
         
-        type = SceneObjType.Player;
+        type = SceneObjType.Mob;
         Hp = MaxHp = 100;
+        IsDie = false;
+        enemyMainLogic.Init();
+        Name = type.ToString() + mobTemplate.ToString() + "_" + _id;
+        gameObject.name = Name;
 
         InitHudText();
     }
 
-    public override void OnDespawn() {
-        // 
-        base.OnDespawn();
+    public virtual void OnSpawn() {
+        Init(CombatUtility.GenNextMobID());
+        SceneMng.instance.AddSceneObj(this);
+    }
 
-        IsDie = false;
-        Hp = MaxHp;
+    public virtual void OnDespawn() {
+        // 
         gameObject.SetActive(false);
         SceneMng.instance.RemoveSceneObj(this);
     }
@@ -145,7 +150,7 @@ public class Mob : Actor {
     void UpdateHudText() {
         if (hudMesh != null) {
             if (Hp > 0) {
-                hudMesh.text = "<color=red>Mob:" + id + "</color> <color=red>" + Hp + "/" + MaxHp + "</color>";
+                hudMesh.text = "<color=red>" + Name + "</color> <color=red>" + Hp + "/" + MaxHp + "</color>";
             }
             else {
                 hudMesh.text = "";

@@ -4,15 +4,15 @@ using System.Collections;
 public class Billboard : MonoBehaviour {
 
     [System.NonSerialized]
-    public Camera camera;
+    public Camera mainCamera;
 
     void Start() {
-        camera = testCameraControl.instance.mainCamera;
+        mainCamera = testCameraControl.instance.mainCamera;
     }
 
     void LateUpdate() {
-        if (camera != null)  {
-            transform.rotation = camera.transform.rotation;
+        if (mainCamera != null)  {
+            transform.rotation = mainCamera.transform.rotation;
         }
     }
 }

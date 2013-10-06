@@ -16,7 +16,9 @@ public class SceneObj : MonoBehaviour {
     // variable
     ///////////////////////////////////////////////////////////////////////////////
     
+    [System.NonSerialized]
     public SceneObjType type;
+    [System.NonSerialized]
     public int id;
 
     // ------------------------------------------------------------------ 
@@ -56,10 +58,6 @@ public class SceneObj : MonoBehaviour {
         Debug.Log("Destroy SceneObj (" + type + ", " + id + ")");
 #endif
         GameObject.Destroy(this);
-    }
-
-    public virtual void OnDespawn() {
-
     }
     
 

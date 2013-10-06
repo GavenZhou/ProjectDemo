@@ -150,7 +150,7 @@ public class GameObjectPool {
     }
 
     public void Return(GameObject _item) {
-        ++idx; Debug.Log(idx);
+        ++idx;
         data[idx] = _item;
     }
 }

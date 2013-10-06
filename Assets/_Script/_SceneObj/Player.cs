@@ -19,7 +19,7 @@ public class Player : Actor {
         base.Init(_id);
         
         Hp = MaxHp = 1000;
-        type = SceneObjType.Player;
+        //type = SceneObjType.Player;
 		playerMainLogic = (PlayerMainLogic)this.transform.GetComponent<PlayerMainLogic>();
     }
 

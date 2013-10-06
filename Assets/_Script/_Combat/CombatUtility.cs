@@ -127,6 +127,7 @@ public static class CombatUtility {
     // 根据xxx算法检测mob生成时机
     public static bool MobGeneratorDetector() {
         if (mobID < TestScene.instance.totalMobCount) {
+            Debug.Log("dddddd" + SceneMng.instance.GetSceneObjs<Mob>().Count);
             if (SceneMng.instance.GetSceneObjs<Mob>().Count < TestScene.instance.maxMobInScene) {
                 MobGenerator();
                 return true;
