@@ -10275,7 +10275,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1352525402}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 495.346741, y: 0, z: -176.088531}
+  m_LocalPosition: {x: 499.235901, y: 0, z: -176.088531}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1880133114}
@@ -16548,8 +16548,8 @@ MonoBehaviour:
     prefab: {fileID: 100090, guid: 6b7cd4ddfa557a14cbb0948892be276e, type: 2}
     size: 10
   dropItemPool:
-    prefab: {fileID: 0}
-    size: 0
+    prefab: {fileID: 100000, guid: 3e8c097e88b4c3c47ba3cc5e9379ca51, type: 2}
+    size: 25
 --- !u!1 &1748750117
 GameObject:
   m_ObjectHideFlags: 0
