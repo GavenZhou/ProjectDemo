@@ -81,7 +81,6 @@ public class GameObjectPool {
             }
         }
         idx = size - 1;
-        Debug.Log(idx);
     }
 
     public void Clear() {
@@ -108,7 +107,7 @@ public class GameObjectPool {
             return null;
         }
 
-        GameObject result = data[idx]; Debug.Log(idx);
+        GameObject result = data[idx];
         --idx;
         return result;
     }

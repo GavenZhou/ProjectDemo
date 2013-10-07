@@ -62,7 +62,6 @@ public class Spawner : MonoBehaviour {
     // ------------------------------------------------------------------
 
     public Mob SpawnMob(int _type, Vector3 _pos) {
-        Debug.Log(1111111111);
         Mob mob;
         if (_type == 0) {
             mob = mobPool1.Request<Mob>(_pos);
