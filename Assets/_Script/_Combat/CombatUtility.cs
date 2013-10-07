@@ -183,10 +183,10 @@ public static class CombatUtility {
 
     static Vector3 GetDropLocation(Vector3 _center) {
 
-        float delta = 2 * Mathf.PI / Random.Range(0, 7);
+        float delta = Random.Range(0, 7) * Mathf.PI / 4;
         Vector3 vec = _center + new Vector3(Mathf.Cos(delta), 0, Mathf.Sin(delta))
                         + new Vector3(Random.Range(-1.0f, 1.0f), 0, Random.Range(-1.0f, 1.0f));
-        vec.y = 0.5f;
+        vec.y = 0.2f;
         return vec ;
     }
 #endregion

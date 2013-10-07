@@ -52,6 +52,9 @@ public class DropItem : SceneObj, ISpawn {
     public void Dead(SceneObj _object) {
 
         isDied = true;
+        if (_object) {
+            _object.SendMessage("OnPickup", this);
+        }
         Spawner.instance.DespawnDrop(this);
     }
 
