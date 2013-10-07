@@ -259,8 +259,8 @@ public class PlayerMainLogic : MonoBehaviour {
 					colliderBaseScript.mTarget = null;
 					PlayerDataClass.AttackStart = false;
 				}
-				mTouchState = TouchState.None;
 			}
+			mTouchState = TouchState.None;
 			break;
 			
 		case TouchState.AFingerDoubleTap:
@@ -314,8 +314,13 @@ public class PlayerMainLogic : MonoBehaviour {
 	
 	Vector3 RayColliderByTapPos(Vector3 pos)
 	{
+		Debug.Log(pos.x);
+		if(pos.x > Screen.width *0.8f)
+			return Vector3.zero;
+		
 		Ray ray1 = Camera.mainCamera.ScreenPointToRay(pos);
-		hit = Physics.RaycastAll(ray1,100);
+		
+		hit = Physics.RaycastAll(ray1,100,1<<1);
 		foreach(RaycastHit hit1 in hit)
 		{
 			if(hit1.transform.tag == "ground")
