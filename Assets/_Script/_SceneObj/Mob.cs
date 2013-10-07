@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Collections;
 
 
-public class Mob : Actor, ISpawn {
+public class Mob : Actor, ISpawn
+{
 
     ///////////////////////////////////////////////////////////////////////////////
     // variable
     ///////////////////////////////////////////////////////////////////////////////
-    
+
     public int mobTemplate = 0;
 
     // ------------------------------------------------------------------ 
@@ -24,7 +25,7 @@ public class Mob : Actor, ISpawn {
     // reference
     // ------------------------------------------------------------------
 
-	EnemyMainLogic enemyMainLogic;
+    EnemyMainLogic enemyMainLogic;
     AudioSource audioSource;
     TextMesh hudMesh;
 
@@ -55,8 +56,8 @@ public class Mob : Actor, ISpawn {
     public override void Init(int _id) {
 
         // 
-        base.Init(_id); 
-        
+        base.Init(_id);
+
         type = SceneObjType.Mob;
         Hp = MaxHp = 100;
         IsDied = false;
@@ -80,7 +81,7 @@ public class Mob : Actor, ISpawn {
     }
 
     public override void Attack() {
-        
+
         //
         base.Attack();
 
@@ -99,13 +100,13 @@ public class Mob : Actor, ISpawn {
         Hp -= 25;
         UpdateHudText();
         bool isdead = base.Hurt(_object);
-		if(isdead)
-			enemyMainLogic.mState = EnemyMainLogic.EnemyState.Die;
-		else
-			enemyMainLogic.ChangeAnimationByState(EnemyMainLogic.EnemyState.BeHit,true);
+        if (isdead)
+            enemyMainLogic.mState = EnemyMainLogic.EnemyState.Die;
+        else
+            enemyMainLogic.ChangeAnimationByState(EnemyMainLogic.EnemyState.BeHit, true);
 
         audioSource.PlayOneShot(audioClipInjury);
-		return isdead;
+        return isdead;
     }
 
     public override void Dead(SceneObj _object) {
@@ -127,9 +128,9 @@ public class Mob : Actor, ISpawn {
         float timer = 0.0f;
         float duration = 4.0f;
         Vector3 start = transform.position;
-        Vector3 end = start + new Vector3( 0.0f, -2.0f, 0.0f );
+        Vector3 end = start + new Vector3(0.0f, -2.0f, 0.0f);
 
-        while ( timer <= duration ) {
+        while (timer <= duration) {
             float ratio = timer / duration;
             Vector3 pos = Vector3.Lerp(start, end, ratio);
             transform.position = pos;
@@ -158,8 +159,7 @@ public class Mob : Actor, ISpawn {
         if (hudMesh != null) {
             if (Hp > 0) {
                 hudMesh.text = "<color=red>" + Name + "</color> <color=red>" + Hp + "/" + MaxHp + "</color>";
-            }
-            else {
+            } else {
                 hudMesh.text = "";
             }
         }
