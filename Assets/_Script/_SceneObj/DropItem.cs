@@ -13,7 +13,6 @@ public class DropItem : SceneObj, ISpawn {
 
     bool attracted = false;
     bool isDied = false;
-    bool freeze = true;
 
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -25,7 +24,6 @@ public class DropItem : SceneObj, ISpawn {
         base.Init(_id);
         type = SceneObjType.DropItem;
         attracted = isDied = false;
-        freeze = true;
     }
 
     public virtual void OnSpawn() {
