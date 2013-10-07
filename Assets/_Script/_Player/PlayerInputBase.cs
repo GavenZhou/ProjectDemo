@@ -48,13 +48,13 @@ public class PlayerInputBase : MonoBehaviour {
 			return;
 		}
 		
-#if !UNITY_IPHONE		
+#if UNITY_EDITOR		
 	//	if(Input.GetMouseButton(0))
 #elif UNITY_IPHONE
 		if(Input.touchCount == 1)
 #endif
 		{
-#if !UNITY_IPHONE			
+#if UNITY_EDITOR			
 			if(Input.GetMouseButtonDown(0))
 #else
 			if(Input.GetTouch(0).phase == TouchPhase.Began)
@@ -80,7 +80,7 @@ public class PlayerInputBase : MonoBehaviour {
 				oldPos = Input.mousePosition;
 			}
 			
-#if !UNITY_IPHONE				
+#if UNITY_EDITOR				
 			if(Input.GetMouseButtonUp(0))
 #else
 			if(Input.GetTouch(0).phase == TouchPhase.Ended)
@@ -100,7 +100,7 @@ public class PlayerInputBase : MonoBehaviour {
 				}
 			}
 			
-#if !UNITY_IPHONE			
+#if UNITY_EDITOR			
 			if(Input.GetMouseButton(0))
 #else
 			if(Input.GetTouch(0).phase == TouchPhase.Moved)
