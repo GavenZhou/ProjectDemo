@@ -18,6 +18,7 @@ public class Mob : Actor, ISpawn {
     float attackRadius = 3.5f;
     float attackAngle = 120;
     float corpseDuration = 5.0f;
+    float dropDelay = 2.0f;
 
     // ------------------------------------------------------------------ 
     // reference
@@ -74,6 +75,7 @@ public class Mob : Actor, ISpawn {
     public virtual void OnDespawn() {
         // 
         gameObject.SetActive(false);
+        gameObject.transform.position = Vector3.zero;
         SceneMng.instance.RemoveSceneObj(this);
     }
 
@@ -94,7 +96,7 @@ public class Mob : Actor, ISpawn {
     }
 
     public override bool Hurt(SceneObj _object) {
-        Hp -= 15;
+        Hp -= 25;
         UpdateHudText();
         bool isdead = base.Hurt(_object);
 		if(isdead)
@@ -110,8 +112,7 @@ public class Mob : Actor, ISpawn {
 
         base.Dead(_object);
 
-        // µÙ¬‰º∆À„
-        CombatUtility.DropGenerator(this);
+        StartCoroutine(Drop_Coroutine(transform.position));
         StartCoroutine(Dead_Coroutine());
     }
 
@@ -138,6 +139,14 @@ public class Mob : Actor, ISpawn {
             yield return 0;
         }
         Spawner.instance.DespawnMob(this);
+    }
+
+    IEnumerator Drop_Coroutine(Vector3 _pos) {
+
+        yield return new WaitForSeconds(dropDelay);
+
+        // µÙ¬‰º∆À„
+        CombatUtility.DropGenerator(_pos);
     }
 
     void InitHudText() {

@@ -30,6 +30,11 @@ public class TestScene : MonoBehaviour {
         //if (Time.timeScale != timeScale) {
         //    Time.timeScale = timeScale;
         //}
+
+
+        if (Input.GetKeyDown(KeyCode.F2)) {
+            CombatUtility.DropGenerator(SceneMng.instance.mainPlayer.transform.position + Vector3.right * 4);
+        }
     }
 
     // ------------------------------------------------------------------ 

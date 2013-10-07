@@ -7,12 +7,13 @@ public class DropItem : SceneObj, ISpawn {
     // 
     ///////////////////////////////////////////////////////////////////////////////
 
-    public float attractRange = 5.0f;
-    public float deadRange = 1.0f;
-    public float attractDuration = 0.5f;
+    public float attractRange;
+    public float deadRange;
+    public float attractDuration;
 
     bool attracted = false;
     bool isDied = false;
+    bool freeze = true;
 
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -24,6 +25,7 @@ public class DropItem : SceneObj, ISpawn {
         base.Init(_id);
         type = SceneObjType.DropItem;
         attracted = isDied = false;
+        freeze = true;
     }
 
     public virtual void OnSpawn() {
@@ -69,7 +71,7 @@ public class DropItem : SceneObj, ISpawn {
             if (_object == null) yield break;
 
             float ratio = timer / duration;
-            Vector3 end = _object.transform.position + new Vector3( 0.0f, 1.0f, 0.0f );
+            Vector3 end = _object.transform.position + new Vector3( 0.0f, 1f, 0.0f );
             Vector3 pos = Vector3.Lerp(start, end, ratio);
             transform.position = pos;
 
@@ -81,11 +83,12 @@ public class DropItem : SceneObj, ISpawn {
     }
 
 
+
     void Update() {
 
         if (!attracted && !isDied) {
             Actor actor = SceneMng.instance.mainPlayer;
-            float magnitude = Vector3.Magnitude(actor.transform.position - this.transform.position);
+            float magnitude = (actor.transform.position - this.transform.position).sqrMagnitude;
             if (magnitude <= deadRange * deadRange) {
                 this.Dead(actor);
             }

@@ -37,6 +37,7 @@ public class Spawner : MonoBehaviour {
         //
         mobPool1.Init(true);
         mobPool2.Init(true);
+        dropItemPool.Init(true);
     }
 
     public void Reset() {
@@ -44,6 +45,7 @@ public class Spawner : MonoBehaviour {
         //
         mobPool1.Reset();
         mobPool2.Reset();
+        dropItemPool.Reset();
     }
 
     public void Clear() {
@@ -51,6 +53,7 @@ public class Spawner : MonoBehaviour {
         // 
         mobPool1.Clear();
         mobPool2.Clear();
+        dropItemPool.Clear();
     }
 
 
