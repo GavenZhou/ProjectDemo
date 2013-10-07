@@ -4,6 +4,9 @@ using GameBaseData;
 
 public class PlayerAnimationControl : MonoBehaviour {
 	
+	
+	public bool isSkillPlaying = false;
+	
 	// wiil be true when animation finish
 	public bool attack1Finish = false;
 	public bool attack2Finish = false;
@@ -76,8 +79,8 @@ public class PlayerAnimationControl : MonoBehaviour {
 		mSkillIdel = this.animation["gongjidaijiEdit"];
 		mSkillIdel.layer = 4;
 		
-		mSkill1 = this.animation["jineng"];
-		mSkill1.layer = 5;
+		mSkill1 = this.animation["jinengEdit"];
+		mSkill1.layer = 6;
 		
 		mBeHit = this.animation["beiji"];
 		mBeHit.layer = 5;
@@ -269,9 +272,24 @@ public class PlayerAnimationControl : MonoBehaviour {
 		}
 	}
 	
+	void StartSkill(int skillId)
+	{
+		main.OnStartSkill(skillId);
+	}
+	
+	void FinishSkill(int skillId)
+	{
+		isSkillPlaying = false;
+	}
+	
 	void SkillIdelFinish()
 	{
 		//ready to start skill
+	}
+	
+	void SkillShootPoint(int skillId)
+	{
+			// create the skill area here	
 	}
 	
 }

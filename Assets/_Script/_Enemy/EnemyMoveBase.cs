@@ -92,7 +92,7 @@ public class EnemyMoveBase : MonoBehaviour {
 		pos.y = 0;
 		//todo
 		if(Vector3.Distance(transform.position,player.transform.position) > 1)
-			this.transform.forward = Vector3.RotateTowards(transform.position,pos,Time.deltaTime*200,1000);
+			this.transform.forward = Vector3.RotateTowards(transform.position,pos,0.01f*200,1000);
 	}
 	
 	
@@ -100,7 +100,7 @@ public class EnemyMoveBase : MonoBehaviour {
 	{
 		//todo
 		if(mSpeed != 0)
-			this.transform.Translate(0,0,Time.deltaTime*Random.Range(mSpeed-1,mSpeed+1));
+			this.transform.Translate(0,0,0.01f*Random.Range(mSpeed-1,mSpeed+1));
 	}
 	
 	void MoveStop()
