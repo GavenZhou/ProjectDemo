@@ -100,7 +100,7 @@ public static class CombatUtility {
 
     static int mobID = 0;
     static int maxMobTemplate = 2;
-    static Vector3[] mobSpawnLoctions
+    static Vector3[] mobBornLoctions
         = {
             new Vector3(-3.60f, 0, 6.94f),
             new Vector3(-0.86f, 0, -8.60f),
@@ -113,11 +113,11 @@ public static class CombatUtility {
         return ++mobID;
     }
 
-    // 根据xxx算法在出生点随机生成mob, (待改进)
+    // 根据xxx算法在出生点随机生成mob, (待修改)
     public static Mob MobGenerator() {
 
         List<Vector3> locs = null;
-        if (GetSuitableLocation(out locs)) {
+        if (GetSuitableMobLocation(out locs)) {
             int loction = Random.Range(0, locs.Count - 1);
             return Spawner.instance.SpawnMob(Random.Range(0, maxMobTemplate), locs[loction]);
         }
@@ -136,12 +136,12 @@ public static class CombatUtility {
     }
 
     static float minDistance = 2.0f;
-    static bool GetSuitableLocation(out List<Vector3> _locs) {
+    static bool GetSuitableMobLocation(out List<Vector3> _locs) {
 
         _locs = new List<Vector3>();
         List<Mob> mobs = SceneMng.instance.GetSceneObjsWithPred<Mob>(m => !m.IsDie);
 
-        foreach (Vector3 vec in mobSpawnLoctions) {
+        foreach (Vector3 vec in mobBornLoctions) {
             bool suitable = true;
             foreach (Mob m in mobs) {
                 float magnitude = new Vector2(m.transform.position.x - vec.x, m.transform.position.z - vec.z).magnitude;
@@ -160,7 +160,43 @@ public static class CombatUtility {
     // 掉落计算
     ///////////////////////////////////////////////////////////////////////////////
 
+    static int dropID = 0;
+    static float dropProbability = 0.4f;
+    public static int GenNextDropID() {
+        return ++dropID;
+    }
+   
+    // 根据xxx算法在计算物品掉落, (待修改)
+    public static DropItem DropGenerator(Mob _mob) {
 
-    
+        if (dropProbability >= Random.Range(0.0f, 1.0f)) {
+
+            List<Vector3> locs = null;
+            if (GetSuitableDropLocation(_mob.transform.position, out locs)) {
+                int loction = Random.Range(0, locs.Count - 1);
+                return Spawner.instance.SpawnDrop(locs[loction]);
+            }
+        }
+        return null;
+    }
+
+    static bool GetSuitableDropLocation(Vector3 _orig, out List<Vector3> _locs) {
+
+        _locs = new List<Vector3>();
+        List<Mob> mobs = SceneMng.instance.GetSceneObjsWithPred<Mob>(m => !m.IsDie);
+
+        foreach (Vector3 vec in mobBornLoctions) {
+            bool suitable = true;
+            foreach (Mob m in mobs) {
+                float magnitude = new Vector2(m.transform.position.x - vec.x, m.transform.position.z - vec.z).magnitude;
+                if (magnitude <= minDistance * minDistance) {
+                    suitable = false;
+                    break;
+                }
+            }
+            if (suitable) _locs.Add(vec);
+        }
+        return _locs.Count != 0;
+    }
 }
 

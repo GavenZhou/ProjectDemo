@@ -46,12 +46,6 @@ public class Mob : Actor, ISpawn {
         audioSource = gameObject.AddComponent<AudioSource>();
     }
 
-    protected void Start() {
-
-        //this.Init(CombatUtility.GenNextMobID());
-        //SceneMng.instance.AddSceneObj(this);
-    }
-
     // ------------------------------------------------------------------ 
     // virtual 
     // ------------------------------------------------------------------
