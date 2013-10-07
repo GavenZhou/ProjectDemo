@@ -47,7 +47,7 @@ public class Player : Actor {
 
         List<Mob> targets = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
         foreach (Mob m in targets) {
-            if (!m.IsDie) {
+            if (!m.IsDied) {
                 m.Hurt(this);
             }
         }

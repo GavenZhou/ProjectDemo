@@ -22,10 +22,10 @@ public class Actor : SceneObj {
         set;
     }
 
-    private bool isDie;
-    public bool IsDie {
-        get { return isDie; }
-        protected set { isDie = value; }
+    private bool isDied;
+    public bool IsDied {
+        get { return isDied; }
+        protected set { isDied = value; }
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -45,6 +45,6 @@ public class Actor : SceneObj {
     }
 
     public virtual void Dead(SceneObj _object) {
-        IsDie = true;
+        IsDied = true;
     }
 }

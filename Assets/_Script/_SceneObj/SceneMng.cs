@@ -35,6 +35,8 @@ public class SceneMng {
     ///////////////////////////////////////////////////////////////////////////////
 
     public static SceneMng instance;
+    public Player mainPlayer;
+
     Dictionary<ObjectID, SceneObj> sceneObjs = new Dictionary<ObjectID, SceneObj>();
 
 
@@ -49,7 +51,12 @@ public class SceneMng {
     public void Init() {
 
     }
-    
+
+    public void AddMainPlayer(Player _player) {
+        mainPlayer = _player;
+        AddSceneObj(_player);
+    }
+
     public void AddSceneObj(SceneObj _obj) {
 
         SceneObj oldObj = null;

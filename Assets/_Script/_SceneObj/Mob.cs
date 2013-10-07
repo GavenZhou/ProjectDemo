@@ -17,6 +17,7 @@ public class Mob : Actor, ISpawn {
 
     float attackRadius = 3.5f;
     float attackAngle = 120;
+    float corpseDuration = 5.0f;
 
     // ------------------------------------------------------------------ 
     // reference
@@ -57,7 +58,7 @@ public class Mob : Actor, ISpawn {
         
         type = SceneObjType.Mob;
         Hp = MaxHp = 100;
-        IsDie = false;
+        IsDied = false;
         enemyMainLogic.Init();
         Name = type.ToString() + mobTemplate.ToString() + "_" + _id;
         gameObject.name = Name;
@@ -86,7 +87,7 @@ public class Mob : Actor, ISpawn {
         CombatUtility.CombatParam_AttackRange param = CombatUtility.GetConeParam(_pos, _dir, attackAngle * Mathf.Deg2Rad, attackRadius);
         List<Player> targets = CombatUtility.GetInteractiveObjects<Player>(SceneMng.instance, ref param);
         foreach (Player actor in targets) {
-            if (!actor.IsDie) {
+            if (!actor.IsDied) {
                 actor.Hurt(this);
             }
         }
@@ -106,18 +107,21 @@ public class Mob : Actor, ISpawn {
     }
 
     public override void Dead(SceneObj _object) {
+
         base.Dead(_object);
 
-        StartCoroutine("Dead_Coroutine", 10.0f);
+        // µÙ¬‰º∆À„
+        CombatUtility.DropGenerator(this);
+        StartCoroutine(Dead_Coroutine());
     }
 
     // ------------------------------------------------------------------ 
     // private
     // ------------------------------------------------------------------
 
-    IEnumerator Dead_Coroutine(float _f) {
+    IEnumerator Dead_Coroutine() {
 
-        yield return new WaitForSeconds(_f);
+        yield return new WaitForSeconds(corpseDuration);
 
         float timer = 0.0f;
         float duration = 4.0f;

@@ -27,9 +27,7 @@ public class PlayerMainLogic : MonoBehaviour {
 	private PlayerColliderBase colliderBaseScript;
 
     private Player player;
-	
-	private Transform directionIcon;
-	
+
     public GameObject[] sfx;
 	
 	
@@ -39,12 +37,10 @@ public class PlayerMainLogic : MonoBehaviour {
 		
 		moveBaseScript = (PlayerMoveBase)this.GetComponent<PlayerMoveBase>();
 		
-		directionIcon = this.transform.FindChild("icon");
-		
 		colliderBaseScript = (PlayerColliderBase)this.GetComponent<PlayerColliderBase>();
         player = gameObject.AddComponent<Player>();
         player.Init(1000);
-        SceneMng.instance.AddSceneObj(player);
+        SceneMng.instance.AddMainPlayer(player);
 	}
 	
 	// Update is called once per frame
@@ -103,8 +99,7 @@ public class PlayerMainLogic : MonoBehaviour {
 		
 		
 		if(colliderBaseScript.mTarget != null 
-			&& PlayerDataClass.AttackStart == false
-			&& aniControlScript.isSkillPlaying == false)
+			&& PlayerDataClass.AttackStart == false)
 		{
 			// attack start
 			PlayerDataClass.AttackStart = true;
@@ -223,9 +218,15 @@ public class PlayerMainLogic : MonoBehaviour {
 		{
 		case TouchState.AFingerOneTap:
 			
-			colliderBaseScript.mTarget = null;
-			PlayerDataClass.AttackStart = false;
-			mTouchState = TouchState.None;
+			byte skillId = IsTouchSkillBtn(InputStateClass.touchPointPos);
+			
+			if(skillId != 0)
+			{
+				Time.timeScale = 0.5f;
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Plyaer_SkillIdel,true);
+				mTouchState = TouchState.None;
+				return;
+			}
 			
 			targetPos = RayColliderByTapPos(InputStateClass.touchPointPos);
 			
@@ -234,19 +235,10 @@ public class PlayerMainLogic : MonoBehaviour {
 				// turn to the direction first
 				SetPlayerToRun(targetPos-this.transform.position);
 				
-				
-				if(directionIcon.renderer.enabled == true)
-				{
-					directionIcon.renderer.enabled = false;
-					Time.timeScale = 1;
-					return;
-				}
-				
-				if(aniControlScript.isSkillPlaying)
-					return;
-				
 				// check the attack area
 				colliderBaseScript.RayToAttackArea();
+				
+//				Debug.Log(PlayerDataClass.playerAniCmdNext);
 				
 				// if there is no enemy in the area, then player start to run
 				if(colliderBaseScript.mTarget == null)
@@ -264,32 +256,27 @@ public class PlayerMainLogic : MonoBehaviour {
 					{
 						ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,true);
 					}
+					colliderBaseScript.mTarget = null;
+					PlayerDataClass.AttackStart = false;
 				}
 			}
+			mTouchState = TouchState.None;
 			break;
 			
 		case TouchState.AFingerDoubleTap:
-			mTouchState = TouchState.None;
-			
 			targetPos = RayColliderByTapPos(InputStateClass.touchPointPos);
-			SetPlayerToRun(targetPos-this.transform.position);	
-			if(aniControlScript.isSkillPlaying == false)
-			{
-				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Jump,true);
-			}				
+			SetPlayerToRun(targetPos-this.transform.position);
+			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Jump,true);
+			mTouchState = TouchState.None;
 			break;
 			
 		case TouchState.AFingerSlash:
+			targetPos = RayColliderByTapPos(InputStateClass.oldSlashPos);
+			SetPlayerToRun(targetPos-this.transform.position);
+			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Rush,true);
 			colliderBaseScript.turnOnCatchRay = true;
 			colliderBaseScript.mCatchTarget = null;
 			mTouchState = TouchState.None;
-			
-			targetPos = RayColliderByTapPos(InputStateClass.oldSlashPos);
-			SetPlayerToRun(targetPos-this.transform.position);
-			if(aniControlScript.isSkillPlaying == false)
-			{
-				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Rush,true);
-			}			
 			break;
 			
 		case TouchState.TwoFingersDoubleTap:
@@ -309,9 +296,24 @@ public class PlayerMainLogic : MonoBehaviour {
 		}
 	}
 	
+	
+	byte IsTouchSkillBtn(Vector3 pos)
+	{
+		Ray ray1 = Camera.mainCamera.ScreenPointToRay(pos);
+		hit = Physics.RaycastAll(ray1,100);
+		foreach(RaycastHit hit1 in hit)
+		{
+			if(hit1.transform.tag == "skill1")
+				return 1;
+			else if(hit1.transform.tag == "skill2")
+				return 2;
+		}
+		return 0;
+	}
+	
+	
 	Vector3 RayColliderByTapPos(Vector3 pos)
 	{
-		// NGUI area
 		if(pos.x > Screen.width *0.8f)
 			return Vector3.zero;
 		
@@ -346,23 +348,7 @@ public class PlayerMainLogic : MonoBehaviour {
 		transform.RotateAround(transform.position,Vector3.up,angle);
 	}
 	
-	void NGUI_Skill1()
-	{			
-		Time.timeScale = 0.2f;
-		ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Skill1,true);
-		directionIcon.renderer.enabled = true;
-		aniControlScript.isSkillPlaying = true;
-	}
 	
-	
-	
-	
-	public void OnStartSkill(int skillId)
-	{
-		Time.timeScale = 1;
-		directionIcon.renderer.enabled = false;
-		ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,false);
-	}
 	
 	void TargetTheEnemy(Vector3 enemy)
 	{

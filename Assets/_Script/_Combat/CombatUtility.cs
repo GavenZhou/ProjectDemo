@@ -139,7 +139,7 @@ public static class CombatUtility {
     static bool GetSuitableMobLocation(out List<Vector3> _locs) {
 
         _locs = new List<Vector3>();
-        List<Mob> mobs = SceneMng.instance.GetSceneObjsWithPred<Mob>(m => !m.IsDie);
+        List<Mob> mobs = SceneMng.instance.GetSceneObjsWithPred<Mob>(m => !m.IsDied);
 
         foreach (Vector3 vec in mobBornLoctions) {
             bool suitable = true;
@@ -180,10 +180,15 @@ public static class CombatUtility {
         return null;
     }
 
-    static bool GetSuitableDropLocation(Vector3 _orig, out List<Vector3> _locs) {
+    static bool GetSuitableDropLocation(Vector3 _start, out List<Vector3> _locs) {
 
         _locs = new List<Vector3>();
-        List<Mob> mobs = SceneMng.instance.GetSceneObjsWithPred<Mob>(m => !m.IsDie);
+
+        for (int i = 0; i < 8; i++) {
+            
+        }
+
+        List<Mob> mobs = SceneMng.instance.GetSceneObjsWithPred<Mob>(m => !m.IsDied);
 
         foreach (Vector3 vec in mobBornLoctions) {
             bool suitable = true;
