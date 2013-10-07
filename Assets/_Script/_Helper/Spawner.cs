@@ -20,6 +20,7 @@ public class Spawner : MonoBehaviour {
 
     public GameObjectPool mobPool1;
     public GameObjectPool mobPool2;
+    public GameObjectPool dropItemPool;
 
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -58,7 +59,7 @@ public class Spawner : MonoBehaviour {
     ///////////////////////////////////////////////////////////////////////////////
 
     // ------------------------------------------------------------------ 
-    // mob Spawner
+    // mob spawner
     // ------------------------------------------------------------------
 
     public Mob SpawnMob(int _type, Vector3 _pos) {
@@ -86,6 +87,21 @@ public class Spawner : MonoBehaviour {
         pool.Return(_mob.gameObject);
     }
 
+    // ------------------------------------------------------------------ 
+    // drop spawner
+    // ------------------------------------------------------------------
 
+    public DropItem SpawnDrop(Vector3 _pos) {
+
+        DropItem drop = dropItemPool.Request<DropItem>(_pos);
+        drop.OnSpawn();
+        return drop;
+    }
+
+    public void DespawnDrop(DropItem _drop) {
+       
+        _drop.OnDespawn();
+        dropItemPool.Return(_drop.gameObject);
+    }
 }
 
