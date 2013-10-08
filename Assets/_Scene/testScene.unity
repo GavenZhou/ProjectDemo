@@ -17421,7 +17421,7 @@ MonoBehaviour:
     prefab: {fileID: 100090, guid: 6b7cd4ddfa557a14cbb0948892be276e, type: 2}
     size: 10
   dropItemPool:
-    prefab: {fileID: 100006, guid: e5ac54a0d196dbe4391c09f7452fb104, type: 2}
+    prefab: {fileID: 100000, guid: ae3b32ff8b7eee54caabff04230390d8, type: 2}
     size: 25
 --- !u!1001 &1746872924
 Prefab:
