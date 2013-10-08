@@ -368,7 +368,12 @@ public class PlayerMainLogic : MonoBehaviour {
 		directionIcon.renderer.enabled = false;
 		ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,false);
 	}
-	
+
+	public void OnSkillShootPoint(int skillId)
+	{
+        player.PlaySkill(skillId);
+	}
+
 	void TargetTheEnemy(Vector3 enemy)
 	{
 		enemy.y = transform.position.y;

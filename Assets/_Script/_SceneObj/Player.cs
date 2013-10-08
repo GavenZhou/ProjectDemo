@@ -3,24 +3,39 @@ using System.Collections.Generic;
 
 public class Player : Actor {
 
+    ///////////////////////////////////////////////////////////////////////////////
+    // 
+    ///////////////////////////////////////////////////////////////////////////////
+
     float attackRadius = 3.5f;
     float attackAngle = 160;
     float attackX = 0.5f;
     float attackY = 10f;
-    public CombatUtility.AttackRangeType attackRangeType = CombatUtility.AttackRangeType.Cone;
 
-    public List<Mob> interativeMobs = new List<Mob>();
+    PlayerMainLogic playerMainLogic;
+    PlayerAnimationControl aniControlScript;
+
+    public CombatUtility.AttackRangeType attackRangeType = CombatUtility.AttackRangeType.Cone;
 	
-	PlayerMainLogic playerMainLogic;
+
+    public bool IsSkillPlaying {
+        get { return aniControlScript.isSkillPlaying; }
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // virtual
+    ///////////////////////////////////////////////////////////////////////////////
 
     public override void Init(int _id) {
 
         //
         base.Init(_id);
-        
+        type = SceneObjType.Player;        
         Hp = MaxHp = 1000;
-        //type = SceneObjType.Player;
-		playerMainLogic = (PlayerMainLogic)this.transform.GetComponent<PlayerMainLogic>();
+
+		playerMainLogic = transform.GetComponent<PlayerMainLogic>() as PlayerMainLogic;
+        aniControlScript = transform.GetComponentInChildren(typeof(PlayerAnimationControl)) as PlayerAnimationControl;
     }
 
     public override void Attack() {
@@ -48,14 +63,14 @@ public class Player : Actor {
         List<Mob> targets = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
         foreach (Mob m in targets) {
             if (!m.IsDied) {
-                m.Hurt(this);
+                m.Hurt(this, 1.0f);
             }
         }
     }
 
-    public override bool Hurt(SceneObj _object) {
-        Hp -= 10;
-        bool isdead = base.Hurt(_object);
+    public override bool Hurt(SceneObj _object, object _param) {
+        Hp -= (int)(25 * (float)_param);
+        bool isdead = base.Hurt(_object, _param);
 		if(isdead)
 			playerMainLogic.ChangeAnimationByActionCmd(GameBaseData.PlayerDataClass.PlayerActionCommand.Player_Die,true);
 		else
@@ -67,11 +82,31 @@ public class Player : Actor {
         base.Dead(_object);
     }
 
+    public virtual void PlaySkill(int _skillID) {
+        
+        Vector3 _pos = transform.position;
+        Vector3 _dir = transform.forward;
+        CombatUtility.CombatParam_AttackRange param;
+
+        param = CombatUtility.GetCircleParam(_pos, attackRadius);
+
+        List<Mob> targets = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
+        foreach (Mob m in targets) {
+            if (!m.IsDied) {
+                m.Hurt(this, 1.5f);
+            }
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // 
+    ///////////////////////////////////////////////////////////////////////////////
+
     void OnDrawGizmos() {
 
         Gizmos.color = Color.blue;
 
-        interativeMobs.Clear();
+        List<Mob> interativeMobs = new List<Mob>();
         Vector3 _pos = transform.position;
         Vector3 _dir = transform.forward;
 

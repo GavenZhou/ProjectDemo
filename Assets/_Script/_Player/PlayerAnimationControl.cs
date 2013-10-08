@@ -289,7 +289,8 @@ public class PlayerAnimationControl : MonoBehaviour {
 	
 	void SkillShootPoint(int skillId)
 	{
-			// create the skill area here	
+        // create the skill area here	
+        main.OnSkillShootPoint(skillId);
 	}
 	
 }

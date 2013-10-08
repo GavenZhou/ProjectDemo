@@ -36,7 +36,7 @@ public class Actor : SceneObj {
 
     }
 
-    public virtual bool Hurt(SceneObj _object) {
+    public virtual bool Hurt(SceneObj _object, object _param) {
         if (Hp <= 0) {
             Dead(_object);
 			return true;

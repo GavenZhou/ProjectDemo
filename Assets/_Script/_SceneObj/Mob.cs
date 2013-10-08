@@ -90,16 +90,16 @@ public class Mob : Actor, ISpawn
         CombatUtility.CombatParam_AttackRange param = CombatUtility.GetConeParam(_pos, _dir, attackAngle * Mathf.Deg2Rad, attackRadius);
         List<Player> targets = CombatUtility.GetInteractiveObjects<Player>(SceneMng.instance, ref param);
         foreach (Player actor in targets) {
-            if (!actor.IsDied) {
-                actor.Hurt(this);
+            if (!actor.IsDied && !actor.IsSkillPlaying) {
+                actor.Hurt(this, 1.0f);
             }
         }
     }
 
-    public override bool Hurt(SceneObj _object) {
-        Hp -= 25;
+    public override bool Hurt(SceneObj _object, object _param) {
+        Hp -= (int)(25 * (float)_param);
         UpdateHudText();
-        bool isdead = base.Hurt(_object);
+        bool isdead = base.Hurt(_object, _param);
         if (isdead)
             enemyMainLogic.mState = EnemyMainLogic.EnemyState.Die;
         else
