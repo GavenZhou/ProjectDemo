@@ -1681,8 +1681,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c500c7619a3df0488fa33650a2959d7, type: 3}
   m_Name: 
-  type: 0
-  id: 0
   mobTemplate: 0
 --- !u!114 &11400008
 MonoBehaviour:

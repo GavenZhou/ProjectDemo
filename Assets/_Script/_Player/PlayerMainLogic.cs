@@ -34,6 +34,8 @@ public class PlayerMainLogic : MonoBehaviour {
     
     public GameObject pickupSfx;
 	
+	public GameObject skill1Sfx;
+	
 	
 	// Use this for initialization
 	void Start () {
@@ -354,6 +356,7 @@ public class PlayerMainLogic : MonoBehaviour {
 		ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Skill1,true);
 		directionIcon.renderer.enabled = true;
 		aniControlScript.isSkillPlaying = true;
+        skill1Sfx.GetComponent<particleControl>().turnOn = true;
 	}
 	
 	
