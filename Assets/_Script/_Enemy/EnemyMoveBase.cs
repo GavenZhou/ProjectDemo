@@ -92,7 +92,17 @@ public class EnemyMoveBase : MonoBehaviour {
 		pos.y = 0;
 		//todo
 		if(Vector3.Distance(transform.position,player.transform.position) > 1)
+		{	
+			if(transform.position.y != 0)
+			{
+				Vector3 tempPos = transform.position;
+				tempPos.y = 0;
+				transform.position = tempPos;
+			}
+//			Debug.Log(transform.position.y + " = "+pos.y);
 			this.transform.forward = Vector3.RotateTowards(transform.position,pos,0.01f*200,1000);
+		}
+		
 	}
 	
 	
