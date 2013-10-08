@@ -15,3 +15,7 @@ EditorBuildSettings:
     path: Assets/_Scene/_Level/Login.unity
   - enabled: 0
     path: Assets/_Scene/_Level/Map.unity
+  - enabled: 0
+    path: Assets/_Scene/Launch.unity
+  - enabled: 0
+    path: Assets/testdelete.unity

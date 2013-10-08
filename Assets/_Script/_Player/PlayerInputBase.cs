@@ -50,7 +50,7 @@ public class PlayerInputBase : MonoBehaviour {
 		
 #if UNITY_EDITOR		
 	//	if(Input.GetMouseButton(0))
-#elif UNITY_IPHONE
+#else
 		if(Input.touchCount == 1)
 #endif
 		{
@@ -112,10 +112,6 @@ public class PlayerInputBase : MonoBehaviour {
 					InputStateClass.AddPointToSlashPosArray(Input.mousePosition);
 				}
 			}
-			
-			
 		}
-		
-	
 	}
 }

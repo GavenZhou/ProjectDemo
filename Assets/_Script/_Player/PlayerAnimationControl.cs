@@ -280,6 +280,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 	void FinishSkill(int skillId)
 	{
 		isSkillPlaying = false;
+		Debug.Log("FinishSkill"+isSkillPlaying);
 	}
 	
 	void SkillIdelFinish()

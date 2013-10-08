@@ -134,6 +134,11 @@ public class PlayerMainLogic : MonoBehaviour {
 	}
 	
 	
+	void OnGUI()
+	{
+		GUI.Label(new Rect(Screen.width*0.2f,Screen.height*0.2f,Screen.width*0.2f,Screen.height*.1f),"isSkillPlaying ="+aniControlScript.isSkillPlaying);
+	}
+	
 	void CheckMoveState()
 	{
 		bool immedilate = false;
@@ -238,7 +243,6 @@ public class PlayerMainLogic : MonoBehaviour {
 				// turn to the direction first
 				SetPlayerToRun(targetPos-this.transform.position);
 				
-				
 				if(directionIcon.renderer.enabled == true)
 				{
 					directionIcon.renderer.enabled = false;
@@ -247,7 +251,10 @@ public class PlayerMainLogic : MonoBehaviour {
 				}
 				
 				if(aniControlScript.isSkillPlaying)
+				{
+					Debug.Log("aniControlScript.isSkillPlaying!!");
 					return;
+				}
 				
 				// check the attack area
 				colliderBaseScript.RayToAttackArea();

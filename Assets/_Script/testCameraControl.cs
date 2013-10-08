@@ -10,6 +10,7 @@ public class testCameraControl : MonoBehaviour {
     public static testCameraControl instance;
 
 	void Awake() {
+		Application.targetFrameRate = 60;
         instance = this;
         mainCamera = GetComponentInChildren(typeof(Camera)) as Camera;
     }
