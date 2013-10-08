@@ -133,12 +133,6 @@ public class PlayerMainLogic : MonoBehaviour {
 		
 	}
 	
-	
-	void OnGUI()
-	{
-		GUI.Label(new Rect(Screen.width*0.2f,Screen.height*0.2f,Screen.width*0.2f,Screen.height*.1f),"isSkillPlaying ="+aniControlScript.isSkillPlaying);
-	}
-	
 	void CheckMoveState()
 	{
 		bool immedilate = false;
@@ -252,7 +246,6 @@ public class PlayerMainLogic : MonoBehaviour {
 				
 				if(aniControlScript.isSkillPlaying)
 				{
-					Debug.Log("aniControlScript.isSkillPlaying!!");
 					return;
 				}
 				
