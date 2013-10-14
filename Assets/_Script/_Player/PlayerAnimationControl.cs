@@ -216,7 +216,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 	// this function will be called when attack part is finish
 	// attackId  is  1 , 2,  3
 	//todo
-	void AttackFinish(int attackId)
+	void OnActionFinish(int attackId)
 	{
         main.OnAttackFinish(attackId);
 
@@ -258,7 +258,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 	}
 	
 	
-	void StartToAttack(int attackId)
+	void OnActionStart(int attackId)
 	{
         main.OnStartToAttack(attackId);
 		switch(attackId)
