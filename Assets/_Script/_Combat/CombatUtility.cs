@@ -94,6 +94,26 @@ public static class CombatUtility {
         }
         return objs;
     }
+
+    // 选择与当前朝向夹角最小的物件。
+    public static T GetNearestObject<T>(SceneMng _scene, Transform _trans, ref List<T> _lstObjs) where T : SceneObj {
+
+        if (_lstObjs != null && _lstObjs.Count != 0) {
+
+            float radian = float.MaxValue;
+            T target = null;
+            foreach (T obj in _lstObjs) {
+                float cross = Mathf.Abs(Vector3.Dot(_trans.forward, (obj.transform.position - _trans.position)));
+                if (cross <= radian) {
+                    target = obj;
+                    radian = cross;
+                }
+            }
+            return target;
+        }
+        return null;
+    }
+
 #endregion
 
 

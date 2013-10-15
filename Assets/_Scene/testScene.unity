@@ -19797,7 +19797,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1352525402}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 815.453308, y: 0, z: -176.088531}
+  m_LocalPosition: {x: 483.95459, y: 0, z: -176.088531}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1880133114}
@@ -30986,6 +30986,7 @@ MonoBehaviour:
   - {fileID: 603299358}
   pickupSfx: {fileID: 1853398169}
   skill1Sfx: {fileID: 264218081}
+  mTarget: {fileID: 0}
 --- !u!114 &1907103248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31006,12 +31007,11 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1907103244}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d6776924e430432fbfad6ccd679c6af, type: 3}
   m_Name: 
   turnOnCatchRay: 0
-  mTarget: {fileID: 0}
   mCatchTarget: {fileID: 0}
   catchArea: {fileID: 657552660}
   attackArea:

@@ -98,8 +98,21 @@ public class Player : Actor {
         }
     }
 
+    public Transform GetNearestAttackTarget() {
+
+        Vector3 _pos = transform.position;
+        Vector3 _dir = transform.forward;
+        CombatUtility.CombatParam_AttackRange param
+            = CombatUtility.GetConeParam(_pos, _dir, attackAngle * Mathf.Deg2Rad, attackRadius);
+
+        List<Mob> targets = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
+        Mob m = CombatUtility.GetNearestObject<Mob>(SceneMng.instance, transform, ref targets);
+        return m != null ? m.transform : null;
+    }
+
+
     ///////////////////////////////////////////////////////////////////////////////
-    // 
+    // Gizmos & Debug
     ///////////////////////////////////////////////////////////////////////////////
 
     void OnDrawGizmos() {

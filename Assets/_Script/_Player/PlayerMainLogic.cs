@@ -24,8 +24,6 @@ public class PlayerMainLogic : MonoBehaviour {
 	
 	private PlayerMoveBase moveBaseScript;
 	
-	private PlayerColliderBase colliderBaseScript;
-
     private Player player;
 	
 	private Transform directionIcon;
@@ -35,6 +33,8 @@ public class PlayerMainLogic : MonoBehaviour {
     public GameObject pickupSfx;
 	
 	public GameObject skill1Sfx;
+
+	public Transform mTarget;
 	
 	
 	// Use this for initialization
@@ -45,7 +45,6 @@ public class PlayerMainLogic : MonoBehaviour {
 		
 		directionIcon = this.transform.FindChild("icon");
 		
-		colliderBaseScript = (PlayerColliderBase)this.GetComponent<PlayerColliderBase>();
         player = gameObject.AddComponent<Player>();
         player.Init(1000);
         SceneMng.instance.AddMainPlayer(player);
@@ -53,15 +52,19 @@ public class PlayerMainLogic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
+        if(mTarget == null) {
+            mTarget = player.GetNearestAttackTarget();
+        }	
+
 		if(aniControlScript.attack1Finish == true)
 		{
 //			Debug.Log("aniControlScript.attack1Finish");
 			aniControlScript.attack1Finish = false;
 			
 			//check whether need to start the attack2
-			colliderBaseScript.RayToAttackArea();
-			if(colliderBaseScript.mTarget != null)
+			mTarget = player.GetNearestAttackTarget();
+			if(mTarget != null)
 			{
 				aniControlScript.attack1AnimationFinish = 2;
 				aniControlScript.attack2AnimationFinish = 0;
@@ -70,7 +73,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			}
 			else
 			{
-				colliderBaseScript.mTarget = null;
+				mTarget = null;
 				PlayerDataClass.AttackStart = false;
 			}
 		}
@@ -81,8 +84,8 @@ public class PlayerMainLogic : MonoBehaviour {
 			aniControlScript.attack2Finish = false;
 			
 			//check whether need to start the attack3
-			colliderBaseScript.RayToAttackArea();
-			if(colliderBaseScript.mTarget != null)
+			mTarget = player.GetNearestAttackTarget();
+			if(mTarget != null)
 			{
 				aniControlScript.attack2AnimationFinish = 2;
 				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack3,true);
@@ -90,7 +93,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			}
 			else
 			{
-				colliderBaseScript.mTarget = null;
+				mTarget = null;
 				PlayerDataClass.AttackStart = false;
 			}
 		}
@@ -102,11 +105,11 @@ public class PlayerMainLogic : MonoBehaviour {
 			
 			// add cd time here
 			//todo
-			colliderBaseScript.RayToAttackArea();
+			mTarget = player.GetNearestAttackTarget();
 		}
 		
 		
-		if(colliderBaseScript.mTarget != null 
+		if(mTarget != null 
 			&& PlayerDataClass.AttackStart == false
 			&& aniControlScript.isSkillPlaying == false)
 		{
@@ -114,7 +117,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			PlayerDataClass.AttackStart = true;
 			
 			//turn to the target
-			TargetTheEnemy(colliderBaseScript.mTarget.position);
+			TargetTheEnemy(mTarget.position);
 			
 //			Debug.Log("here");
 			// attack!
@@ -123,11 +126,11 @@ public class PlayerMainLogic : MonoBehaviour {
 			return;
 		}
 		
-		if(colliderBaseScript.mCatchTarget != null)
-		{
-			colliderBaseScript.turnOnCatchRay = false;
-			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Catch,true);
-		}
+        //if(colliderBaseScript.mCatchTarget != null)
+        //{
+        //    colliderBaseScript.turnOnCatchRay = false;
+        //    ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Catch,true);
+        //}
 		
 		CheckMoveState();
 		
@@ -140,17 +143,17 @@ public class PlayerMainLogic : MonoBehaviour {
 		{
 		case PlayerMoveBase.PlayerMovementState.RunOver:
 			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Walk,true);
-			colliderBaseScript.mTarget = null;
+			mTarget = null;
 			break;
 			
 		case PlayerMoveBase.PlayerMovementState.WalkOver:
 			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true);
-			colliderBaseScript.mTarget = null;
+			mTarget = null;
 			break;
 			
 		case PlayerMoveBase.PlayerMovementState.BeHitOver:
 			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true);
-			colliderBaseScript.mTarget = null;
+			mTarget = null;
 			break;
 			
 		case PlayerMoveBase.PlayerMovementState.Attack1Over:
@@ -164,7 +167,7 @@ public class PlayerMainLogic : MonoBehaviour {
 				
 				aniControlScript.attack1AnimationFinish = 0;
 				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,immedilate);
-				colliderBaseScript.mTarget = null;
+				mTarget = null;
 			}
 			break;
 			
@@ -178,7 +181,7 @@ public class PlayerMainLogic : MonoBehaviour {
 					immedilate = true;
 				
 				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,immedilate);
-				colliderBaseScript.mTarget = null;
+				mTarget = null;
 			}
 			break;
 			
@@ -188,18 +191,18 @@ public class PlayerMainLogic : MonoBehaviour {
 			{
 				aniControlScript.attack3AnimationFinish = 0;
 				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,true);
-				colliderBaseScript.mTarget = null;
+				mTarget = null;
 			}
 			break;	
 		
 		case PlayerMoveBase.PlayerMovementState.JumpOver:
 			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true);
-			colliderBaseScript.mTarget = null;
+			mTarget = null;
 			break;
 			
 		case PlayerMoveBase.PlayerMovementState.RushOver:
 			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Catch,true);
-			colliderBaseScript.mTarget = null;
+			mTarget = null;
 			break;
 			
 		case PlayerMoveBase.PlayerMovementState.CatchOver:
@@ -226,7 +229,7 @@ public class PlayerMainLogic : MonoBehaviour {
 		{
 		case TouchState.AFingerOneTap:
 			
-			colliderBaseScript.mTarget = null;
+			mTarget = null;
 			PlayerDataClass.AttackStart = false;
 			mTouchState = TouchState.None;
 			
@@ -250,10 +253,10 @@ public class PlayerMainLogic : MonoBehaviour {
 				}
 				
 				// check the attack area
-				colliderBaseScript.RayToAttackArea();
+                mTarget = player.GetNearestAttackTarget();
 				
 				// if there is no enemy in the area, then player start to run
-				if(colliderBaseScript.mTarget == null)
+				if(mTarget == null)
 				{
 					if(moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Run
 						||moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Walk)
@@ -284,16 +287,16 @@ public class PlayerMainLogic : MonoBehaviour {
 			break;
 			
 		case TouchState.AFingerSlash:
-			colliderBaseScript.turnOnCatchRay = true;
-			colliderBaseScript.mCatchTarget = null;
-			mTouchState = TouchState.None;
+            //colliderBaseScript.turnOnCatchRay = true;
+            //colliderBaseScript.mCatchTarget = null;
+            //mTouchState = TouchState.None;
 			
-			targetPos = RayColliderByTapPos(InputStateClass.oldSlashPos);
-			SetPlayerToRun(targetPos-this.transform.position);
-			if(aniControlScript.isSkillPlaying == false)
-			{
-				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Rush,true);
-			}			
+            //targetPos = RayColliderByTapPos(InputStateClass.oldSlashPos);
+            //SetPlayerToRun(targetPos-this.transform.position);
+            //if(aniControlScript.isSkillPlaying == false)
+            //{
+            //    ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Rush,true);
+            //}			
 			break;
 			
 		case TouchState.TwoFingersDoubleTap:
