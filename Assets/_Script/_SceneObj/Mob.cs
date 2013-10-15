@@ -88,7 +88,7 @@ public class Mob : Actor, ISpawn
         Vector3 _pos = transform.position;
         Vector3 _dir = transform.forward;
         CombatUtility.CombatParam_AttackRange param = CombatUtility.GetConeParam(_pos, _dir, attackAngle * Mathf.Deg2Rad, attackRadius);
-        List<Player> targets = CombatUtility.GetInteractiveObjects<Player>(SceneMng.instance, ref param);
+        List<Player> targets = CombatUtility.GetInteractiveObjects<Player>(SceneMng.instance, ref param, m => !m.IsDied);
         foreach (Player actor in targets) {
             if (!actor.IsDied && !actor.IsSkillPlaying) {
                 actor.Hurt(this, 1.0f);
@@ -184,7 +184,7 @@ public class Mob : Actor, ISpawn
         GizmosHelper.DrawConeArc(Quaternion.identity, _pos, _dir, attackRadius, attackAngle);
 
         CombatUtility.CombatParam_AttackRange param = CombatUtility.GetConeParam(_pos, _dir, attackAngle * Mathf.Deg2Rad, attackRadius);
-        List<SceneObj> interatives = CombatUtility.GetInteractiveObjects<SceneObj>(SceneMng.instance, ref param);
+        List<SceneObj> interatives = CombatUtility.GetInteractiveObjects<SceneObj>(SceneMng.instance, ref param, m => !m.IsDied);
 
         Gizmos.color = Color.green;
         foreach (SceneObj o in interatives) {
