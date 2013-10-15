@@ -1,3 +1,6 @@
+
+#if false
+
 using UnityEngine;
 using System.Collections;
 using GameBaseData;
@@ -58,3 +61,5 @@ public class PlayerColliderBase : MonoBehaviour {
 	
 	
 }
+
+#endif
