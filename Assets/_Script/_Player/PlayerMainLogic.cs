@@ -185,7 +185,8 @@ public class PlayerMainLogic : MonoBehaviour {
 					immedilate = true;
 				
 				aniControlScript.attack1AnimationFinish = 0;
-				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,immedilate);
+				
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,immedilate);
 				mTarget = null;
 			}
 			break;
@@ -199,7 +200,7 @@ public class PlayerMainLogic : MonoBehaviour {
 				else
 					immedilate = true;
 				
-				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,immedilate);
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,immedilate);
 				mTarget = null;
 			}
 			break;
@@ -209,7 +210,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			if(aniControlScript.attack3AnimationFinish > 0)
 			{
 				aniControlScript.attack3AnimationFinish = 0;
-				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,true);
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
 				mTarget = null;
 			}
 			break;	
@@ -280,7 +281,7 @@ public class PlayerMainLogic : MonoBehaviour {
 					if(moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Jump)
 					{
 						float dis = Vector3.Distance(targetPos,transform.position);
-						if(dis < 4)
+						if(dis < 1)
 						{				
 							ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true);
 						}
