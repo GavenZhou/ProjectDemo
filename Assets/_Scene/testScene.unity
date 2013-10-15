@@ -15794,7 +15794,7 @@ GameObject:
   - 114: {fileID: 781362221}
   - 114: {fileID: 781362220}
   m_Layer: 0
-  m_Name: AnimatedSprite
+  m_Name: SpecialAttackIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15823,7 +15823,7 @@ MonoBehaviour:
   m_Name: 
   library: {fileID: 11400000, guid: 68cc4da10d501f9439d1507a1a2c46c1, type: 2}
   defaultClipId: 0
-  playAutomatically: 0
+  playAutomatically: 1
   _sprite: {fileID: 781362221}
 --- !u!114 &781362221
 MonoBehaviour:
@@ -31039,21 +31039,21 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: -2.33996677}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1451908727}
+  - {fileID: 354650424}
+  - {fileID: 603299359}
+  - {fileID: 1045793326}
+  - {fileID: 2049389781}
+  - {fileID: 1853398170}
+  - {fileID: 264218082}
   - {fileID: 781362219}
   - {fileID: 143520433}
   - {fileID: 1410993726}
   - {fileID: 909262823}
-  - {fileID: 1451908727}
-  - {fileID: 354650424}
-  - {fileID: 603299359}
   - {fileID: 657552661}
   - {fileID: 553946713}
   - {fileID: 1982398709}
-  - {fileID: 1045793326}
-  - {fileID: 2049389781}
   - {fileID: 409041638}
-  - {fileID: 1853398170}
-  - {fileID: 264218082}
   m_Father: {fileID: 0}
 --- !u!114 &1907103246
 MonoBehaviour:
