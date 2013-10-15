@@ -46423,14 +46423,14 @@ AnimationClip:
     script: {fileID: 0}
   m_Events:
   - time: .316666663
-    functionName: StartToAttack
+    functionName: OnActionStart
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 3
     messageOptions: 0
   - time: .983333349
-    functionName: AttackFinish
+    functionName: OnActionFinish
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
