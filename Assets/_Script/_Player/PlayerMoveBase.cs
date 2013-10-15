@@ -68,11 +68,11 @@ public class PlayerMoveBase : MonoBehaviour {
 		player_Idel.leftTime = -1;
 		
 		player_Run.startSpeed = 8;
-		player_Run.acceleration = -3;
+		player_Run.acceleration = -2;
 		player_Run.leftTime = 2;
 		
 		player_Trot.startSpeed = 8;
-		player_Trot.acceleration = -3;
+		player_Trot.acceleration = -4;
 		player_Trot.leftTime = 0.5f;
 		
 		player_Walk.startSpeed = 2.5f;
@@ -112,9 +112,7 @@ public class PlayerMoveBase : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		InitalizePlayerMovementStruct();
-		
 		UpdateMovementState();
-		
 	}
 	
 	// Update is called once per frame

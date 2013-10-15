@@ -18543,7 +18543,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1267097865}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -31.2753792, y: 0, z: 0}
+  m_LocalPosition: {x: -291.301331, y: 0, z: 0}
   m_LocalScale: {x: .00277777785, y: .00277777785, z: .00277777785}
   m_Children:
   - {fileID: 1822128057}
@@ -19884,7 +19884,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1352525402}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 453.720215, y: 0, z: -176.088531}
+  m_LocalPosition: {x: 472.286438, y: 0, z: -176.088531}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1880133114}
@@ -27814,7 +27814,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1745868873}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3510240e76e494c498c6646c7590cbc9, type: 3}
   m_Name: 
@@ -29549,13 +29549,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1849266347}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de599ac5d9d71ec44a4e442709aa3042, type: 3}
   m_Name: 
   mobDetectorBegin: 2
   mobDetectorSpan: 2
-  maxMobInScene: 10
+  maxMobInScene: 1
   totalMobCount: 50
 --- !u!1 &1853398169
 GameObject:
@@ -31018,7 +31018,6 @@ GameObject:
   - 114: {fileID: 1907103247}
   - 114: {fileID: 1907103246}
   - 114: {fileID: 1907103248}
-  - 114: {fileID: 1907103249}
   - 65: {fileID: 1907103251}
   - 54: {fileID: 1907103250}
   - 81: {fileID: 1907103252}
@@ -31098,16 +31097,6 @@ MonoBehaviour:
   mMoveTimeLeft: 0
   mAcceleration: 0
   targetPos: {x: 0, y: 0, z: 0}
---- !u!114 &1907103249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1907103244}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d6776924e430432fbfad6ccd679c6af, type: 3}
-  m_Name: 
 --- !u!54 &1907103250
 Rigidbody:
   m_ObjectHideFlags: 0

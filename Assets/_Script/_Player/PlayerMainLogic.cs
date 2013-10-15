@@ -278,18 +278,21 @@ public class PlayerMainLogic : MonoBehaviour {
 				// if there is no enemy in the area, then player start to run
 				if(mTarget == null)
 				{
-					if(moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Jump)
+					if(moveBaseScript.curMovementState != PlayerMoveBase.PlayerMovementState.Jump
+						&& moveBaseScript.curMovementState != PlayerMoveBase.PlayerMovementState.Attack1
+						&& moveBaseScript.curMovementState != PlayerMoveBase.PlayerMovementState.Attack2
+						&& moveBaseScript.curMovementState != PlayerMoveBase.PlayerMovementState.Attack3)
 					{
 						float dis = Vector3.Distance(targetPos,transform.position);
 						if(dis < 1)
 						{				
 							ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true);
 						}
-					}
-					else
-					{
-						moveBaseScript.targetPos = targetPos;
-						ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,true);
+						else
+						{
+							moveBaseScript.targetPos = targetPos;
+							ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,true);
+						}
 					}
 				}
 			}
@@ -297,13 +300,15 @@ public class PlayerMainLogic : MonoBehaviour {
 			
 		case TouchState.AFingerDoubleTap:
 			mTouchState = TouchState.None;
-			
-			targetPos = RayColliderByTapPos(InputStateClass.touchPointPos);
-			SetPlayerToRun(targetPos-this.transform.position);	
-			if(aniControlScript.isSkillPlaying == false)
+			if(moveBaseScript.curMovementState != PlayerMoveBase.PlayerMovementState.Jump)
 			{
-				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Jump,true);
-			}				
+				targetPos = RayColliderByTapPos(InputStateClass.touchPointPos);
+				SetPlayerToRun(targetPos-this.transform.position);	
+				if(aniControlScript.isSkillPlaying == false)
+				{
+					ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Jump,true);
+				}				
+			}
 			break;
 			
 		case TouchState.AFingerSlash:
