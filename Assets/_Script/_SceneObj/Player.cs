@@ -85,7 +85,6 @@ public class Player : Actor {
     public virtual void PlaySkill(int _skillID) {
         
         Vector3 _pos = transform.position;
-        Vector3 _dir = transform.forward;
         CombatUtility.CombatParam_AttackRange param;
 
         param = CombatUtility.GetCircleParam(_pos, attackRadius);

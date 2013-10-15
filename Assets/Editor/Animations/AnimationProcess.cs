@@ -1,34 +1,104 @@
 
 using UnityEngine;
 using UnityEditor;
-using System.Collections;
 using System.Collections.Generic;
 using Aspose.Cells;
 using System.Text.RegularExpressions;
 using System.IO;
 
 
-public class AnimationTableWindow : EditorWindow
+public class AnimationProcess : EditorWindow
 {
-    static string assetPath = @"Assets\_ProcessAssets\_TableAssets";
-    static string assetName = "AnimationTable.asset";
-    
+    ///////////////////////////////////////////////////////////////////////////////
+    // 
+    ///////////////////////////////////////////////////////////////////////////////    
+
+    public static string assetName = "AnimationProcess.asset";
+
     
     ///////////////////////////////////////////////////////////////////////////////
     // Menu Item
     ///////////////////////////////////////////////////////////////////////////////
 
-    [MenuItem("Helper/Animation Table Editor")]
-    public static AnimationTableWindow NewWindow() {
-        AnimationTableWindow newWindow = EditorWindow.GetWindow<AnimationTableWindow>();
+    [MenuItem("Helper/Animation Process")]
+    public static AnimationProcess NewWindow() {
+        AnimationProcess newWindow = EditorWindow.GetWindow<AnimationProcess>();
         return newWindow;
     }
 
-    [MenuItem("Assets/Create/Table Asset/Animation Table")]
+    [MenuItem("Assets/Create/Custom Assets/Animation Process")]
     static void CreateAnimationTableAsset() {
-        EditorHelper.CreateNewEditorAsset<AnimationTableAsset>("AnimationTable");
+        EditorHelper.CreateNewEditorProfile<AnimationProcessProfile>(assetName);
     }
 
+    [MenuItem("Assets/Helper/Copy Animation Clip")]
+    static void CopyCurvesToDuplicate() {
+        // Get selected AnimationClip
+        Object[] imported = Selection.GetFiltered(typeof(AnimationClip), SelectionMode.Unfiltered);
+        if (imported.Length == 0) {
+            Debug.LogWarning("Either no objects were selected or the objects selected were not AnimationClips.");
+            return;
+        }
+
+        //If necessary, create the animations folder.
+        if (Directory.Exists("Assets/" + processAssets) == false) {
+            AssetDatabase.CreateFolder("Assets", processAssets);
+        }
+        if (Directory.Exists("Assets/" + processAssets + "/" + animationFolder) == false) {
+            AssetDatabase.CreateFolder("Assets/" + processAssets, animationFolder);
+        }
+
+        string path = "Assets/" + processAssets + "/" + animationFolder;
+
+        foreach (AnimationClip clip in imported) {
+
+            string importedPath = AssetDatabase.GetAssetPath(clip);
+
+            //If the animation came from an FBX, then use the FBX name as a subfolder to contain the animations.
+            string copyPath;
+            if (importedPath.Contains(".fbx")) {
+                //With subfolder.
+                string folder = importedPath.Substring(importedPath.LastIndexOf("/") + 1, importedPath.LastIndexOf(".") - importedPath.LastIndexOf("/") - 1);
+                if (!Directory.Exists(path + "/" + folder)) {
+                    AssetDatabase.CreateFolder(path, folder);
+                }
+                copyPath = path + "/" + folder + "/" + clip.name + duplicatePostfix + ".anim";
+            } else {
+                //No Subfolder
+                copyPath = path + "/" + clip.name + duplicatePostfix + ".anim";
+            }
+            Debug.Log("CopyPath: " + copyPath);
+
+            CopyClip(importedPath, copyPath);
+
+            AnimationClip copy = AssetDatabase.LoadAssetAtPath(copyPath, typeof(AnimationClip)) as AnimationClip;
+            if (copy == null) {
+                Debug.Log("No copy found at " + copyPath);
+                return;
+            }
+            // Copy curves from imported to copy
+            AnimationClipCurveData[] curveDatas = AnimationUtility.GetAllCurves(clip, true);
+            for (int i = 0; i < curveDatas.Length; i++) {
+                AnimationUtility.SetEditorCurve(
+                    copy,
+                    curveDatas[i].path,
+                    curveDatas[i].type,
+                    curveDatas[i].propertyName,
+                    curveDatas[i].curve
+                );
+            }
+            Debug.Log("Copying curves into " + copy.name + " is done");
+        }
+    }
+
+    static void CopyClip(string importedPath, string copyPath) {
+
+        AnimationClip src = AssetDatabase.LoadAssetAtPath(importedPath, typeof(AnimationClip)) as AnimationClip;
+        AnimationClip newClip = new AnimationClip();
+        newClip.name = src.name + duplicatePostfix;
+        AssetDatabase.CreateAsset(newClip, copyPath);
+        AssetDatabase.Refresh();
+    }
 
     ///////////////////////////////////////////////////////////////////////////////
     // variable
@@ -36,7 +106,7 @@ public class AnimationTableWindow : EditorWindow
 
     //
     int currentIndex = -1;
-    AnimationTableAsset asset;
+    AnimationProcessProfile asset;
     SerializedObject serialized;
     SerializedProperty animationClipsProp;
     SerializedProperty animationTableExcelProp;
@@ -46,21 +116,13 @@ public class AnimationTableWindow : EditorWindow
     // 
     ///////////////////////////////////////////////////////////////////////////////
 
-    // ------------------------------------------------------------------ 
-    // Desc: 
-    // ------------------------------------------------------------------ 
-
-    void Init() {
-
-    }
-
     void OnEnable() {
-        name = "Animation Table Editor";
+        name = "Animation Process";
         wantsMouseMove = false;
         autoRepaintOnSceneChange = false;
 
-        asset = AssetDatabase.LoadAssetAtPath(assetPath + "/" + assetName,
-                                              typeof(AnimationTableAsset)) as AnimationTableAsset;
+        asset = AssetDatabase.LoadAssetAtPath(EditorHelper.profilePath + "/" + assetName,
+                                              typeof(AnimationProcessProfile)) as AnimationProcessProfile;
 
         serialized = new SerializedObject(asset);
         animationClipsProp = serialized.FindProperty("animationClipsFolder");
@@ -71,16 +133,8 @@ public class AnimationTableWindow : EditorWindow
     // Desc: 
     // ------------------------------------------------------------------ 
 
-    void OnSelectionChange() {
-    }
-
-    // ------------------------------------------------------------------ 
-    // Desc: 
-    // ------------------------------------------------------------------ 
-
     void OnGUI() {
         GUIStyle style = null;
-        Rect rect = new Rect();
 
         // if we don't have a profile
         if (asset == null) {
@@ -101,14 +155,6 @@ public class AnimationTableWindow : EditorWindow
         //
         GUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(animationClipsProp);
-        //if (GUILayout.Button("...", GUILayout.Width(30))) {
-        //    string newPath = EditorUtility.SaveFolderPanel("Animation Clips",
-        //                                                   animationClipsProp.stringValue,
-        //                                                   Path.GetFullPath(Application.dataPath));
-        //    if (newPath.Length != 0) {
-        //        animationClipsProp.stringValue = newPath;
-        //    }
-        //}
         GUILayout.EndHorizontal();
 
         // ======================================================== 
@@ -128,13 +174,8 @@ public class AnimationTableWindow : EditorWindow
 
         ++idx;
         EditorGUILayout.BeginHorizontal();
-        GUILayout.Space(30);
         style.normal.textColor = (idx == currentIndex) ? Color.green : EditorStyles.label.normal.textColor;
-        EditorGUILayout.LabelField(" [" + (idx + 1).ToString("00") + "]", style, GUILayout.Width(40));
-        rect = GUILayoutUtility.GetLastRect();
-        GUI.Box(rect, "");
-
-        EditorGUILayout.LabelField(" Update Animation Events", style, GUILayout.Width(300));
+        EditorGUILayout.LabelField(" Process Animation Events", style, GUILayout.Width(200));
 
         if (GUILayout.Button("Exec", GUILayout.Width(50))) {
             currentIndex = idx;
@@ -265,5 +306,9 @@ public class AnimationTableWindow : EditorWindow
         }
         EditorUtility.ClearProgressBar();
     }
+
+    const string duplicatePostfix = "Edit";
+    const string processAssets = "_ProcessAssets";
+    const string animationFolder = "_Clips";
 }
 
