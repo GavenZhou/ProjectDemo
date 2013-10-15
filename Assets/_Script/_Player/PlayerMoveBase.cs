@@ -9,6 +9,8 @@ public class PlayerMoveBase : MonoBehaviour {
 		Idel,
 		Run,
 		RunOver,
+		Trot,
+		TrotOver,
 		Walk,
 		WalkOver,
 		Attack1,
@@ -36,6 +38,7 @@ public class PlayerMoveBase : MonoBehaviour {
 	
 	PlayerMovementStruct player_Idel;
 	PlayerMovementStruct player_Run;
+	PlayerMovementStruct player_Trot;
 	PlayerMovementStruct player_Walk;
 	PlayerMovementStruct player_Attack1;
 	PlayerMovementStruct player_Attack2;
@@ -54,6 +57,10 @@ public class PlayerMoveBase : MonoBehaviour {
 	
 	private float mTime;
 	
+	public Vector3 targetPos;
+	
+	Vector3 lookDirection;
+	
 	void InitalizePlayerMovementStruct()
 	{
 		player_Idel.startSpeed = 0;
@@ -63,6 +70,10 @@ public class PlayerMoveBase : MonoBehaviour {
 		player_Run.startSpeed = 8;
 		player_Run.acceleration = -3;
 		player_Run.leftTime = 2;
+		
+		player_Trot.startSpeed = 8;
+		player_Trot.acceleration = -3;
+		player_Trot.leftTime = 0.5f;
 		
 		player_Walk.startSpeed = 2.5f;
 		player_Walk.acceleration = -1.5f;
@@ -86,7 +97,7 @@ public class PlayerMoveBase : MonoBehaviour {
 		
 		player_Jump.startSpeed = 20;
 		player_Jump.acceleration = -40;
-		player_Jump.leftTime =1.2f;
+		player_Jump.leftTime =0.8f;
 		
 		player_Rush.startSpeed = 40;
 		player_Rush.acceleration = -90;
@@ -116,6 +127,11 @@ public class PlayerMoveBase : MonoBehaviour {
 		else
 		{
 			MoveStop();
+		}
+		
+		if(curMovementState == PlayerMovementState.Run)
+		{
+			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection.normalized), Time.deltaTime * 10);
 		}
 	}
 	
@@ -156,9 +172,18 @@ public class PlayerMoveBase : MonoBehaviour {
 			break;
 			
 		case PlayerMovementState.Run:
+			lookDirection = targetPos - transform.position;
+			lookDirection.y = 0;
 			mSpeed = player_Run.startSpeed;
 			mAcceleration = player_Run.acceleration;
 			mMoveTimeLeft = player_Run.leftTime;
+			mTime = Time.time;
+			break;	
+		
+		case PlayerMovementState.Trot:
+			mSpeed = player_Trot.startSpeed;
+			mAcceleration = player_Trot.acceleration;
+			mMoveTimeLeft = player_Trot.leftTime;
 			mTime = Time.time;
 			break;
 			
@@ -218,8 +243,6 @@ public class PlayerMoveBase : MonoBehaviour {
 			mTime = Time.time;
 			break;
 			
-			
-			
 		default:
 			break;
 		}
@@ -235,6 +258,10 @@ public class PlayerMoveBase : MonoBehaviour {
 			
 		case PlayerMovementState.Run:
 			curMovementState = PlayerMovementState.RunOver;
+			break;	
+		
+		case PlayerMovementState.Trot:
+			curMovementState = PlayerMovementState.TrotOver;
 			break;
 			
 		case PlayerMovementState.Walk:

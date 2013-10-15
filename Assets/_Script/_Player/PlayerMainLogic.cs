@@ -36,6 +36,8 @@ public class PlayerMainLogic : MonoBehaviour {
 
 	public Transform mTarget;
 	
+	private Transform specialAttackIcon;
+	
 	
 	// Use this for initialization
 	void Start () {
@@ -44,6 +46,7 @@ public class PlayerMainLogic : MonoBehaviour {
 		moveBaseScript = (PlayerMoveBase)this.GetComponent<PlayerMoveBase>();
 		
 		directionIcon = this.transform.FindChild("icon");
+		specialAttackIcon = this.transform.FindChild("SpecialAttackIcon");
 		
         player = gameObject.AddComponent<Player>();
         player.Init(1000);
@@ -138,10 +141,26 @@ public class PlayerMainLogic : MonoBehaviour {
 	
 	void CheckMoveState()
 	{
+		if(moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Run)
+		{
+			if(PlayerDataClass.isSpecialAttack == false)
+			{
+				if(PlayerDataClass.CheckSpecialAttack())
+					specialAttackIcon.renderer.enabled = true;
+			}
+		}
+		else
+		{
+			specialAttackIcon.renderer.enabled = false;
+			PlayerDataClass.ResetSpecialAttackTime();
+		}
+		
+		
 		bool immedilate = false;
 		switch(moveBaseScript.curMovementState)
 		{
 		case PlayerMoveBase.PlayerMovementState.RunOver:
+		case PlayerMoveBase.PlayerMovementState.TrotOver:
 			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Walk,true);
 			mTarget = null;
 			break;
@@ -196,7 +215,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			break;	
 		
 		case PlayerMoveBase.PlayerMovementState.JumpOver:
-			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true);
+			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
 			mTarget = null;
 			break;
 			
@@ -238,7 +257,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			if(targetPos != Vector3.zero)
 			{
 				// turn to the direction first
-				SetPlayerToRun(targetPos-this.transform.position);
+			//	SetPlayerToRun(targetPos-this.transform.position);
 				
 				if(directionIcon.renderer.enabled == true)
 				{
@@ -258,8 +277,7 @@ public class PlayerMainLogic : MonoBehaviour {
 				// if there is no enemy in the area, then player start to run
 				if(mTarget == null)
 				{
-					if(moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Run
-						||moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Walk)
+					if(moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Jump)
 					{
 						float dis = Vector3.Distance(targetPos,transform.position);
 						if(dis < 4)
@@ -269,6 +287,7 @@ public class PlayerMainLogic : MonoBehaviour {
 					}
 					else
 					{
+						moveBaseScript.targetPos = targetPos;
 						ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,true);
 					}
 				}
@@ -287,9 +306,9 @@ public class PlayerMainLogic : MonoBehaviour {
 			break;
 			
 		case TouchState.AFingerSlash:
-            //colliderBaseScript.turnOnCatchRay = true;
-            //colliderBaseScript.mCatchTarget = null;
-            //mTouchState = TouchState.None;
+//            colliderBaseScript.turnOnCatchRay = true;
+//            colliderBaseScript.mCatchTarget = null;
+            mTouchState = TouchState.None;
 			
             //targetPos = RayColliderByTapPos(InputStateClass.oldSlashPos);
             //SetPlayerToRun(targetPos-this.transform.position);

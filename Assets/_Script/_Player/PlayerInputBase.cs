@@ -39,12 +39,9 @@ public class PlayerInputBase : MonoBehaviour {
 		}
 		
 		// one tap 
-		if(Time.time - mPressTime > 0.2f && mOneClick == true)
+		if(Time.time - mPressTime > 0.5f && mOneClick == true)
 		{
-			baseControlScript.mTouchState = PlayerMainLogic.TouchState.AFingerOneTap;
 			mOneClick = false;
-			InputStateClass.touchPointPos = oldPos;
-//			Debug.Log(baseControlScript.mTouchState);
 			return;
 		}
 		
@@ -63,6 +60,8 @@ public class PlayerInputBase : MonoBehaviour {
 				if(mOneClick == false) // no tap before
 				{
 					// click once
+					baseControlScript.mTouchState = PlayerMainLogic.TouchState.AFingerOneTap;
+					InputStateClass.touchPointPos = Input.mousePosition;
 					mPressTime = Time.time;
 					mOneClick = true;
 				}

@@ -123,6 +123,12 @@ public class PlayerAnimationControl : MonoBehaviour {
 			PlayAnimation(mRun,immedilate);
 			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Run);
 			PlayerDataClass.PlayerNextActionReset();
+			break;		
+		
+		case PlayerDataClass.PlayerActionCommand.Player_Trot:
+			PlayAnimation(mRun,immedilate);
+			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Trot);
+			PlayerDataClass.PlayerNextActionReset();
 			break;	
 			
 		case PlayerDataClass.PlayerActionCommand.Player_Attack1:

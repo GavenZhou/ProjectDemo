@@ -7,6 +7,8 @@ namespace GameBaseData
 	
 	public class PlayerDataClass
 	{  
+		public static bool isSpecialAttack;
+		
 		// 20 monster at most
 		//todo
 		public static Transform[] AllMonsterInAttackArea = new Transform[20];
@@ -45,6 +47,7 @@ namespace GameBaseData
 		{
 			Player_None,
 			Player_Run,
+			Player_Trot,
 			Player_Walk,
 			Player_Idel,
 			Plyaer_SkillIdel,
@@ -70,6 +73,24 @@ namespace GameBaseData
 		public static void PlayerNextActionReset()
 		{
 			playerAniCmdNext = PlayerActionCommand.Player_None;
+		}
+		
+		private static float mSpecialAttackTime=0;
+		
+		public static bool CheckSpecialAttack()
+		{
+			if(Time.time - mSpecialAttackTime > 3)
+			{
+				isSpecialAttack = true;
+			}
+			else
+				isSpecialAttack = false;
+			return isSpecialAttack;
+		}
+		
+		public static void ResetSpecialAttackTime()
+		{
+			mSpecialAttackTime = Time.time;
 		}
 	}
 	
