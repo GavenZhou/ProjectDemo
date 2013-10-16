@@ -6,31 +6,32 @@ using Aspose.Cells;
 
 public class EditorHelper
 {
-    // ------------------------------------------------------------------ 
-    // Desc: 
-    // ------------------------------------------------------------------ 
+    public static string profilePath = @"Assets\_ProcessAssets\_Profile";
 
-    public static void CreateNewEditorAsset<T>(string _assetName) where T : ScriptableObject {
+    ///////////////////////////////////////////////////////////////////////////////
+    // 
+    ///////////////////////////////////////////////////////////////////////////////
+
+    public static void CreateNewEditorProfile<T>(string _profileName) where T : ScriptableObject {
 
         // 
-        string assetPath = @"Assets/Editor/Asset";
-        string path = Path.Combine(assetPath, _assetName + ".asset");
+        string path = Path.Combine(profilePath, _profileName);
 
         bool doCreate = true;
         FileInfo fileInfo = new FileInfo(path);
         if (fileInfo.Exists) {
-            doCreate = EditorUtility.DisplayDialog(_assetName + " already exists.",
+            doCreate = EditorUtility.DisplayDialog(_profileName + " already exists.",
                                                    "Do you want to overwrite the old one?",
                                                    "Yes", "No");
         }
         if (doCreate) {
 
             // check if the asset is valid to create
-            if (new DirectoryInfo(assetPath).Exists == false) {
+            if (new DirectoryInfo(profilePath).Exists == false) {
                 Debug.LogError("can't create asset, path not found");
                 return;
             }
-            if (string.IsNullOrEmpty(_assetName)) {
+            if (string.IsNullOrEmpty(_profileName)) {
                 Debug.LogError("can't create asset, the name is empty");
                 return;
             }
@@ -41,14 +42,6 @@ public class EditorHelper
             Selection.activeObject = newAsset;
         }
     }
-
-    // ------------------------------------------------------------------ 
-    // 
-    // ------------------------------------------------------------------
-
-    // ------------------------------------------------------------------ 
-    // Desc: 
-    // ------------------------------------------------------------------ 
 
     public static Worksheet LoadExcelSheet(string _excelFilePath, string _sheetName)
     {

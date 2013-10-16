@@ -9,8 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 037ddd0fa4e4b924e9978cf96d25b01c, type: 3}
-  m_Name: AnimationTable
-  animationTablesPath: Assets/Editor/AnimationTable/
+  m_Name: AnimationProcess
   animationClipsFolder: Assets/_ProcessAssets/_Clips
   animationTableExcel: {fileID: 102900000, guid: 02bc9fd9180ed1f498e0504575003346,
     type: 3}
