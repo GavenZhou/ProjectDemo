@@ -14,7 +14,7 @@ public class AnimationProcess : EditorWindow
     ///////////////////////////////////////////////////////////////////////////////    
 
     static string assetName = "AnimationProcess.asset";
-    const string duplicatePostfix = "Edit";
+    const string duplicatePostfix = "";
     const string processAssets = "_ProcessAssets";
     const string animationFolder = "_Clips";
 

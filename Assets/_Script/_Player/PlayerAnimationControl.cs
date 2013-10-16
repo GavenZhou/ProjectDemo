@@ -218,33 +218,27 @@ public class PlayerAnimationControl : MonoBehaviour {
 	}
 	
 		
-	// AnimationEvent
-	// this function will be called when attack part is finish
-	// attackId  is  1 , 2,  3
-	//todo
-	void OnActionFinish(int attackId)
-	{
-        main.OnAttackFinish(attackId);
 
+	void OnAnimationStart(int attackId)
+	{
+	}
+
+	void OnAttackStart(int attackId)
+    {
+        main.OnStartToAttack(attackId);
 		switch(attackId)
 		{
 		case 1:
-			attack1Finish = true;
 			break;
-			
 		case 2:
-			attack2Finish = true;
 			break;
-			
 		case 3:
-			attack3Finish = true;
 			break;
 		}
-	}
-	
-	
-	void AttackAnimationFinish(int attackId)
-	{
+    }
+
+	void OnAttackFinish(int attackId)
+    {
         main.OnAttackAnimationFinish(attackId);
 
 		switch(attackId)
@@ -261,22 +255,27 @@ public class PlayerAnimationControl : MonoBehaviour {
 			attack3AnimationFinish = 1;
 			break;
 		}
-	}
-	
-	
-	void OnActionStart(int attackId)
-	{
-        main.OnStartToAttack(attackId);
+    }
+
+    void OnAnimationFinish(int attackId)
+    {
+        main.OnAttackFinish(attackId);
+
 		switch(attackId)
 		{
 		case 1:
+			attack1Finish = true;
 			break;
+			
 		case 2:
+			attack2Finish = true;
 			break;
+			
 		case 3:
+			attack3Finish = true;
 			break;
 		}
-	}
+    }
 	
 	void StartSkill(int skillId)
 	{
