@@ -83,7 +83,6 @@ public class PlayerInputBase : MonoBehaviour {
 				if(dis > Screen.width/20)
 				{
 					baseControlScript.mTouchState = PlayerMainLogic.TouchState.AFingerSlash;
-					Debug.Log(baseControlScript.mTouchState);
 					mOneClick = false;
 					
 					InputStateClass.oldSlashPos = Input.mousePosition;
@@ -141,10 +140,11 @@ public class PlayerInputBase : MonoBehaviour {
 			//send the result to the center control
 			baseControlScript.GetInputState();
 			
+			Debug.Log(baseControlScript.mTouchState);
+			
 			InputStateClass.ClearTouchSlashPosArray();
 			InputStateClass.oldSlashPos = Vector3.zero;
 			return;
 		}
-		
 	}
 }

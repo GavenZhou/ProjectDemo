@@ -293,7 +293,10 @@ public class PlayerMainLogic : MonoBehaviour {
 						else
 						{
 							moveBaseScript.targetPos = targetPos;
-							ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,true);
+							if(moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Run)
+								ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,false);
+							else
+								ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,true);
 						}
 					}
 				}
