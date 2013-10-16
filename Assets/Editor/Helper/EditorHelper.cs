@@ -6,7 +6,7 @@ using Aspose.Cells;
 
 public class EditorHelper
 {
-    public static string profilePath = @"Assets\_ProcessAssets\_Profile";
+    public static string profileFolder = @"Assets\_ProcessAssets\_Profile";
 
     ///////////////////////////////////////////////////////////////////////////////
     // 
@@ -15,7 +15,7 @@ public class EditorHelper
     public static void CreateNewEditorProfile<T>(string _profileName) where T : ScriptableObject {
 
         // 
-        string path = Path.Combine(profilePath, _profileName);
+        string path = Path.Combine(profileFolder, _profileName);
 
         bool doCreate = true;
         FileInfo fileInfo = new FileInfo(path);
@@ -27,7 +27,7 @@ public class EditorHelper
         if (doCreate) {
 
             // check if the asset is valid to create
-            if (new DirectoryInfo(profilePath).Exists == false) {
+            if (new DirectoryInfo(profileFolder).Exists == false) {
                 Debug.LogError("can't create asset, path not found");
                 return;
             }

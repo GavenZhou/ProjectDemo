@@ -13,7 +13,10 @@ public class AnimationProcess : EditorWindow
     // 
     ///////////////////////////////////////////////////////////////////////////////    
 
-    public static string assetName = "AnimationProcess.asset";
+    static string assetName = "AnimationProcess.asset";
+    const string duplicatePostfix = "Edit";
+    const string processAssets = "_ProcessAssets";
+    const string animationFolder = "_Clips";
 
     
     ///////////////////////////////////////////////////////////////////////////////
@@ -109,7 +112,7 @@ public class AnimationProcess : EditorWindow
     AnimationProcessProfile asset;
     SerializedObject serialized;
     SerializedProperty animationClipsProp;
-    SerializedProperty animationTableExcelProp;
+    SerializedProperty animationEventExcelProp;
 
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -118,15 +121,15 @@ public class AnimationProcess : EditorWindow
 
     void OnEnable() {
         name = "Animation Process";
-        wantsMouseMove = false;
         autoRepaintOnSceneChange = false;
 
-        asset = AssetDatabase.LoadAssetAtPath(EditorHelper.profilePath + "/" + assetName,
+        asset = AssetDatabase.LoadAssetAtPath(EditorHelper.profileFolder + "/" + assetName,
                                               typeof(AnimationProcessProfile)) as AnimationProcessProfile;
+        if (asset == null) return;
 
         serialized = new SerializedObject(asset);
         animationClipsProp = serialized.FindProperty("animationClipsFolder");
-        animationTableExcelProp = serialized.FindProperty("animationTableExcel");
+        animationEventExcelProp = serialized.FindProperty("animationEventExcel");
     }
 
     // ------------------------------------------------------------------ 
@@ -147,10 +150,10 @@ public class AnimationProcess : EditorWindow
             return;
         }
 
+        serialized.Update();
+
         //
         GUILayout.Space(10);
-
-        serialized.Update();
 
         //
         GUILayout.BeginHorizontal();
@@ -161,8 +164,8 @@ public class AnimationProcess : EditorWindow
         // excel table 
         // ======================================================== 
 
-        EditorGUILayout.PropertyField(animationTableExcelProp);
-        GUILayout.Space(20);
+        EditorGUILayout.PropertyField(animationEventExcelProp);
+        GUILayout.Space(10);
 
         int idx = -1;
         style = new GUIStyle();
@@ -195,7 +198,7 @@ public class AnimationProcess : EditorWindow
         SortedDictionary<string, Dictionary<string, string>> excelData =
             new SortedDictionary<string, Dictionary<string, string>>();
 
-        Worksheet sheet = EditorHelper.LoadExcelSheet(AssetDatabase.GetAssetPath(asset.animationTableExcel),
+        Worksheet sheet = EditorHelper.LoadExcelSheet(AssetDatabase.GetAssetPath(asset.animationEventExcel),
                                                       "AnimationEvents");
 
         // parse title 
@@ -307,8 +310,5 @@ public class AnimationProcess : EditorWindow
         EditorUtility.ClearProgressBar();
     }
 
-    const string duplicatePostfix = "Edit";
-    const string processAssets = "_ProcessAssets";
-    const string animationFolder = "_Clips";
 }
 
