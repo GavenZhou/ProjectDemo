@@ -8,11 +8,12 @@ public class PlayerInputBase : MonoBehaviour {
 	
 	private PlayerMainLogic baseControlScript;
 	
-	
+	bool isHold;
 	
 	private bool mOneClick = false;
 	private bool mTwiceClick = false;
 	private float mPressTime = 0;
+	private float mHoldTime = 0;
 	
 	private Vector3 oldPos;
 	
@@ -20,23 +21,13 @@ public class PlayerInputBase : MonoBehaviour {
 	void Start () {
 		
 		baseControlScript = (PlayerMainLogic)this.GetComponent<PlayerMainLogic>();
-		
-		
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
-		if(baseControlScript.mTouchState != PlayerMainLogic.TouchState.None)
-		{
-			//send the result to the center control
-			baseControlScript.GetInputState();
-			
-			InputStateClass.ClearTouchSlashPosArray();
-			InputStateClass.oldSlashPos = Vector3.zero;
-			return;
-		}
+
 		
 		// one tap 
 		if(Time.time - mPressTime > 0.5f && mOneClick == true)
@@ -63,6 +54,7 @@ public class PlayerInputBase : MonoBehaviour {
 					baseControlScript.mTouchState = PlayerMainLogic.TouchState.AFingerOneTap;
 					InputStateClass.touchPointPos = Input.mousePosition;
 					mPressTime = Time.time;
+					mHoldTime =  Time.time;
 					mOneClick = true;
 				}
 				else // tap once before
@@ -78,6 +70,7 @@ public class PlayerInputBase : MonoBehaviour {
 				}
 				oldPos = Input.mousePosition;
 			}
+
 			
 #if UNITY_EDITOR				
 			if(Input.GetMouseButtonUp(0))
@@ -97,6 +90,20 @@ public class PlayerInputBase : MonoBehaviour {
 					InputStateClass.AddPointToSlashPosArray(Input.mousePosition);
 					return;
 				}
+				else
+				{
+					if(isHold)
+					{
+						isHold = false;
+						baseControlScript.mTouchState = PlayerMainLogic.TouchState.AFingerHoldStop;
+						//send the result to the center control
+						baseControlScript.GetInputState();
+						
+						InputStateClass.ClearTouchSlashPosArray();
+						InputStateClass.oldSlashPos = Vector3.zero;
+						return;
+					}
+				}
 			}
 			
 #if UNITY_EDITOR			
@@ -111,6 +118,33 @@ public class PlayerInputBase : MonoBehaviour {
 					InputStateClass.AddPointToSlashPosArray(Input.mousePosition);
 				}
 			}
+			
+#if UNITY_EDITOR				
+			if(Input.GetMouseButton(0))
+#else
+			if(Input.GetTouch(0).phase == TouchPhase.Stationary)
+#endif				
+			{
+				
+				if(Time.time - mHoldTime > 1.0f && isHold == false)
+				{
+					mHoldTime = Time.time;
+					baseControlScript.mTouchState = PlayerMainLogic.TouchState.AFingerHold;
+					isHold = true;
+					return;
+				}
+			}
 		}
+		
+		if(baseControlScript.mTouchState != PlayerMainLogic.TouchState.None)
+		{
+			//send the result to the center control
+			baseControlScript.GetInputState();
+			
+			InputStateClass.ClearTouchSlashPosArray();
+			InputStateClass.oldSlashPos = Vector3.zero;
+			return;
+		}
+		
 	}
 }

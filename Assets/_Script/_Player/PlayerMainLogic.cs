@@ -10,6 +10,8 @@ public class PlayerMainLogic : MonoBehaviour {
 		None,
 		AFingerOneTap,
 		AFingerDoubleTap,
+		AFingerHold,
+		AFingerHoldStop,
 		AFingerSlash,
 		TwoFingersTap,
 		TwoFingersDoubleTap,
@@ -311,11 +313,24 @@ public class PlayerMainLogic : MonoBehaviour {
 			}
 			break;
 			
+		case TouchState.AFingerHold:
+			if(moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Attack3)
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack3,false);
+			else
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack3,true);
+				
+        //    mTouchState = TouchState.None;
+			break;	
+		
+		case TouchState.AFingerHoldStop:
+			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
+            mTouchState = TouchState.None;
+			break;
+			
 		case TouchState.AFingerSlash:
 //            colliderBaseScript.turnOnCatchRay = true;
 //            colliderBaseScript.mCatchTarget = null;
             mTouchState = TouchState.None;
-			
             //targetPos = RayColliderByTapPos(InputStateClass.oldSlashPos);
             //SetPlayerToRun(targetPos-this.transform.position);
             //if(aniControlScript.isSkillPlaying == false)
