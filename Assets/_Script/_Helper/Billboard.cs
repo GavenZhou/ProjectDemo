@@ -7,7 +7,7 @@ public class Billboard : MonoBehaviour {
     public Camera mainCamera;
 
     void Start() {
-        mainCamera = testCameraControl.instance.mainCamera;
+        mainCamera = OrbitCameraCtrl.instance.mainCamera;
     }
 
     void LateUpdate() {

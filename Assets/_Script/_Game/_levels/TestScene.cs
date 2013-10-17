@@ -12,6 +12,7 @@ public class TestScene : MonoBehaviour {
 
     void Awake() {
         instance = this;
+        Application.targetFrameRate = 30;
         SceneMng scene = new SceneMng();
         scene.Init();
     }
@@ -34,6 +35,10 @@ public class TestScene : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.F2)) {
             CombatUtility.DropGenerator(SceneMng.instance.mainPlayer.transform.position + Vector3.right * 4);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F3)) {
+            OrbitCameraCtrl.instance.ShakeCamera(0.15f);
         }
     }
 

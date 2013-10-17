@@ -462,11 +462,11 @@ public class PlayerMainLogic : MonoBehaviour {
     {
         attackSfx[attackId - 1].GetComponent<particleControl>().turnOn = true;
         player.Attack();
+        OrbitCameraCtrl.instance.ShakeCamera(0);
     }
 
     public void OnAttackFinish(int attackId)
     {
-
     }
 
     public void OnAttackAnimationFinish(int attackId)
