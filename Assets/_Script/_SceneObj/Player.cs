@@ -74,7 +74,10 @@ public class Player : Actor {
 		if(isdead)
 			playerMainLogic.ChangeAnimationByActionCmd(GameBaseData.PlayerDataClass.PlayerActionCommand.Player_Die,true);
 		else
+		{
+			playerMainLogic.mContinueAttack = false;
 			playerMainLogic.ChangeAnimationByActionCmd(GameBaseData.PlayerDataClass.PlayerActionCommand.Player_BeHit,true);
+		}
 		return isdead;
     }
 

@@ -45261,21 +45261,21 @@ AnimationClip:
     floatParameter: 0
     intParameter: 3
     messageOptions: 1
-  - time: .458333343
+  - time: .383333325
     functionName: OnAttackStart
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 3
     messageOptions: 1
-  - time: .833333313
+  - time: .699999988
     functionName: OnAttackFinish
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 3
     messageOptions: 1
-  - time: 1.25
+  - time: .983333349
     functionName: OnAnimationFinish
     data: 
     objectReferenceParameter: {fileID: 0}

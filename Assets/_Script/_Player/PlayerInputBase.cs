@@ -140,8 +140,6 @@ public class PlayerInputBase : MonoBehaviour {
 			//send the result to the center control
 			baseControlScript.GetInputState();
 			
-			Debug.Log(baseControlScript.mTouchState);
-			
 			InputStateClass.ClearTouchSlashPosArray();
 			InputStateClass.oldSlashPos = Vector3.zero;
 			return;

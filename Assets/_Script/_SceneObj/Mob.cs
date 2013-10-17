@@ -59,7 +59,7 @@ public class Mob : Actor, ISpawn
         base.Init(_id);
 
         type = SceneObjType.Mob;
-        Hp = MaxHp = 100;
+        Hp = MaxHp = 400;
         IsDied = false;
         enemyMainLogic.Init();
         Name = type.ToString() + mobTemplate.ToString() + "_" + _id;

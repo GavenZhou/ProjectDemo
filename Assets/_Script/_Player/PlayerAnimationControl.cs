@@ -4,19 +4,44 @@ using GameBaseData;
 
 public class PlayerAnimationControl : MonoBehaviour {
 	
+	public enum PlayerAnimationState
+	{
+		Idel,
+		Run,
+		Walk,
+		Attack1,
+		Attack2,
+		Attack3,
+		Attack4,
+		Jump,
+		Rush,
+		Catch,
+		Die,
+		Behit,
+	}
+	
+	public PlayerAnimationState mAnimationState = PlayerAnimationState.Idel;
+	
+	public bool attackCheckPoint = false;
+	public byte attackCheckId = 0;
+	public byte attackIdNow = 0;
 	
 	public bool isSkillPlaying = false;
-	
+/*	
 	// wiil be true when animation finish
 	public bool attack1Finish = false;
 	public bool attack2Finish = false;
 	public bool attack3Finish = false;
+	public bool attack4Finish = false;
+		
 	
 	// 1  means   animation stop normal
 	// 2 	means   animation stop because the next attack start
 	public byte attack1AnimationFinish = 0;   
 	public byte attack2AnimationFinish = 0;
 	public byte attack3AnimationFinish = 0;
+	public byte attack4AnimationFinish = 0;
+	 */
 	
 	// player clips
 	AnimationState mRun;
@@ -26,6 +51,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 	AnimationState mAttack1;
 	AnimationState mAttack2;
 	AnimationState mAttack3;
+	AnimationState mAttack4;
 	AnimationState mSkill1;
 	AnimationState mBeHit;
 	AnimationState mDie;
@@ -49,44 +75,47 @@ public class PlayerAnimationControl : MonoBehaviour {
 	
 	void InitalizeAnimationClips()
 	{
-		mRun = this.animation["pao"];
+		mRun = this.animation["1_011"];
 		mRun.layer = 0;
 		
-		mWalk = this.animation["zou"];
+		mWalk = this.animation["1_021"];
 		mWalk.layer = 0;
 		
-		mIdel = this.animation["gongjidaiji"];
+		mIdel = this.animation["1_001"];
 		mIdel.layer = 0;
 		
-		mRush = this.animation["chongci"];
-		mRush.layer = 1;
+	//	mRush = this.animation["1_001"];
+	//	mRush.layer = 1;
 		
-		mCatch = this.animation["zhuaju"];
-		mCatch.layer = 1;
+	//	mCatch = this.animation["1_001"];
+	//	mCatch.layer = 1;
 		
-		mJump = this.animation["shanbi"];
+		mJump = this.animation["1_031"];
 		mJump.layer = 1;
 		
-		mAttack1 = this.animation["gongjiEdit"];
+		mAttack1 = this.animation["1_101"];
 		mAttack1.layer = 3;
 		
-		mAttack2 = this.animation["gongji2Edit"];
+		mAttack2 = this.animation["1_102"];
 		mAttack2.layer = 3;
 		
-		mAttack3 = this.animation["gongji3Edit"];
+		mAttack3 = this.animation["1_103"];
 		mAttack3.layer = 3;
 		
-		mSkillIdel = this.animation["gongjidaijiEdit"];
-		mSkillIdel.layer = 4;
+		mAttack4 = this.animation["1_104"];
+		mAttack4.layer = 3;
 		
-		mSkill1 = this.animation["jinengEdit"];
-		mSkill1.layer = 6;
+//		mSkillIdel = this.animation["1_001"];
+//		mSkillIdel.layer = 4;
 		
-		mBeHit = this.animation["beiji"];
-		mBeHit.layer = 5;
+//		mSkill1 = this.animation["1_001"];
+//		mSkill1.layer = 6;
 		
-		mDie = this.animation["siwang"];
-		mDie.layer = 10;
+//		mBeHit = this.animation["1_001"];
+//		mBeHit.layer = 5;
+		
+//		mDie = this.animation["1_001"];
+//		mDie.layer = 10;
 	}
 	
 	
@@ -103,12 +132,31 @@ public class PlayerAnimationControl : MonoBehaviour {
 	{
 		if(immedilate)
 		{
-			this.animation.Stop();
-			this.animation.CrossFade(state.name);
+			//this.animation.Stop();
+			this.animation.CrossFade(state.name,0.2f);
 		}
 		else
 		{
 			this.animation.CrossFadeQueued(state.name);
+		}
+	}
+	
+	public void SetAttackAnimationTime(byte attackId, float time)
+	{
+		switch(attackId)
+		{
+		case 1:
+			mAttack1.time = time;
+			break;
+		case 2:
+			mAttack2.time = time;
+			break;
+		case 3:
+			mAttack3.time = time;
+			break;
+		case 4:
+			mAttack4.time = time;
+			break;
 		}
 	}
 	
@@ -146,6 +194,12 @@ public class PlayerAnimationControl : MonoBehaviour {
 		case PlayerDataClass.PlayerActionCommand.Player_Attack3:
 			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack3);
 			PlayAnimation(mAttack3,immedilate);
+			PlayerDataClass.PlayerNextActionReset();
+			break;
+			
+		case PlayerDataClass.PlayerActionCommand.Player_Attack4:
+			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack4);
+			PlayAnimation(mAttack4,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 
@@ -234,45 +288,41 @@ public class PlayerAnimationControl : MonoBehaviour {
 			break;
 		case 3:
 			break;
+		case 4:
+			break;
 		}
     }
 
 	void OnAttackFinish(int attackId)
     {
         main.OnAttackAnimationFinish(attackId);
-
-		switch(attackId)
+		Debug.Log("OnAttackFinish == "+ attackId);
+		if(attackId == 4)
 		{
-		case 1:
-			attack1AnimationFinish = 1;
-			break;
-			
-		case 2:
-			attack2AnimationFinish = 1;
-			break;
-			
-		case 3:
-			attack3AnimationFinish = 1;
-			break;
+			attackCheckId = 0;
+			return;
 		}
+		attackCheckPoint = true;
+		attackCheckId = (byte)attackId;
     }
 
     void OnAnimationFinish(int attackId)
     {
         main.OnAttackFinish(attackId);
 
+		Debug.Log("OnAnimationFinish == "+ attackId);
 		switch(attackId)
 		{
 		case 1:
-			attack1Finish = true;
 			break;
 			
 		case 2:
-			attack2Finish = true;
 			break;
 			
 		case 3:
-			attack3Finish = true;
+			break;
+			
+		case 4:
 			break;
 		}
     }

@@ -51,8 +51,8 @@ public class EnemyMoveBase : MonoBehaviour {
 		enemy_Attack.acceleration = -90;
 		enemy_Attack.leftTime =0.6f;
 		
-		enemy_BeHit.startSpeed = -3;
-		enemy_BeHit.acceleration = 20;
+		enemy_BeHit.startSpeed = -8;
+		enemy_BeHit.acceleration = 10;
 		enemy_BeHit.leftTime = 0.5f;
 	}
 	

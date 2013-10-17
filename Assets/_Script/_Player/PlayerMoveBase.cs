@@ -19,6 +19,8 @@ public class PlayerMoveBase : MonoBehaviour {
 		Attack2Over, 
 		Attack3,
 		Attack3Over,
+		Attack4,
+		Attack4Over,
 		BeHit,
 		BeHitOver,
 		Jump,
@@ -43,6 +45,7 @@ public class PlayerMoveBase : MonoBehaviour {
 	PlayerMovementStruct player_Attack1;
 	PlayerMovementStruct player_Attack2;
 	PlayerMovementStruct player_Attack3;
+	PlayerMovementStruct player_Attack4;
 	PlayerMovementStruct player_BeHit;
 	PlayerMovementStruct player_Jump;
 	PlayerMovementStruct player_Rush;
@@ -72,24 +75,28 @@ public class PlayerMoveBase : MonoBehaviour {
 		player_Run.leftTime = 2;
 		
 		player_Trot.startSpeed = 8;
-		player_Trot.acceleration = -4;
+		player_Trot.acceleration = -3;
 		player_Trot.leftTime = 0.5f;
 		
 		player_Walk.startSpeed = 2.5f;
-		player_Walk.acceleration = -1.5f;
-		player_Walk.leftTime = 1f;
+		player_Walk.acceleration = -1.0f;
+		player_Walk.leftTime = 1.5f;
 		
-		player_Attack1.startSpeed = 20;
-		player_Attack1.acceleration = -90;
-		player_Attack1.leftTime =0.4f;
+		player_Attack1.startSpeed = 10;
+		player_Attack1.acceleration = -30;
+		player_Attack1.leftTime =0.8f;
 		
-		player_Attack2.startSpeed = 25;
-		player_Attack2.acceleration = -90; 
-		player_Attack2.leftTime = 0.6f;
+		player_Attack2.startSpeed = 10;
+		player_Attack2.acceleration = -30; 
+		player_Attack2.leftTime = 0.8f;
 		
-		player_Attack3.startSpeed = 0;//30;
-		player_Attack3.acceleration = 0;//-90;
-		player_Attack3.leftTime = 0.6f;
+		player_Attack3.startSpeed = 15;
+		player_Attack3.acceleration = -30;
+		player_Attack3.leftTime = 0.8f;
+		
+		player_Attack4.startSpeed = 20;
+		player_Attack4.acceleration = -50;
+		player_Attack4.leftTime = 0.9f;
 		
 		player_BeHit.startSpeed = 0;
 		player_BeHit.acceleration = 0;
@@ -97,7 +104,7 @@ public class PlayerMoveBase : MonoBehaviour {
 		
 		player_Jump.startSpeed = 20;
 		player_Jump.acceleration = -40;
-		player_Jump.leftTime =0.8f;
+		player_Jump.leftTime =0.4f;
 		
 		player_Rush.startSpeed = 40;
 		player_Rush.acceleration = -90;
@@ -211,6 +218,13 @@ public class PlayerMoveBase : MonoBehaviour {
 			mAcceleration = player_Attack3.acceleration;
 			mMoveTimeLeft = player_Attack3.leftTime;
 			mTime = Time.time;
+			break;	
+		
+		case PlayerMovementState.Attack4:
+			mSpeed = player_Attack4.startSpeed;
+			mAcceleration = player_Attack4.acceleration;
+			mMoveTimeLeft = player_Attack4.leftTime;
+			mTime = Time.time;
 			break;
 			
 		case PlayerMovementState.BeHit:
@@ -276,6 +290,10 @@ public class PlayerMoveBase : MonoBehaviour {
 			
 		case PlayerMovementState.Attack3:
 			curMovementState = PlayerMovementState.Attack3Over;
+			break;	
+		
+		case PlayerMovementState.Attack4:
+			curMovementState = PlayerMovementState.Attack4Over;
 			break;
 			
 		case PlayerMovementState.BeHit:

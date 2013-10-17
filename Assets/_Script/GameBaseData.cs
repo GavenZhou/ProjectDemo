@@ -56,6 +56,7 @@ namespace GameBaseData
 			Player_Attack1,
 			Player_Attack2,
 			Player_Attack3,
+			Player_Attack4,
 			Player_Skill1,
 			Player_Rush,
 			Player_Jump,
