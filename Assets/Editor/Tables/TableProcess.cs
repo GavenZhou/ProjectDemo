@@ -4,6 +4,8 @@ using Aspose.Cells;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System;
+using System.Reflection;
 
 public class TableProcess : EditorWindow {
 
@@ -91,10 +93,8 @@ public class TableProcess : EditorWindow {
 
     void ExportCharacterTable() {
 
-        SortedDictionary<string, Dictionary<string, string>> excelData =
-            new SortedDictionary<string, Dictionary<string, string>>();
-
-        Worksheet sheet = EditorHelper.LoadExcelSheet(AssetDatabase.GetAssetPath(asset.characterExcel), "CharType");
+        Dictionary<string, Dictionary<string, string>> excelData = new Dictionary<string, Dictionary<string, string>>();
+        Worksheet sheet = EditorHelper.LoadExcelSheet(AssetDatabase.GetAssetPath(asset.characterExcel), "CharacterTable");
 
         // parse title 
         string[] header = new string[sheet.Cells.Columns.Count];
@@ -102,12 +102,15 @@ public class TableProcess : EditorWindow {
 
         for (int i = 0; i < sheet.Cells.Columns.Count; ++i) {
             header[i] = sheet.Cells.Rows[characterTableTitleRow].GetCellOrNull(i) != null ? sheet.Cells.Rows[1].GetCellOrNull(i).StringValue : null;
+            if (header[i] != null) header[i].Trim();
+
             type[i] = sheet.Cells.Rows[characterTableValueTypeRow].GetCellOrNull(i) != null ? sheet.Cells.Rows[2].GetCellOrNull(i).StringValue : null;
+            if (type[i] != null) type[i].Trim();
         }
 
         // parse table content
         foreach (Row row in sheet.Cells.Rows) {
-            if (row.Index == 0)
+            if (row.Index <= characterTableValueTypeRow)
                 continue;
 
             string key = row.GetCellOrNull(0) != null ? row.GetCellOrNull(0).StringValue : null;
@@ -130,81 +133,35 @@ public class TableProcess : EditorWindow {
             }
         }
 
-        foreach (string s in excelData.Keys) { 
-            string str = s + " ";
-            Dictionary<string, string> dict = excelData[s];
-            foreach (string k in dict.Keys) {
-                str += ((dict[k]) + " ");
-            }
-            Debug.Log(str);
-        }
-
-
-        //// parse excelData
-        //int index = 0;
-        //List<AnimationEvent> animEvents = new List<AnimationEvent>();
-
-        //foreach (string animName in excelData.Keys) {
-        //    animEvents.Clear();
-        //    float progress = (float)index / (float)excelData.Keys.Count;
-
-        //    if (EditorUtility.DisplayCancelableProgressBar("Add Normal Animation Events",
-        //                                                   "Processing " + animName,
-        //                                                   progress))
-        //    {
-        //        break;
+        //foreach (string s in excelData.Keys) { 
+        //    string str = "";
+        //    Dictionary<string, string> dict = excelData[s];
+        //    foreach (string k in dict.Keys) {
+        //        str += ((dict[k]) + " ");
         //    }
-        //    ++index;
-
-        //    string path = Path.Combine(asset.animationClipsFolder, animName + ".anim");
-        //    AnimationClip animClip = AssetDatabase.LoadAssetAtPath(path, typeof(AnimationClip)) as AnimationClip;
-        //    if (animClip == null) {
-        //        Debug.LogWarning("can't find anim clip " + path);
-        //        continue;
-        //    }
-
-        //    Dictionary<string, string> srcEventInfos = excelData[animName];
-
-        //    Regex regex = new Regex(@"(\w+)_(\d+)", RegexOptions.IgnoreCase);
-        //    AnimationEvent animEvent = null;
-
-        //    foreach (string title in srcEventInfos.Keys) {
-        //        Match m = regex.Match(title);
-        //        if (m.Success) {
-        //            if (string.IsNullOrEmpty(srcEventInfos[title]))
-        //                continue;
-
-        //            //
-        //            if (m.Groups[1].Value == "Keyframe") {
-        //                animEvent = new AnimationEvent();
-        //                animEvents.Add(animEvent);
-
-        //                int keyframe = System.Convert.ToInt32(srcEventInfos[title]);
-        //                animEvent.time = keyframe / 24.0f;//animClip.frameRate;
-        //            }
-
-        //            //
-        //            if (m.Groups[1].Value == "FunctionName") {
-        //                animEvent.functionName = srcEventInfos[title];
-        //                animEvent.messageOptions = SendMessageOptions.DontRequireReceiver;
-        //            }
-
-        //            //
-        //            if (m.Groups[1].Value == "Parameter") {
-        //                string param = srcEventInfos[title];
-        //                if (string.IsNullOrEmpty(param) == false && string.Compare(param, "null", true) != 0) {
-        //                    int intParam;
-        //                    if (System.Int32.TryParse(param, out intParam)) {
-        //                        animEvent.intParameter = intParam;
-        //                    } else {
-        //                        animEvent.stringParameter = param;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    AnimationUtility.SetAnimationEvents(animClip, animEvents.ToArray());
+        //    Debug.Log(str);
         //}
-        EditorUtility.ClearProgressBar();
+
+        // parse excelData
+        Type t = typeof(CharacterData);
+        CharacterTable table = EditorHelper.CreateNewEditorProfile<CharacterTable>("CharacterTable.asset");
+
+        foreach (Dictionary<string, string> row in excelData.Values) {
+
+            // 
+            int index = 0;
+            CharacterData c = new CharacterData();
+            foreach (string title in row.Keys) {
+                FieldInfo mInfo = t.GetField(header[index], BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                if (mInfo != null) {
+                    object param = EditorHelper.GetTableValue(type[index], row[title]);
+                    if (param != null) {
+                        t.InvokeMember(mInfo.Name, BindingFlags.SetField, null, c, new object[] { param });
+                    }
+                }
+                index++;
+            }
+            table.lstCharacter.Add(c);
+        }
     }
 }

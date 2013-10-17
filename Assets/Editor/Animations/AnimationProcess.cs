@@ -18,7 +18,7 @@ public class AnimationProcess : EditorWindow
     const string processAssets = "_ProcessAssets";
     const string animationFolder = "_Clips";
 
-    
+
     ///////////////////////////////////////////////////////////////////////////////
     // Menu Item
     ///////////////////////////////////////////////////////////////////////////////
@@ -34,73 +34,74 @@ public class AnimationProcess : EditorWindow
         EditorHelper.CreateNewEditorProfile<AnimationProcessProfile>(assetName);
     }
 
-    [MenuItem("Assets/Helper/Copy Animation Clip")]
+    [MenuItem("Assets/Helper/Copy Animation Clips")]
     static void CopyCurvesToDuplicate() {
-        // Get selected AnimationClip
-        Object[] imported = Selection.GetFiltered(typeof(AnimationClip), SelectionMode.Unfiltered);
-        if (imported.Length == 0) {
-            Debug.LogWarning("Either no objects were selected or the objects selected were not AnimationClips.");
-            return;
-        }
 
-        //If necessary, create the animations folder.
-        if (Directory.Exists("Assets/" + processAssets) == false) {
-            AssetDatabase.CreateFolder("Assets", processAssets);
-        }
-        if (Directory.Exists("Assets/" + processAssets + "/" + animationFolder) == false) {
+        // "Assets/_ProcessAssets/_Clips"
+        string folder = "Assets/" + processAssets + "/" + animationFolder;
+        if (Directory.Exists(folder) == false) {
             AssetDatabase.CreateFolder("Assets/" + processAssets, animationFolder);
         }
 
-        string path = "Assets/" + processAssets + "/" + animationFolder;
+        // Get selected object
+        AnimationClip clipToCopy = null;
+        AnimationClip newAnimClip = null;
+        Object[] imported = Selection.GetFiltered(typeof(Object), SelectionMode.DeepAssets);
 
-        foreach (AnimationClip clip in imported) {
+        for (int i = 0; i < imported.Length; ++i) {
+            UnityEngine.Object obj = imported[i];
 
-            string importedPath = AssetDatabase.GetAssetPath(clip);
+            if (EditorUtility.DisplayCancelableProgressBar("Copy Animation Clips",
+                                                            "Processing " + obj.name,
+                                                            (float)i / (float)imported.Length)) {
+                break;
+            }
 
-            //If the animation came from an FBX, then use the FBX name as a subfolder to contain the animations.
-            string copyPath;
-            if (importedPath.Contains(".fbx")) {
-                //With subfolder.
-                string folder = importedPath.Substring(importedPath.LastIndexOf("/") + 1, importedPath.LastIndexOf(".") - importedPath.LastIndexOf("/") - 1);
-                if (!Directory.Exists(path + "/" + folder)) {
-                    AssetDatabase.CreateFolder(path, folder);
+            //
+            clipToCopy = obj as AnimationClip;
+            if (clipToCopy) {
+                string animName = clipToCopy.name + ".anim";
+                newAnimClip = CopyClip(Path.Combine(folder, animName), clipToCopy);
+            }
+
+            //
+            GameObject go = obj as GameObject;
+            if (go && go.animation) {
+                foreach (AnimationState state in go.animation) {
+                    clipToCopy = state.clip;
+                    if (clipToCopy) {
+                        string animName = clipToCopy.name + ".anim";
+                        newAnimClip = CopyClip(Path.Combine(folder, animName), clipToCopy);
+                    }
                 }
-                copyPath = path + "/" + folder + "/" + clip.name + duplicatePostfix + ".anim";
-            } else {
-                //No Subfolder
-                copyPath = path + "/" + clip.name + duplicatePostfix + ".anim";
             }
-            Debug.Log("CopyPath: " + copyPath);
-
-            CopyClip(importedPath, copyPath);
-
-            AnimationClip copy = AssetDatabase.LoadAssetAtPath(copyPath, typeof(AnimationClip)) as AnimationClip;
-            if (copy == null) {
-                Debug.Log("No copy found at " + copyPath);
-                return;
-            }
-            // Copy curves from imported to copy
-            AnimationClipCurveData[] curveDatas = AnimationUtility.GetAllCurves(clip, true);
-            for (int i = 0; i < curveDatas.Length; i++) {
-                AnimationUtility.SetEditorCurve(
-                    copy,
-                    curveDatas[i].path,
-                    curveDatas[i].type,
-                    curveDatas[i].propertyName,
-                    curveDatas[i].curve
-                );
-            }
-            Debug.Log("Copying curves into " + copy.name + " is done");
         }
+        EditorUtility.ClearProgressBar();
+        AssetDatabase.SaveAssets();
+        Selection.activeObject = newAnimClip;
+        EditorGUIUtility.PingObject(newAnimClip);
     }
 
-    static void CopyClip(string importedPath, string copyPath) {
+    static AnimationClip CopyClip(string _path, AnimationClip _clipToCopy) {
 
-        AnimationClip src = AssetDatabase.LoadAssetAtPath(importedPath, typeof(AnimationClip)) as AnimationClip;
         AnimationClip newClip = new AnimationClip();
-        newClip.name = src.name + duplicatePostfix;
-        AssetDatabase.CreateAsset(newClip, copyPath);
+        newClip.name = _clipToCopy.name + duplicatePostfix;
+        AssetDatabase.CreateAsset(newClip, _path);
         AssetDatabase.Refresh();
+
+        AnimationClipCurveData[] srcCurveData = AnimationUtility.GetAllCurves(_clipToCopy, true);
+
+        for (int i = 0; i < srcCurveData.Length; ++i) {
+            AnimationUtility.SetEditorCurve(newClip,
+                                            srcCurveData[i].path,
+                                            srcCurveData[i].type,
+                                            srcCurveData[i].propertyName,
+                                            srcCurveData[i].curve);
+        }
+        EditorUtility.SetDirty(newClip);
+        Debug.Log("Copying curves into " + _clipToCopy.name + " is done");
+
+        return newClip;
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -232,7 +233,7 @@ public class AnimationProcess : EditorWindow
             }
         }
 
-        foreach (string s in excelData.Keys) { 
+        foreach (string s in excelData.Keys) {
             string str = s + " ";
             Dictionary<string, string> dict = excelData[s];
             foreach (string k in dict.Keys) {
@@ -252,8 +253,7 @@ public class AnimationProcess : EditorWindow
 
             if (EditorUtility.DisplayCancelableProgressBar("Add Normal Animation Events",
                                                            "Processing " + animName,
-                                                           progress))
-            {
+                                                           progress)) {
                 break;
             }
             ++index;
