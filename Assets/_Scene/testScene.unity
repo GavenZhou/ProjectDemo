@@ -11782,7 +11782,7 @@ Transform:
   m_PrefabInternal: {fileID: 1424598188}
   m_GameObject: {fileID: 532568233}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -15}
+  m_LocalPosition: {x: 0, y: 0, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 495384270}
@@ -15737,7 +15737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &846675574
 Transform:
   m_ObjectHideFlags: 0
@@ -23349,6 +23349,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 775d7ea1ac767ef4d829d512c587224d, type: 2}
+    - target: {fileID: 100000, guid: 8abfb4edcd74ba641b01c60d60612c59, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8abfb4edcd74ba641b01c60d60612c59, type: 2}
   m_RootGameObject: {fileID: 846675573}
@@ -25649,7 +25653,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 95e8efad15518604388401125691b4e2, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -15
+      value: -12
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 95e8efad15518604388401125691b4e2, type: 2}
       propertyPath: maxDistance
