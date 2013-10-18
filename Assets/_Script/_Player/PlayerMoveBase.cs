@@ -84,19 +84,19 @@ public class PlayerMoveBase : MonoBehaviour {
 		
 		player_Attack1.startSpeed = 10;
 		player_Attack1.acceleration = -30;
-		player_Attack1.leftTime =0.8f;
+		player_Attack1.leftTime =0.9f;
 		
 		player_Attack2.startSpeed = 10;
 		player_Attack2.acceleration = -30; 
-		player_Attack2.leftTime = 0.8f;
+		player_Attack2.leftTime = 0.9f;
 		
 		player_Attack3.startSpeed = 15;
 		player_Attack3.acceleration = -30;
-		player_Attack3.leftTime = 0.8f;
+		player_Attack3.leftTime = 0.9f;
 		
 		player_Attack4.startSpeed = 20;
 		player_Attack4.acceleration = -50;
-		player_Attack4.leftTime = 0.9f;
+		player_Attack4.leftTime = 1.4f;
 		
 		player_BeHit.startSpeed = 0;
 		player_BeHit.acceleration = 0;

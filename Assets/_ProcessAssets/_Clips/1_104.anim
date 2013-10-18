@@ -68727,28 +68727,28 @@ AnimationClip:
     classID: 4
     script: {fileID: 0}
   m_Events:
-  - time: .416666657
+  - time: .166666672
     functionName: OnAnimationStart
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 4
     messageOptions: 1
-  - time: 1.25
+  - time: .649999976
     functionName: OnAttackStart
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 4
     messageOptions: 1
-  - time: 2.33333325
+  - time: 1.10000002
     functionName: OnAttackFinish
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 4
     messageOptions: 1
-  - time: 2.375
+  - time: 1.79999995
     functionName: OnAnimationFinish
     data: 
     objectReferenceParameter: {fileID: 0}
