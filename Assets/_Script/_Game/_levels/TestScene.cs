@@ -12,7 +12,7 @@ public class TestScene : MonoBehaviour {
 
     void Awake() {
         instance = this;
-        Application.targetFrameRate = 30;
+        Application.targetFrameRate = 60;
         SceneMng scene = new SceneMng();
         scene.Init();
     }
