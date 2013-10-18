@@ -111,8 +111,8 @@ public class PlayerAnimationControl : MonoBehaviour {
 //		mSkill1 = this.animation["1_001"];
 //		mSkill1.layer = 6;
 		
-//		mBeHit = this.animation["1_001"];
-//		mBeHit.layer = 5;
+		mBeHit = this.animation["1_501"];
+		mBeHit.layer = 5;
 		
 //		mDie = this.animation["1_001"];
 //		mDie.layer = 10;
@@ -132,11 +132,13 @@ public class PlayerAnimationControl : MonoBehaviour {
 	{
 		if(immedilate)
 		{
+			Debug.Log(state.name);
 			//this.animation.Stop();
 			this.animation.CrossFade(state.name,0.2f);
 		}
 		else
 		{
+			Debug.Log(state.name);
 			this.animation.CrossFadeQueued(state.name);
 		}
 	}
