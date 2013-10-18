@@ -21,22 +21,22 @@ public class EnemyAnimationControl : MonoBehaviour {
 	
 	void InitalizeAnimationClips()
 	{   
-		mRun = this.animation["pao"];
+		mRun = this.animation["011"];
 		mRun.layer = 0;
 		
-		mWalk = this.animation["zou"];
+		mWalk = this.animation["021"];
 		mWalk.layer = 0;
 		
-		mIdel = this.animation["daiji"];
+		mIdel = this.animation["001"];
 		mIdel.layer = 0;
 		
-		mAttack = this.animation["gongji"];
+		mAttack = this.animation["2101"];
 		mAttack.layer = 1;
 		
-		mBeHit = this.animation["shouji"];
+		mBeHit = this.animation["501"];
 		mBeHit.layer = 2;
 		
-		mDie = this.animation["siwang"];
+		mDie = this.animation["504"];
 		mDie.layer = 3;
 	}
 	
