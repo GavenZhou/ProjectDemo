@@ -22,6 +22,8 @@ public class PlayerAnimationControl : MonoBehaviour {
 	
 	public PlayerAnimationState mAnimationState = PlayerAnimationState.Idel;
 	
+	bool isQueueAnimation = false;
+	
 	public bool attackCheckPoint = false;
 	public byte attackCheckId = 0;
 	public byte attackIdNow = 0;
@@ -126,6 +128,50 @@ public class PlayerAnimationControl : MonoBehaviour {
 	
 	}
 	
+	void UpdateAnimationState(string clipName)
+	{
+		switch(clipName)
+		{
+		case "1_011":
+			mAnimationState = PlayerAnimationState.Run;
+			break;
+			
+		case "1_021":
+			mAnimationState = PlayerAnimationState.Walk;
+			break;
+			
+		case "1_001":
+			mAnimationState = PlayerAnimationState.Idel;
+			break;
+			
+		case "1_031":
+			mAnimationState = PlayerAnimationState.Jump;
+			break;
+			
+		case "1_101":
+			mAnimationState = PlayerAnimationState.Attack1;
+			break;
+			
+		case "1_102":
+			mAnimationState = PlayerAnimationState.Attack2;
+			break;
+			
+		case "1_103":
+			mAnimationState = PlayerAnimationState.Attack3;
+			break;
+			
+		case "1_104":
+			mAnimationState = PlayerAnimationState.Attack4;
+			break;
+			
+		case "1_501":
+			mAnimationState = PlayerAnimationState.Behit;
+			break;
+		}
+		
+	}
+	
+	
 	// if immedilate == true,  play the animation right now,
 	// else play it in queue
 	void PlayAnimation(AnimationState state, bool immedilate)
@@ -135,9 +181,13 @@ public class PlayerAnimationControl : MonoBehaviour {
 //			Debug.Log(state.name);
 			//this.animation.Stop();
 			this.animation.CrossFade(state.name,0.2f);
+			UpdateAnimationState(state.name);
+			
+			isQueueAnimation = false;
 		}
 		else
 		{
+			isQueueAnimation = true;
 //			Debug.Log(state.name);
 			this.animation.CrossFadeQueued(state.name);
 		}
@@ -171,90 +221,120 @@ public class PlayerAnimationControl : MonoBehaviour {
 		{
 		case PlayerDataClass.PlayerActionCommand.Player_Run:
 			PlayAnimation(mRun,immedilate);
-			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Run);
+			if(immedilate
+				||moveScript.curMovementState == PlayerMoveBase.PlayerMovementState.Run)
+				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Run);
 			PlayerDataClass.PlayerNextActionReset();
 			break;		
 		
 		case PlayerDataClass.PlayerActionCommand.Player_Trot:
 			PlayAnimation(mRun,immedilate);
-			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Trot);
+			
+			if(immedilate)
+				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Trot);
 			PlayerDataClass.PlayerNextActionReset();
 			break;	
 			
 		case PlayerDataClass.PlayerActionCommand.Player_Attack1:
-			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack1);
+			
+			if(immedilate)
+				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack1);
 			PlayAnimation(mAttack1,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Player_Attack2:
-			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack2);
+			
+			if(immedilate)
+				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack2);
 			PlayAnimation(mAttack2,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Player_Attack3:
-			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack3);
+			
+			if(immedilate)
+				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack3);
 			PlayAnimation(mAttack3,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Player_Attack4:
-			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack4);
+			
+			if(immedilate)
+				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack4);
 			PlayAnimation(mAttack4,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 
 		case PlayerDataClass.PlayerActionCommand.Player_Skill1:
-			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
+			
+			if(immedilate)
+				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
 			PlayAnimation(mSkill1,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Player_BeHit:
-			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.BeHit);
+			
+			if(immedilate)
+				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.BeHit);
 			PlayAnimation(mBeHit,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Player_Die:
-			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
+			
+			if(immedilate)
+				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
 			PlayAnimation(mDie,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Player_Idel:
-			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
+			
+			if(immedilate)
+				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
 			PlayAnimation(mIdel,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Plyaer_SkillIdel:
-			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
+			
+			if(immedilate)
+				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
 			PlayAnimation(mSkillIdel,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Player_Walk:
-			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Walk);
+			
+			if(immedilate)
+				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Walk);
 			PlayAnimation(mWalk,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;		
 		
 		case PlayerDataClass.PlayerActionCommand.Player_Jump:
-			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Jump);
+			
+			if(immedilate)
+				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Jump);
 			PlayAnimation(mJump,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 		
 		case PlayerDataClass.PlayerActionCommand.Player_Rush:
-			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Rush);
+			
+			if(immedilate)
+				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Rush);
 			PlayAnimation(mRush,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 		
 		case PlayerDataClass.PlayerActionCommand.Player_Catch:
-			ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Catch);
+			
+			if(immedilate)
+				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Catch);
 			PlayAnimation(mCatch,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
@@ -298,13 +378,14 @@ public class PlayerAnimationControl : MonoBehaviour {
 	void OnAttackFinish(int attackId)
     {
         main.OnAttackAnimationFinish(attackId);
-		Debug.Log("OnAttackFinish == "+ attackId);
+	//	Debug.Log("OnAttackFinish == "+ attackId);
 		if(attackId == 4)
 		{
 			attackCheckId = 0;
 			return;
 		}
-		attackCheckPoint = true;
+		if(PlayerDataClass.targetAttackPos == Vector3.zero)
+			attackCheckPoint = true;
 		attackCheckId = (byte)attackId;
     }
 
@@ -312,7 +393,7 @@ public class PlayerAnimationControl : MonoBehaviour {
     {
         main.OnAttackFinish(attackId);
 
-		Debug.Log("OnAnimationFinish == "+ attackId);
+//		Debug.Log("OnAnimationFinish == "+ attackId);
 		switch(attackId)
 		{
 		case 1:
@@ -350,7 +431,28 @@ public class PlayerAnimationControl : MonoBehaviour {
         main.OnSkillShootPoint(skillId);
 	}
 	
-	
-	
+ 	void ChangeAnimationState(int actionId)
+	{
+		switch(actionId)
+		{
+		case 11: //run  011 
+//			Debug.Log(mAnimationState+"   "+isQueueAnimation);
+			if(mAnimationState == PlayerAnimationState.Attack1
+				||mAnimationState == PlayerAnimationState.Attack2
+				||mAnimationState == PlayerAnimationState.Attack3
+				||mAnimationState == PlayerAnimationState.Attack4)
+			{
+				if(isQueueAnimation)
+				{
+			//		Debug.Log("queue run");
+					isQueueAnimation = false;
+					mAnimationState = PlayerAnimationState.Run;
+					ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Run);
+				}
+			}
+			break;
+		}
+	}
+
 	
 }

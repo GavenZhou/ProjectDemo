@@ -69,7 +69,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			||moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Trot
 			||moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Walk)) 
 		{
-			if(PlayerDataClass.targetAttackPos != Vector3.zero)
+			if(PlayerDataClass.isChangeToRun == true)
             	mTarget = player.GetNearestAttackTarget(PlayerDataClass.targetAttackPos-transform.position);// transform.forward);
 			else 
 				mTarget = player.GetNearestAttackTarget(transform.forward);
@@ -82,7 +82,11 @@ public class PlayerMainLogic : MonoBehaviour {
 			if(mTarget != null)
 			{
 				Debug.Log("there...........");
-				ContinueAttack();
+				if(PlayerDataClass.isChangeToRun == false)
+				{
+					TargetTheEnemy(mTarget.position);
+					ContinueAttack();
+				}
 				return;
 			}
 			else
@@ -97,13 +101,17 @@ public class PlayerMainLogic : MonoBehaviour {
 		
 		if(mTarget != null&& PlayerDataClass.AttackStart == false)
 		{
-			Debug.Log("here...........");
-			//turn to the target
-			TargetTheEnemy(mTarget.position);
-			PlayerDataClass.AttackStart = true;
-			// attack!
-			AttackAfterRun();
-			return;
+			
+			if(PlayerDataClass.isChangeToRun == false)
+			{
+				Debug.Log("here...........");
+				//turn to the target
+				TargetTheEnemy(mTarget.position);
+				PlayerDataClass.AttackStart = true;
+				// attack!
+				AttackAfterRun();
+				return;
+			}
 		}
 		
 		CheckMoveState();
@@ -120,6 +128,7 @@ public class PlayerMainLogic : MonoBehaviour {
 				Debug.Log("tingdun Player_Attack2");
 				aniControlScript.attackIdNow = 2;
 				aniControlScript.SetAttackAnimationTime(2,0);
+			moveBaseScript.SetAttackMoveTime(2,0);
 				mAttackCdTime = Time.time;
 				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack2,true);
 				break;
@@ -129,6 +138,7 @@ public class PlayerMainLogic : MonoBehaviour {
 				Debug.Log("tingdun Player_Attack3");
 				aniControlScript.attackIdNow = 3;
 				aniControlScript.SetAttackAnimationTime(3,0);
+			moveBaseScript.SetAttackMoveTime(3,0);
 				mAttackCdTime = Time.time;
 				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack3,true);
 				break;
@@ -138,6 +148,7 @@ public class PlayerMainLogic : MonoBehaviour {
 				mContinueAttack = false;
 				aniControlScript.attackIdNow = 0;
 				aniControlScript.SetAttackAnimationTime(4,0);
+			moveBaseScript.SetAttackMoveTime(4,0);
 				mAttackCdTime = Time.time;
 				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack4,true);
 				break;
@@ -161,6 +172,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			aniControlScript.attackIdNow = 2;
 			Debug.Log("lianxu Player_Attack2");
 			aniControlScript.SetAttackAnimationTime(2,0.2f);
+			moveBaseScript.SetAttackMoveTime(2,0.2f);
 			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack2,true);
 			break;
 			
@@ -169,6 +181,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			aniControlScript.attackIdNow = 3;
 			mAttackCdTime = Time.time;
 			aniControlScript.SetAttackAnimationTime(3,0.2f);
+			moveBaseScript.SetAttackMoveTime(3,0.2f);
 			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack3,true);
 			break;
 			
@@ -178,6 +191,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			mContinueAttack = false;
 			mAttackCdTime = Time.time;
 			aniControlScript.SetAttackAnimationTime(4,0.2f);
+			moveBaseScript.SetAttackMoveTime(4,0.2f);
 			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack4,true);
 			break;
 			
@@ -190,10 +204,7 @@ public class PlayerMainLogic : MonoBehaviour {
 	void CheckMoveState()
 	{
 		if(moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Run)
-		{
-			if(moveBaseScript.mRunTurnState == PlayerMoveBase.PlayerRunTurnState.Stop)
-				PlayerDataClass.targetAttackPos = Vector3.zero;
-			
+		{	
 			if(PlayerDataClass.isSpecialAttack == false)
 			{
 				if(PlayerDataClass.CheckSpecialAttack())
@@ -227,40 +238,45 @@ public class PlayerMainLogic : MonoBehaviour {
 			break;
 			
 		case PlayerMoveBase.PlayerMovementState.Attack1Over:
-			Debug.Log("Attack1Over");
+			Debug.Log("Player_Trot Attack1Over");
 			mContinueAttack = true;
 			PlayerDataClass.AttackStart = false;
 			aniControlScript.SetAttackAnimationTime(2,0);
-			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
+			if(PlayerDataClass.isChangeToRun == false)
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
 			mTarget = null;
 			break;
 			
 		case PlayerMoveBase.PlayerMovementState.Attack2Over:
-			Debug.Log("Attack2Over");
+			Debug.Log("Player_Trot Attack2Over");
 			mContinueAttack = true;
 			PlayerDataClass.AttackStart = false;
 			aniControlScript.SetAttackAnimationTime(3,0);
-			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
+			if(PlayerDataClass.isChangeToRun == false)
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
 			mTarget = null;
 			break;
 			
 		case PlayerMoveBase.PlayerMovementState.Attack3Over:
-			Debug.Log("Attack3Over");
+			Debug.Log("Player_Trot  Attack3Over");
 			mContinueAttack = true;
 			PlayerDataClass.AttackStart = false;
 			aniControlScript.SetAttackAnimationTime(4,0);
-			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
+			if(PlayerDataClass.isChangeToRun == false)
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
 			mTarget = null;
 			break;		
 		
 		case PlayerMoveBase.PlayerMovementState.Attack4Over:
-			Debug.Log("Attack4Over");
+			Debug.Log("Player_Trot Attack4Over");
 			PlayerDataClass.AttackStart = false;
-			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
+			if(PlayerDataClass.isChangeToRun == false)
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
 			mTarget = null;
 			break;	
 		
 		case PlayerMoveBase.PlayerMovementState.JumpOver:
+			Debug.Log("Player_Trot  JumpOver");
 			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
 			mTarget = null;
 			break;
@@ -280,7 +296,6 @@ public class PlayerMainLogic : MonoBehaviour {
 	
 	public void ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand cmd, bool immedilate)
 	{
-//		Debug.Log("ChangeAnimationByActionCmd =====  "+cmd);
 		PlayerDataClass.PlayerNextActionSet(cmd);
 		aniControlScript.UpdateCmdFromControl(immedilate);
 	}
@@ -327,7 +342,8 @@ public class PlayerMainLogic : MonoBehaviour {
 				{
 					if(mTarget == null)
 					{
-				
+						PlayerDataClass.isChangeToRun = false;
+						PlayerDataClass.targetAttackPos = Vector3.zero;;
 						float dis = Vector3.Distance(targetPos,transform.position);
 						if(dis < 1)
 						{				
@@ -337,7 +353,10 @@ public class PlayerMainLogic : MonoBehaviour {
 						{
 							moveBaseScript.targetPos = targetPos;
 							if(moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Run)
+							{
 								ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,false);
+								
+							}
 							else
 								ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,true);
 						}
@@ -349,7 +368,8 @@ public class PlayerMainLogic : MonoBehaviour {
 					mTarget = null;
 					PlayerDataClass.targetAttackPos = targetPos;
 					moveBaseScript.targetPos = targetPos;
-					Debug.Log("xx");
+					Debug.Log("xxxxxxx");
+					PlayerDataClass.isChangeToRun = true;
 					ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,false);
 				}
 			}
@@ -378,7 +398,9 @@ public class PlayerMainLogic : MonoBehaviour {
 			break;	
 		
 		case TouchState.AFingerHoldStop:
-			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
+			Debug.Log("Trot here");
+			if(PlayerDataClass.isChangeToRun == false)
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
             mTouchState = TouchState.None;
 			break;
 			
@@ -414,8 +436,8 @@ public class PlayerMainLogic : MonoBehaviour {
 	Vector3 RayColliderByTapPos(Vector3 pos)
 	{
 		// NGUI area
-		if(pos.x > Screen.width *0.8f)
-			return Vector3.zero;
+	//	if(pos.x > Screen.width *0.8f)
+	//		return Vector3.zero;
 		
 		Ray ray1 = Camera.mainCamera.ScreenPointToRay(pos);
 		
@@ -499,5 +521,8 @@ public class PlayerMainLogic : MonoBehaviour {
     {
         pickupSfx.GetComponent<particleControl>().turnOn = true;
     }
+	
+	
+
 
 }

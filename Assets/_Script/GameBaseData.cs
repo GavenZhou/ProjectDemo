@@ -11,6 +11,8 @@ namespace GameBaseData
 		
 		public static bool isSpecialAttack;
 		
+		public static bool isChangeToRun;
+		
 		// 20 monster at most
 		//todo
 		public static Transform[] AllMonsterInAttackArea = new Transform[20];

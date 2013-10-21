@@ -15692,7 +15692,7 @@ Animation:
   m_Animation: {fileID: 7400000, guid: 4056888dd36bd3044b93728ab1299db9, type: 3}
   m_Animations:
   - {fileID: 7400000, guid: 4056888dd36bd3044b93728ab1299db9, type: 3}
-  - {fileID: 7400000, guid: 6e55d4a5c66654f4e80dc63864571da3, type: 3}
+  - {fileID: 7400000, guid: bda567f21fa704bbca1a79d56c24c1fc, type: 2}
   - {fileID: 7400000, guid: c9bd9b4134c9c7b41bdb78061c03262a, type: 3}
   - {fileID: 7400000, guid: 3bcadac27b3d7654aa0d221c96f5d3b3, type: 3}
   - {fileID: 7400000, guid: 42e0314fccc282140adbce2be99ac2f6, type: 2}
@@ -21413,6 +21413,10 @@ Prefab:
       propertyPath: m_LocalPosition.z
       value: .00324974046
       objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: 15dc01127aae5b649a58b5f79f0514df, type: 3}
+      propertyPath: m_Animations.Array.data[1]
+      value: 
+      objectReference: {fileID: 7400000, guid: bda567f21fa704bbca1a79d56c24c1fc, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 15dc01127aae5b649a58b5f79f0514df, type: 3}
   m_RootGameObject: {fileID: 838678678}
@@ -22703,6 +22707,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e8950eb23f1793b4198394e349c2a755, type: 2}
+    - target: {fileID: 19800004, guid: 247e4ccce20ab2142a71610d20c3c02b, type: 2}
+      propertyPath: moveWithTransform
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 247e4ccce20ab2142a71610d20c3c02b, type: 2}
   m_RootGameObject: {fileID: 1690364165}
@@ -24628,7 +24636,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1352525402}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 453.741516, y: 0, z: -176.088531}
+  m_LocalPosition: {x: 483.34967, y: 0, z: -176.088531}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1880133114}
@@ -28194,7 +28202,7 @@ ParticleSystem:
   looping: 0
   prewarm: 0
   playOnAwake: 0
-  moveWithTransform: 1
+  moveWithTransform: 0
   InitialModule:
     enabled: 1
     startLifetime:
@@ -35760,6 +35768,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8841a0e1da234ee48ede8976f8c35b0, type: 3}
   m_Name: 
+  mRunTurnState: 1
   curMovementState: 1
   mSpeed: 0
   mMoveTimeLeft: 0
