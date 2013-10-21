@@ -68,7 +68,6 @@ public class CombineChildrenPrime : MonoBehaviour
             return;
         }
         Component[] filters = GetComponentsInChildren(typeof(MeshFilter));
-        List<GameObject> objs = new List<GameObject>();
         foreach (Component m in filters) {
             if (m.gameObject.name == "Combined mesh" && m.renderer.enabled == true) {
                 GameObject.DestroyImmediate(m.gameObject);
