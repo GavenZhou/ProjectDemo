@@ -132,13 +132,13 @@ public class PlayerAnimationControl : MonoBehaviour {
 	{
 		if(immedilate)
 		{
-			Debug.Log(state.name);
+//			Debug.Log(state.name);
 			//this.animation.Stop();
 			this.animation.CrossFade(state.name,0.2f);
 		}
 		else
 		{
-			Debug.Log(state.name);
+//			Debug.Log(state.name);
 			this.animation.CrossFadeQueued(state.name);
 		}
 	}
@@ -349,5 +349,8 @@ public class PlayerAnimationControl : MonoBehaviour {
         // create the skill area here	
         main.OnSkillShootPoint(skillId);
 	}
+	
+	
+	
 	
 }

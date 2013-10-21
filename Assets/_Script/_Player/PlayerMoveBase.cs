@@ -3,6 +3,14 @@ using System.Collections;
 
 public class PlayerMoveBase : MonoBehaviour {
 	
+	public enum PlayerRunTurnState
+	{
+		Turning,
+		Stop,
+	};
+	
+	public PlayerRunTurnState mRunTurnState = PlayerRunTurnState.Stop;
+	
 	public enum PlayerMovementState
 	{
 		None,
@@ -136,7 +144,15 @@ public class PlayerMoveBase : MonoBehaviour {
 		
 		if(curMovementState == PlayerMovementState.Run)
 		{
-			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection.normalized), Time.deltaTime * 10);
+			Quaternion targetRotation = Quaternion.LookRotation(lookDirection.normalized);
+			transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
+			
+			if(transform.rotation != targetRotation)
+				mRunTurnState = PlayerRunTurnState.Turning;
+			else
+			{
+				mRunTurnState = PlayerRunTurnState.Stop;
+			}
 		}
 	}
 	

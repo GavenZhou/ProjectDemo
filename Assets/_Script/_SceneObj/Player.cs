@@ -100,12 +100,12 @@ public class Player : Actor {
         }
     }
 
-    public Transform GetNearestAttackTarget() {
+    public Transform GetNearestAttackTarget(Vector3 dir) {
 
         Vector3 _pos = transform.position;
         Vector3 _dir = transform.forward;
         CombatUtility.CombatParam_AttackRange param
-            = CombatUtility.GetConeParam(_pos, _dir, attackAngle * Mathf.Deg2Rad, attackRadius);
+            = CombatUtility.GetConeParam(_pos, dir, attackAngle * Mathf.Deg2Rad, attackRadius);
 
         List<Mob> targets = CombatUtility.GetInteractiveMobs(SceneMng.instance, ref param);
         Mob mob = CombatUtility.GetNearestObject<Mob>(SceneMng.instance, transform, ref targets);
