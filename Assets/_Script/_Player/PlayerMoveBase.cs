@@ -99,22 +99,22 @@ public class PlayerMoveBase : MonoBehaviour {
 		player_Walk.leftTime = 1.5f;
 		player_Walk.realLeftTime = player_Walk.leftTime;
 		
-		player_Attack1.startSpeed = 12;
-		player_Attack1.acceleration = -30;
+		player_Attack1.startSpeed = 10;
+		player_Attack1.acceleration = -50;
 		player_Attack1.leftTime =1.0f;
 		player_Attack1.realLeftTime = player_Attack1.leftTime;
 		
-		player_Attack2.startSpeed = 15;
-		player_Attack2.acceleration = -30; 
+		player_Attack2.startSpeed = 12;
+		player_Attack2.acceleration = -50; 
 		player_Attack2.leftTime = 1.1f;
 		player_Attack2.realLeftTime = player_Attack2.leftTime;
 		
-		player_Attack3.startSpeed = 15;
-		player_Attack3.acceleration = -30;
+		player_Attack3.startSpeed = 12;
+		player_Attack3.acceleration = -50;
 		player_Attack3.leftTime = 1.1f;
 		player_Attack3.realLeftTime = player_Attack3.leftTime;
 		
-		player_Attack4.startSpeed = 20;
+		player_Attack4.startSpeed = 15;
 		player_Attack4.acceleration = -50;
 		player_Attack4.leftTime =1.6f;
 		player_Attack4.realLeftTime = player_Attack4.leftTime;		
