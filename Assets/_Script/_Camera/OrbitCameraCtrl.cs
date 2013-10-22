@@ -4,7 +4,6 @@ using System.Collections;
 
 public class OrbitCameraCtrl : MonoBehaviour
 {
-
     ///////////////////////////////////////////////////////////////////////////////
     // static
     ///////////////////////////////////////////////////////////////////////////////
@@ -64,15 +63,21 @@ public class OrbitCameraCtrl : MonoBehaviour
 
     void Awake() {
         instance = this;
-        mainCamera = GetComponentInChildren<Camera>();
     }
 
     void Start() {
+        cameraAnim = cameraAnchor.animation;
+        transform.localPosition = GetLookAtPoint();
+        transform.localRotation = mainCamera.transform.rotation;
+        float distance = Vector3.Distance(transform.position, mainCamera.transform.position);
+        cameraAnchor.transform.localPosition = new Vector3(0, 0, -1 * distance);
+        mainCamera.transform.parent = cameraAnchor.transform;
+        mainCamera.transform.localPosition = Vector3.zero;
+        mainCamera.transform.localRotation = Quaternion.identity;
+
         cameraRotUp = transform.eulerAngles.x;
         cameraRotSide = transform.eulerAngles.y;
         distanceNoCollision = -cameraAnchor.localPosition.z;
-
-        cameraAnim = cameraAnchor.animation;
     }
 
 
@@ -218,7 +223,6 @@ public class OrbitCameraCtrl : MonoBehaviour
     float curYVel = 0.0f;
     float curZVel = 0.0f;
     float curZoomVel = 0.0f;
-    public bool showDebugCollider = false;
 
     void UpdateTransform() {
 
