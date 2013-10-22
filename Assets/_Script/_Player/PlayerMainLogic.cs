@@ -324,14 +324,9 @@ public class PlayerMainLogic : MonoBehaviour {
 				// turn to the direction first
 			//	SetPlayerToRun(targetPos-this.transform.position);
 				
-				if(directionIcon.renderer.enabled == true)
-				{
-					directionIcon.renderer.enabled = false;
-					return;
-				}
-				
 				if(aniControlScript.isSkillPlaying)
 				{
+					//todo
 					return;
 				}
 				
@@ -491,12 +486,12 @@ public class PlayerMainLogic : MonoBehaviour {
 	
 	public void OnStartSkill(int skillId)
 	{
-		directionIcon.renderer.enabled = false;
 	}
 
 	public void OnSkillShootPoint(int skillId)
 	{
 		Time.timeScale = 1;
+		directionIcon.renderer.enabled = false;
         player.PlaySkill(skillId);
 	}
 
