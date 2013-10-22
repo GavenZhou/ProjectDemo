@@ -131,11 +131,11 @@ public static class CombatUtility {
     static int maxMobTemplate = 2;
     static Vector3[] mobBornLoctions
         = {
-            new Vector3(-3.60f, 0, 6.94f),
-            new Vector3(-0.86f, 0, -8.60f),
-            new Vector3(7.79f, 0, -4.27f),
-            new Vector3(6.24f, 0, 5.57f),
-            new Vector3(-7.72f, 0, -2.00f),
+            new Vector3(16f, 0, 16f),
+            new Vector3(18f, 0, 18f),
+            new Vector3(16f, 0, 18f),
+            new Vector3(18f, 0, 16f),
+            new Vector3(20f, 0, 20f),
           };
 
     public static int GenNextMobID() {
