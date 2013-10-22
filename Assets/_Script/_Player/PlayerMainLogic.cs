@@ -271,7 +271,6 @@ public class PlayerMainLogic : MonoBehaviour {
 			break;		
 		
 		case PlayerMoveBase.PlayerMovementState.Attack4Over:
-		//	Debug.Log("Player_Trot Attack4Over");
 			PlayerDataClass.AttackStart = false;
 			if(PlayerDataClass.isChangeToRun == false)
 				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
@@ -366,7 +365,12 @@ public class PlayerMainLogic : MonoBehaviour {
 					}
 					else
 					{
-						AttackAfterRun();
+						mTarget = player.GetNearestAttackTarget(transform.forward);
+						if(mTarget != null)
+						{
+							TargetTheEnemy(mTarget.position);
+							AttackAfterRun();
+						}
 					}
 				}
 				else
@@ -411,7 +415,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			break;	
 		
 		case TouchState.AFingerHoldStop:
-			Debug.Log("Trot here");
+		//	Debug.Log("Trot here");
 			if(PlayerDataClass.isChangeToRun == false)
 				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
             mTouchState = TouchState.None;
@@ -490,6 +494,7 @@ public class PlayerMainLogic : MonoBehaviour {
 	
 	void NGUI_Skill1()
 	{			
+	//	Debug.Log("reset zero");
 		moveBaseScript.targetPos = Vector3.zero;
 		Time.timeScale = 0.2f;
 		ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Skill1,true);

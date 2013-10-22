@@ -246,14 +246,12 @@ public class PlayerAnimationControl : MonoBehaviour {
 		
 		case PlayerDataClass.PlayerActionCommand.Player_Trot:
 			PlayAnimationCrossFade(mRun,immedilate);
-			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Trot);
 			PlayerDataClass.PlayerNextActionReset();
 			break;	
 			
 		case PlayerDataClass.PlayerActionCommand.Player_Attack1:
-			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack1);
 			PlayAnimationCrossFade(mAttack1,immedilate);
@@ -261,7 +259,6 @@ public class PlayerAnimationControl : MonoBehaviour {
 			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Player_Attack2:
-			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack2);
 			PlayAnimationCrossFade(mAttack2,immedilate);
@@ -277,7 +274,6 @@ public class PlayerAnimationControl : MonoBehaviour {
 			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Player_Attack4:
-			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack4);
 			PlayAnimationCrossFade(mAttack4,immedilate);
@@ -292,7 +288,6 @@ public class PlayerAnimationControl : MonoBehaviour {
 			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Player_BeHit:
-			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.BeHit);
 			PlayAnimationCrossFade(mBeHit,immedilate);
@@ -300,7 +295,6 @@ public class PlayerAnimationControl : MonoBehaviour {
 			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Player_Die:
-			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
 			PlayAnimationCrossFade(mDie,immedilate);
@@ -365,10 +359,8 @@ public class PlayerAnimationControl : MonoBehaviour {
 	// change the movementState by animation clip
 	void ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState mState)
 	{
-//		Debug.Log("ChangeMovementStateByAnimation ========    "+mState);
 		moveScript.SetMovementState(mState);
 	}
-	
 		
 
 	void OnAnimationStart(int attackId)
