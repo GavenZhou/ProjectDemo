@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3bcadac27b3d7654aa0d221c96f5d3b3
+guid: 99ca90eea292b934e9f80a29f7ac275a
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
@@ -56,23 +56,18 @@ ModelImporter:
     100100: Bone H_03
     100102: //RootNode
     100104: S_Abdomen
-    100106: S_BF
-    100108: S_Head
-    100110: S_LF
-    100112: S_LFA
-    100114: S_LH
-    100116: S_LT
-    100118: S_LUA
-    100120: S_RF
-    100122: S_RFA
-    100124: S_RH
-    100126: S_RT
-    100128: S_RUA
-    100130: S_Spine
-    100132: PICK_ROOT
-    100134: S_BB
-    100136: S_BL
-    100138: S_BR
+    100106: S_Head
+    100108: S_LF
+    100110: S_LFA
+    100112: S_LH
+    100114: S_LT
+    100116: S_LUA
+    100118: S_RF
+    100120: S_RFA
+    100122: S_RH
+    100124: S_RT
+    100126: S_RUA
+    100128: S_Spine
     400000: B_LH
     400002: B_LP
     400004: B_RH
@@ -126,31 +121,23 @@ ModelImporter:
     400100: Bone H_03
     400102: //RootNode
     400104: S_Abdomen
-    400106: S_BF
-    400108: S_Head
-    400110: S_LF
-    400112: S_LFA
-    400114: S_LH
-    400116: S_LT
-    400118: S_LUA
-    400120: S_RF
-    400122: S_RFA
-    400124: S_RH
-    400126: S_RT
-    400128: S_RUA
-    400130: S_Spine
-    400132: PICK_ROOT
-    400134: S_BB
-    400136: S_BL
-    400138: S_BR
-    2300000: PICK_ROOT
-    3300000: PICK_ROOT
-    4300000: PICK_ROOT
+    400106: S_Head
+    400108: S_LF
+    400110: S_LFA
+    400112: S_LH
+    400114: S_LT
+    400116: S_LUA
+    400118: S_RF
+    400120: S_RFA
+    400122: S_RH
+    400124: S_RT
+    400126: S_RUA
+    400128: S_Spine
     7400000: Take 001
     9500000: //RootNode
     11100000: //RootNode
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
   animations:

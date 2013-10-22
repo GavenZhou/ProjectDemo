@@ -81,7 +81,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			mTarget = player.GetNearestAttackTarget(transform.forward);
 			if(mTarget != null)
 			{
-				Debug.Log("there...........");
+//				Debug.Log("there...........");
 				if(PlayerDataClass.isChangeToRun == false)
 				{
 					TargetTheEnemy(mTarget.position);
@@ -104,7 +104,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			
 			if(PlayerDataClass.isChangeToRun == false)
 			{
-				Debug.Log("here...........");
+//				Debug.Log("here...........");
 				//turn to the target
 				TargetTheEnemy(mTarget.position);
 				PlayerDataClass.AttackStart = true;
@@ -125,30 +125,30 @@ public class PlayerMainLogic : MonoBehaviour {
 			{
 			case 1:
 				mContinueAttack = false;
-				Debug.Log("tingdun Player_Attack2");
+	//			Debug.Log("tingdun Player_Attack2");
 				aniControlScript.attackIdNow = 2;
 				aniControlScript.SetAttackAnimationTime(2,0);
-			moveBaseScript.SetAttackMoveTime(2,0);
+				moveBaseScript.SetAttackMoveTime(2,0);
 				mAttackCdTime = Time.time;
 				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack2,true);
 				break;
 				
 			case 2:
 				mContinueAttack = false;
-				Debug.Log("tingdun Player_Attack3");
+		//		Debug.Log("tingdun Player_Attack3");
 				aniControlScript.attackIdNow = 3;
 				aniControlScript.SetAttackAnimationTime(3,0);
-			moveBaseScript.SetAttackMoveTime(3,0);
+				moveBaseScript.SetAttackMoveTime(3,0);
 				mAttackCdTime = Time.time;
 				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack3,true);
 				break;
 				
 			case 3:
-				Debug.Log("tingdun Player_Attack4");
+//				Debug.Log("tingdun Player_Attack4");
 				mContinueAttack = false;
 				aniControlScript.attackIdNow = 0;
 				aniControlScript.SetAttackAnimationTime(4,0);
-			moveBaseScript.SetAttackMoveTime(4,0);
+				moveBaseScript.SetAttackMoveTime(4,0);
 				mAttackCdTime = Time.time;
 				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack4,true);
 				break;
@@ -170,14 +170,14 @@ public class PlayerMainLogic : MonoBehaviour {
 		case 1:
 			mAttackCdTime = Time.time;
 			aniControlScript.attackIdNow = 2;
-			Debug.Log("lianxu Player_Attack2");
+//			Debug.Log("lianxu Player_Attack2");
 			aniControlScript.SetAttackAnimationTime(2,0.2f);
 			moveBaseScript.SetAttackMoveTime(2,0.2f);
 			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack2,true);
 			break;
 			
 		case 2:
-			Debug.Log("lianxu Player_Attack3");
+	//		Debug.Log("lianxu Player_Attack3");
 			aniControlScript.attackIdNow = 3;
 			mAttackCdTime = Time.time;
 			aniControlScript.SetAttackAnimationTime(3,0.2f);
@@ -186,7 +186,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			break;
 			
 		case 3:
-			Debug.Log("lianxu Player_Attack4");
+//			Debug.Log("lianxu Player_Attack4");
 			aniControlScript.attackIdNow = 0;
 			mContinueAttack = false;
 			mAttackCdTime = Time.time;
@@ -238,7 +238,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			break;
 			
 		case PlayerMoveBase.PlayerMovementState.Attack1Over:
-			Debug.Log("Player_Trot Attack1Over");
+	//		Debug.Log("Player_Trot Attack1Over");
 			mContinueAttack = true;
 			PlayerDataClass.AttackStart = false;
 			aniControlScript.SetAttackAnimationTime(2,0);
@@ -248,7 +248,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			break;
 			
 		case PlayerMoveBase.PlayerMovementState.Attack2Over:
-			Debug.Log("Player_Trot Attack2Over");
+		//	Debug.Log("Player_Trot Attack2Over");
 			mContinueAttack = true;
 			PlayerDataClass.AttackStart = false;
 			aniControlScript.SetAttackAnimationTime(3,0);
@@ -258,7 +258,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			break;
 			
 		case PlayerMoveBase.PlayerMovementState.Attack3Over:
-			Debug.Log("Player_Trot  Attack3Over");
+		//	Debug.Log("Player_Trot  Attack3Over");
 			mContinueAttack = true;
 			PlayerDataClass.AttackStart = false;
 			aniControlScript.SetAttackAnimationTime(4,0);
@@ -268,7 +268,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			break;		
 		
 		case PlayerMoveBase.PlayerMovementState.Attack4Over:
-			Debug.Log("Player_Trot Attack4Over");
+		//	Debug.Log("Player_Trot Attack4Over");
 			PlayerDataClass.AttackStart = false;
 			if(PlayerDataClass.isChangeToRun == false)
 				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
@@ -276,7 +276,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			break;	
 		
 		case PlayerMoveBase.PlayerMovementState.JumpOver:
-			Debug.Log("Player_Trot  JumpOver");
+	//		Debug.Log("Player_Trot  JumpOver");
 			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
 			mTarget = null;
 			break;
@@ -361,6 +361,10 @@ public class PlayerMainLogic : MonoBehaviour {
 								ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,true);
 						}
 					}
+					else
+					{
+						AttackAfterRun();
+					}
 				}
 				else
 				{
@@ -368,7 +372,7 @@ public class PlayerMainLogic : MonoBehaviour {
 					mTarget = null;
 					PlayerDataClass.targetAttackPos = targetPos;
 					moveBaseScript.targetPos = targetPos;
-					Debug.Log("xxxxxxx");
+				//	Debug.Log("xxxxxxx");
 					PlayerDataClass.isChangeToRun = true;
 					ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,false);
 				}

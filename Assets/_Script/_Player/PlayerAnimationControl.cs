@@ -93,7 +93,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 	//	mCatch.layer = 1;
 		
 		mJump = this.animation["1_031"];
-		mJump.layer = 1;
+		mJump.layer = 4;
 		
 		mAttack1 = this.animation["1_101"];
 		mAttack1.layer = 3;
