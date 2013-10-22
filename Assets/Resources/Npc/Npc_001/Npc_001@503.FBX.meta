@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e5550c3fb896e4f119b549cd2c32c2df
+guid: f9217da4246bca34aa77f1720c922f54
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
@@ -48,26 +48,24 @@ ModelImporter:
     100084: Bip01 R UpperArm
     100086: Bip01 Spine
     100088: Bip01 Spine1
-    100090: Bone F_01
-    100092: Bone F_02
-    100094: Bone F_03
-    100096: Bone H_01
-    100098: Bone H_02
-    100100: Bone H_03
-    100102: //RootNode
-    100104: S_Abdomen
-    100106: S_Head
-    100108: S_LF
-    100110: S_LFA
-    100112: S_LH
-    100114: S_LT
-    100116: S_LUA
-    100118: S_RF
-    100120: S_RFA
-    100122: S_RH
-    100124: S_RT
-    100126: S_RUA
-    100128: S_Spine
+    100090: Bone01
+    100092: Bone02
+    100094: Bone03
+    100096: //RootNode
+    100098: S_Abdomen
+    100100: S_BB
+    100102: S_Head
+    100104: S_LF
+    100106: S_LFA
+    100108: S_LH
+    100110: S_LT
+    100112: S_LUA
+    100114: S_RF
+    100116: S_RFA
+    100118: S_RH
+    100120: S_RT
+    100122: S_RUA
+    100124: S_Spine
     400000: B_LH
     400002: B_LP
     400004: B_RH
@@ -113,26 +111,24 @@ ModelImporter:
     400084: Bip01 R UpperArm
     400086: Bip01 Spine
     400088: Bip01 Spine1
-    400090: Bone F_01
-    400092: Bone F_02
-    400094: Bone F_03
-    400096: Bone H_01
-    400098: Bone H_02
-    400100: Bone H_03
-    400102: //RootNode
-    400104: S_Abdomen
-    400106: S_Head
-    400108: S_LF
-    400110: S_LFA
-    400112: S_LH
-    400114: S_LT
-    400116: S_LUA
-    400118: S_RF
-    400120: S_RFA
-    400122: S_RH
-    400124: S_RT
-    400126: S_RUA
-    400128: S_Spine
+    400090: Bone01
+    400092: Bone02
+    400094: Bone03
+    400096: //RootNode
+    400098: S_Abdomen
+    400100: S_BB
+    400102: S_Head
+    400104: S_LF
+    400106: S_LFA
+    400108: S_LH
+    400110: S_LT
+    400112: S_LUA
+    400114: S_RF
+    400116: S_RFA
+    400118: S_RH
+    400120: S_RT
+    400122: S_RUA
+    400124: S_Spine
     7400000: Take 001
     9500000: //RootNode
     11100000: //RootNode

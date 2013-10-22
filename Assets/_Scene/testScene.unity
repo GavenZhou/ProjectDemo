@@ -201,7 +201,7 @@ ParticleSystem:
   randomSeed: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 0
   InitialModule:
     enabled: 1
@@ -1517,7 +1517,7 @@ ParticleSystem:
   randomSeed: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 0
   InitialModule:
     enabled: 1
@@ -4032,7 +4032,7 @@ ParticleSystem:
   randomSeed: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 0
   InitialModule:
     enabled: 1
@@ -5266,7 +5266,7 @@ ParticleSystem:
   randomSeed: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 0
   InitialModule:
     enabled: 1
@@ -8668,7 +8668,7 @@ ParticleSystem:
   randomSeed: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 0
   InitialModule:
     enabled: 1
@@ -11704,7 +11704,7 @@ ParticleSystem:
   randomSeed: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 0
   InitialModule:
     enabled: 1
@@ -16939,7 +16939,7 @@ ParticleSystem:
   randomSeed: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 0
   InitialModule:
     enabled: 1
@@ -20633,19 +20633,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400040, guid: 15dc01127aae5b649a58b5f79f0514df, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -3.6975431e-14
+      value: -3.69754344e-14
       objectReference: {fileID: 0}
     - target: {fileID: 400040, guid: 15dc01127aae5b649a58b5f79f0514df, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 7.43818873e-07
+      value: 7.4381893e-07
       objectReference: {fileID: 0}
     - target: {fileID: 400040, guid: 15dc01127aae5b649a58b5f79f0514df, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -.268178165
+      value: -.268178195
       objectReference: {fileID: 0}
     - target: {fileID: 400040, guid: 15dc01127aae5b649a58b5f79f0514df, type: 3}
       propertyPath: m_LocalRotation.w
-      value: .96336931
+      value: .96336937
       objectReference: {fileID: 0}
     - target: {fileID: 400040, guid: 15dc01127aae5b649a58b5f79f0514df, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21237,19 +21237,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 15dc01127aae5b649a58b5f79f0514df, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 1.25607479e-15
+      value: 1.2560749e-15
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 15dc01127aae5b649a58b5f79f0514df, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -1.2560731e-15
+      value: -1.2560732e-15
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 15dc01127aae5b649a58b5f79f0514df, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -.707106292
+      value: -.707106352
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 15dc01127aae5b649a58b5f79f0514df, type: 3}
       propertyPath: m_LocalRotation.w
-      value: .707107246
+      value: .707107306
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 15dc01127aae5b649a58b5f79f0514df, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23542,7 +23542,7 @@ ParticleSystem:
   randomSeed: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 1
   InitialModule:
     enabled: 1
@@ -24826,8 +24826,8 @@ SkinnedMeshRenderer:
   - {fileID: 1165032563}
   m_RootBone: {fileID: 373943807}
   m_AABB:
-    m_Center: {x: .02275455, y: .184408754, z: -.0423221588}
-    m_Extent: {x: 1.10709643, y: .904758334, z: 1.045645}
+    m_Center: {x: .0174377561, y: .164765835, z: -.0451188684}
+    m_Extent: {x: 1.11241317, y: .924401283, z: 1.04844165}
   m_DirtyAABB: 0
 --- !u!1 &1422485408
 GameObject:
@@ -29423,7 +29423,7 @@ ParticleSystem:
   randomSeed: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 1
   InitialModule:
     enabled: 1
@@ -31177,7 +31177,7 @@ ParticleSystem:
   randomSeed: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 1
   InitialModule:
     enabled: 1
@@ -33489,7 +33489,7 @@ ParticleSystem:
   randomSeed: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 0
   InitialModule:
     enabled: 1
@@ -36149,7 +36149,7 @@ ParticleSystem:
   randomSeed: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 1
   InitialModule:
     enabled: 1
@@ -38744,7 +38744,7 @@ ParticleSystem:
   randomSeed: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 0
   InitialModule:
     enabled: 1
