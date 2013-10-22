@@ -240,10 +240,9 @@ public class OrbitCameraCtrl : MonoBehaviour
 
                 Vector3 camOffsetPos = cameraSrcPos + cameraAnchor.rotation * camOffset;
                 Vector3 targetToCamera = camOffsetPos - lookatPoint;
-                int layerMask = 1 << 1;
 
                 RaycastHit hit;
-                if (Physics.Raycast(lookatPoint, targetToCamera.normalized, out hit, distanceNoCollision, layerMask)) {
+                if (Physics.Raycast(lookatPoint, targetToCamera.normalized, out hit, distanceNoCollision, LayerManager.CameraColliderMask)) {
                     if (collided == false) {
                         collided = true;
                         curZoomDamping = 0.1f;

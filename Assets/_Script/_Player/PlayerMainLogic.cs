@@ -450,11 +450,9 @@ public class PlayerMainLogic : MonoBehaviour {
 		
 		Ray ray1 = Camera.mainCamera.ScreenPointToRay(pos);
 		
-		hit = Physics.RaycastAll(ray1,100,1<<1);
-		foreach(RaycastHit hit1 in hit)
-		{
-			if(hit1.transform.tag == "ground")
-				return hit1.point;
+		hit = Physics.RaycastAll(ray1,100, LayerManager.GroundMask);
+		foreach(RaycastHit hit1 in hit) {
+            return hit1.point;
 		}
 		return Vector3.zero;
 	}
