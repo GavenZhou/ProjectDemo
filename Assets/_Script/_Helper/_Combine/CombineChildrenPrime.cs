@@ -30,7 +30,7 @@ public class CombineChildrenPrime : MonoBehaviour
     bool combined = false;
 
     void Start() {
-        if (combined == false) {
+        if (combineOnStart && !combined) {
             StartCoroutine(CombineLate());
         }
     }
@@ -49,7 +49,7 @@ public class CombineChildrenPrime : MonoBehaviour
     }
 
     [ContextMenu("Combine All Childs In Editor")]
-    public void CallCombineOnAllChilds() {
+    public void CombineAllChilds() {
         CombineChildrenPrime[] c = gameObject.GetComponentsInChildren<CombineChildrenPrime>();
         int count = c.Length;
         for (int i = 0; i < count; i++) {
