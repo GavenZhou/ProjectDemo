@@ -102,7 +102,7 @@ public class EnemyAnimationControl : MonoBehaviour {
 			break;
 			
 		case EnemyMainLogic.EnemyState.Hover:
-			PlayAnimation(mWalk,immedilate);
+			PlayAnimation(mIdel,immedilate);
             //Debug.Log("mWalk");
 			ChangeMoveState(EnemyMoveBase.EnemyMovementState.Idel);
 			break;
@@ -120,7 +120,7 @@ public class EnemyAnimationControl : MonoBehaviour {
 			break;
 			
 		case EnemyMainLogic.EnemyState.Run:
-			PlayAnimation(mRun,immedilate);
+			PlayAnimation(mWalk,immedilate);
             //Debug.Log("mRun");
 			ChangeMoveState(EnemyMoveBase.EnemyMovementState.Run);
 			break;	

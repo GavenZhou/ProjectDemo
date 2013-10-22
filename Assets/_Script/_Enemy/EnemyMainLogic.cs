@@ -53,7 +53,7 @@ public class EnemyMainLogic : MonoBehaviour {
     }
 
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
 		
 		if(mState == EnemyState.Dead)
 		{

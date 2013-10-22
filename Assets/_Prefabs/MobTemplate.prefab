@@ -2036,7 +2036,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 755a10fc2a7b14da6a974c7892133321, type: 3}
   m_Name: 
-  mPatrolAreaDistance: 5
+  mPatrolAreaDistance: 20
   mHoverAreaDistance: 2
   mAttackCdTime: 5
   modelName: Npc
