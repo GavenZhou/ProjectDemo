@@ -19,9 +19,9 @@ RenderSettings:
   m_FogDensity: 1
   m_LinearFogStart: 25
   m_LinearFogEnd: 64
-  m_AmbientLight: {r: .494117647, g: .356862754, b: .137254909, a: 1}
+  m_AmbientLight: {r: 0, g: 0, b: 0, a: 1}
   m_SkyboxMaterial: {fileID: 0}
-  m_HaloStrength: .5
+  m_HaloStrength: .300000012
   m_FlareStrength: 1
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 0}
@@ -3773,6 +3773,22 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400008, guid: e1230ad00454ce743a5d41b17e1f1bc7, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: e1230ad00454ce743a5d41b17e1f1bc7, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: e1230ad00454ce743a5d41b17e1f1bc7, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: e1230ad00454ce743a5d41b17e1f1bc7, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e1230ad00454ce743a5d41b17e1f1bc7, type: 2}
   m_RootGameObject: {fileID: 1818639647}
@@ -7390,7 +7406,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 275396710}
   m_GameObject: {fileID: 370322518}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8cf077897e3e474448d1fe67d31914e6, type: 3}
   m_Name: 
@@ -7438,7 +7454,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 275396710}
   m_GameObject: {fileID: 372663316}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8cf077897e3e474448d1fe67d31914e6, type: 3}
   m_Name: 
@@ -21961,7 +21977,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 3
   m_Type: 1
-  m_Color: {r: .819607854, g: .80392158, b: .662745118, a: 1}
+  m_Color: {r: .641791046, g: .626464665, b: .488527507, a: 1}
   m_Intensity: .899999976
   m_Range: 10
   m_SpotAngle: 30
@@ -22819,10 +22835,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aeb84d200f58e4a8a83fea5c93accdf3, type: 3}
   m_Name: 
-  allowRotate: 0
-  allowZoom: 0
-  allowYaw: 0
-  allowPitch: 0
+  allowRotate: 1
+  allowZoom: 1
+  allowYaw: 1
+  allowPitch: 1
   moveDampingDuration: .100000001
   rotDampingDuration: .100000001
   zoomDamping: 10
@@ -24519,19 +24535,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 95e8efad15518604388401125691b4e2, type: 2}
       propertyPath: allowRotate
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 95e8efad15518604388401125691b4e2, type: 2}
       propertyPath: allowZoom
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 95e8efad15518604388401125691b4e2, type: 2}
       propertyPath: allowYaw
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 95e8efad15518604388401125691b4e2, type: 2}
       propertyPath: allowPitch
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 95e8efad15518604388401125691b4e2, type: 2}
       propertyPath: traceTarget
@@ -24665,7 +24681,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 275396710}
   m_GameObject: {fileID: 1476516662}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8cf077897e3e474448d1fe67d31914e6, type: 3}
   m_Name: 
@@ -33728,7 +33744,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 275396710}
   m_GameObject: {fileID: 1901187656}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8cf077897e3e474448d1fe67d31914e6, type: 3}
   m_Name: 
