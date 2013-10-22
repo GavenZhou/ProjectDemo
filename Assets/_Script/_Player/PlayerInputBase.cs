@@ -50,6 +50,7 @@ public class PlayerInputBase : MonoBehaviour {
 			{
 				if(mOneClick == false) // no tap before
 				{
+//					Debug.Log("tap x"+Input.mousePosition.x);
 					// click once
 					baseControlScript.mTouchState = PlayerMainLogic.TouchState.AFingerOneTap;
 					InputStateClass.touchPointPos = Input.mousePosition;
@@ -61,6 +62,7 @@ public class PlayerInputBase : MonoBehaviour {
 				{
 					// the second tap here
 					mOneClick = false;
+	//				Debug.Log("double tap x"+Input.mousePosition.x);
 					baseControlScript.mTouchState = PlayerMainLogic.TouchState.AFingerDoubleTap;
 					Debug.Log(baseControlScript.mTouchState);
 					InputStateClass.touchPointPos = Input.mousePosition;

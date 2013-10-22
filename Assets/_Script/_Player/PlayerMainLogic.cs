@@ -18,6 +18,9 @@ public class PlayerMainLogic : MonoBehaviour {
 		TwoFingersSlash,
 	}
 	
+	
+	public Camera mUICamera;
+	
 	public TouchState mTouchState = TouchState.None;
 	
 	private RaycastHit[] hit;
@@ -326,7 +329,7 @@ public class PlayerMainLogic : MonoBehaviour {
 				
 				if(aniControlScript.isSkillPlaying)
 				{
-					//todo
+					moveBaseScript.targetPos = targetPos;
 					return;
 				}
 				
@@ -381,9 +384,15 @@ public class PlayerMainLogic : MonoBehaviour {
 			
 		case TouchState.AFingerDoubleTap:
 			mTouchState = TouchState.None;
+			targetPos = RayColliderByTapPos(InputStateClass.touchPointPos);
+			if(aniControlScript.isSkillPlaying)
+			{
+				moveBaseScript.targetPos = targetPos;
+				return;
+			}
+			
 			if(moveBaseScript.curMovementState != PlayerMoveBase.PlayerMovementState.Jump)
 			{
-				targetPos = RayColliderByTapPos(InputStateClass.touchPointPos);
 				SetPlayerToRun(targetPos-this.transform.position);	
 				if(aniControlScript.isSkillPlaying == false)
 				{
@@ -445,6 +454,13 @@ public class PlayerMainLogic : MonoBehaviour {
 		
 		Ray ray1 = Camera.mainCamera.ScreenPointToRay(pos);
 		
+		Ray ray2 = mUICamera.ScreenPointToRay(pos);
+		
+		hit = Physics.RaycastAll(ray2,100, 1<<8);// layer 8 is NGUI layer
+		foreach(RaycastHit hit1 in hit) {
+			return Vector3.zero;
+		}
+		
 		hit = Physics.RaycastAll(ray1,100, LayerManager.GroundMask);
 		foreach(RaycastHit hit1 in hit) {
             return hit1.point;
@@ -474,6 +490,7 @@ public class PlayerMainLogic : MonoBehaviour {
 	
 	void NGUI_Skill1()
 	{			
+		moveBaseScript.targetPos = Vector3.zero;
 		Time.timeScale = 0.2f;
 		ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Skill1,true);
 		directionIcon.renderer.enabled = true;

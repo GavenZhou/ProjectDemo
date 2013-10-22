@@ -186,8 +186,10 @@ public class PlayerMoveBase : MonoBehaviour {
 		if(curMovementState == PlayerMovementState.Run)
 		{
 			Quaternion targetRotation = Quaternion.LookRotation(lookDirection.normalized);
-			transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
-			
+			if(transform.rotation != targetRotation)
+			{
+				transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
+			}
 			if(transform.rotation != targetRotation)
 				mRunTurnState = PlayerRunTurnState.Turning;
 			else
@@ -196,6 +198,21 @@ public class PlayerMoveBase : MonoBehaviour {
 				{
 					PlayerDataClass.isChangeToRun = false;
 					mRunTurnState = PlayerRunTurnState.Stop;
+				}
+			}
+		}
+		
+		
+		if(curMovementState == PlayerMovementState.Skill1)
+		{
+			if(targetPos != Vector3.zero)
+			{
+				lookDirection = targetPos - transform.position;
+				lookDirection.y = 0;
+				Quaternion targetRotation = Quaternion.LookRotation(lookDirection.normalized);
+				if(transform.rotation != targetRotation)
+				{
+					transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 80);
 				}
 			}
 		}
@@ -243,6 +260,7 @@ public class PlayerMoveBase : MonoBehaviour {
 			mMoveTimeLeft = player_Run.leftTime;
 			mTime = Time.time;
 			break;	
+			
 		
 		case PlayerMovementState.Trot:
 			mSpeed = player_Trot.startSpeed;
@@ -286,7 +304,7 @@ public class PlayerMoveBase : MonoBehaviour {
 			mTime = Time.time;
 			break;
 			
-		case PlayerMovementState.Skill1:
+		case PlayerMovementState.Skill1:		
 			mSpeed = player_Skill1.startSpeed;
 			mAcceleration = player_Skill1.acceleration;
 			mMoveTimeLeft = player_Skill1.leftTime;
