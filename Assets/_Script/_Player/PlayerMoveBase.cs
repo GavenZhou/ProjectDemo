@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using GameBaseData;
 
 public class PlayerMoveBase : MonoBehaviour {
 	
@@ -122,8 +123,8 @@ public class PlayerMoveBase : MonoBehaviour {
 		
 		player_Jump.startSpeed = 20;
 		player_Jump.acceleration = -40;
-		player_Jump.leftTime =0.4f;
-		player_Idel.realLeftTime = player_Idel.leftTime;
+		player_Jump.leftTime =0.6f;
+		player_Jump.realLeftTime = player_Jump.leftTime;
 		
 		player_Rush.startSpeed = 40;
 		player_Rush.acceleration = -90;
@@ -142,16 +143,16 @@ public class PlayerMoveBase : MonoBehaviour {
 		switch(attackId)
 		{
 		case 1:
-			player_Attack1.leftTime = player_Attack1.realLeftTime -time;
+		//	player_Attack1.leftTime = player_Attack1.realLeftTime -time;
 			break;
 		case 2:
-			player_Attack1.leftTime = player_Attack2.realLeftTime -time;
+			player_Attack2.leftTime = player_Attack2.realLeftTime -time;
 			break;
 		case 3:
-			player_Attack1.leftTime = player_Attack3.realLeftTime -time;
+			player_Attack3.leftTime = player_Attack3.realLeftTime -time;
 			break;
 		case 4:
-			player_Attack1.leftTime = player_Attack4.realLeftTime -time;
+			player_Attack4.leftTime = player_Attack4.realLeftTime -time;
 			break;
 		}
 	}
@@ -183,7 +184,11 @@ public class PlayerMoveBase : MonoBehaviour {
 				mRunTurnState = PlayerRunTurnState.Turning;
 			else
 			{
-				mRunTurnState = PlayerRunTurnState.Stop;
+				if(mRunTurnState != PlayerRunTurnState.Stop)
+				{
+					PlayerDataClass.isChangeToRun = false;
+					mRunTurnState = PlayerRunTurnState.Stop;
+				}
 			}
 		}
 	}
@@ -213,8 +218,6 @@ public class PlayerMoveBase : MonoBehaviour {
 	
 	public void UpdateMovementState()
 	{
-		Debug.Log("UpdateMovementState     "+curMovementState);
-		
 		switch(curMovementState)
 		{
 		case PlayerMovementState.Idel:
