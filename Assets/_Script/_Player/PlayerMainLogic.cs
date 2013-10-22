@@ -328,7 +328,6 @@ public class PlayerMainLogic : MonoBehaviour {
 				
 				if(aniControlScript.isSkillPlaying)
 				{
-					Debug.Log("asdasd");
 					moveBaseScript.targetPos = targetPos;
 					return;
 				}
@@ -354,7 +353,6 @@ public class PlayerMainLogic : MonoBehaviour {
 						}
 						else
 						{
-							Debug.Log("sadasd");
 							moveBaseScript.targetPos = targetPos;
 							if(moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Run)
 							{
@@ -367,7 +365,12 @@ public class PlayerMainLogic : MonoBehaviour {
 					}
 					else
 					{
-						AttackAfterRun();
+						mTarget = player.GetNearestAttackTarget(transform.forward);
+						if(mTarget != null)
+						{
+							TargetTheEnemy(mTarget.position);
+							AttackAfterRun();
+						}
 					}
 				}
 				else
@@ -376,7 +379,7 @@ public class PlayerMainLogic : MonoBehaviour {
 					mTarget = null;
 					PlayerDataClass.targetAttackPos = targetPos;
 					moveBaseScript.targetPos = targetPos;
-					Debug.Log("xxxxxxx");
+				//	Debug.Log("xxxxxxx");
 					PlayerDataClass.isChangeToRun = true;
 					ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,false);
 				}
@@ -412,7 +415,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			break;	
 		
 		case TouchState.AFingerHoldStop:
-			Debug.Log("Trot here");
+		//	Debug.Log("Trot here");
 			if(PlayerDataClass.isChangeToRun == false)
 				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
             mTouchState = TouchState.None;
@@ -491,7 +494,7 @@ public class PlayerMainLogic : MonoBehaviour {
 	
 	void NGUI_Skill1()
 	{			
-		Debug.Log("reset zero");
+	//	Debug.Log("reset zero");
 		moveBaseScript.targetPos = Vector3.zero;
 		Time.timeScale = 0.2f;
 		ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Skill1,true);
