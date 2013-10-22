@@ -19,15 +19,15 @@ TagManager:
   Builtin Layer 6: 
   Builtin Layer 7: 
   User Layer 8: MyNGUI
-  User Layer 9: 
-  User Layer 10: 
-  User Layer 11: 
+  User Layer 9: Ground
+  User Layer 10: Wall
+  User Layer 11: Obstacle
   User Layer 12: 
-  User Layer 13: 
-  User Layer 14: 
-  User Layer 15: 
+  User Layer 13: Interactive
+  User Layer 14: Mob
+  User Layer 15: Player
   User Layer 16: 
-  User Layer 17: 
+  User Layer 17: SFX
   User Layer 18: 
   User Layer 19: 
   User Layer 20: 
