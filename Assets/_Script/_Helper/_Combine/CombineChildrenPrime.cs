@@ -67,6 +67,8 @@ public class CombineChildrenPrime : MonoBehaviour
             Debug.LogError("The object have not combined yet!");
             return;
         }
+        combined = false;
+
         Component[] filters = GetComponentsInChildren(typeof(MeshFilter));
         foreach (Component m in filters) {
             if (m.gameObject.name == "Combined mesh" && m.renderer.enabled == true) {
@@ -77,7 +79,6 @@ public class CombineChildrenPrime : MonoBehaviour
                 m.renderer.enabled = true;
             }
         }
-        combined = false;
     }
 
     [ContextMenu("Combine In Editor")]
@@ -87,6 +88,7 @@ public class CombineChildrenPrime : MonoBehaviour
             Debug.LogError("The object has already combined!");
             return;
         }
+        combined = true;
 
         // 
         bool _destroyImmediate = false;
@@ -129,9 +131,9 @@ public class CombineChildrenPrime : MonoBehaviour
         }
 
         GameObject parent = new GameObject(gameObject.name + "(Combine)");
-        parent.transform.localScale = transform.parent.localScale;
-        parent.transform.localRotation = transform.parent.rotation;
-        parent.transform.localPosition = transform.parent.position;
+        parent.transform.localScale = transform.localScale;
+        parent.transform.localRotation = transform.rotation;
+        parent.transform.localPosition = transform.position;
 
         foreach (DictionaryEntry de in materialToMesh) {
 
@@ -168,6 +170,5 @@ public class CombineChildrenPrime : MonoBehaviour
                 }
             }
         }
-        combined = true;
     }
 }
