@@ -124,13 +124,18 @@ public class PlayerInputBase : MonoBehaviour {
 			if(Input.GetTouch(0).phase == TouchPhase.Stationary)
 #endif				
 			{
-				
-				if(Time.time - mHoldTime > 1.0f && isHold == false)
+				if(Input.mousePosition.x > 0 && Input.mousePosition.x < Screen.width)
 				{
-					mHoldTime = Time.time;
-					baseControlScript.mTouchState = PlayerMainLogic.TouchState.AFingerHold;
-					isHold = true;
-					return;
+					if(Input.mousePosition.y > 0 && Input.mousePosition.y < Screen.height)
+					{
+						if(Time.time - mHoldTime > 1.0f && isHold == false)
+						{
+							mHoldTime = Time.time;
+							baseControlScript.mTouchState = PlayerMainLogic.TouchState.AFingerHold;
+							isHold = true;
+							return;
+						}
+					}
 				}
 			}
 		}

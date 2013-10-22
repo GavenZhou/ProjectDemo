@@ -110,8 +110,8 @@ public class PlayerAnimationControl : MonoBehaviour {
 //		mSkillIdel = this.animation["1_001"];
 //		mSkillIdel.layer = 4;
 		
-//		mSkill1 = this.animation["1_001"];
-//		mSkill1.layer = 6;
+		mSkill1 = this.animation["1_1101"];
+		mSkill1.layer = 6;
 		
 		mBeHit = this.animation["1_501"];
 		mBeHit.layer = 5;
@@ -171,16 +171,33 @@ public class PlayerAnimationControl : MonoBehaviour {
 		
 	}
 	
-	
-	// if immedilate == true,  play the animation right now,
-	// else play it in queue
 	void PlayAnimation(AnimationState state, bool immedilate)
 	{
 		if(immedilate)
 		{
 //			Debug.Log(state.name);
 			//this.animation.Stop();
+			this.animation.Play(state.name);
+			UpdateAnimationState(state.name);
+			isQueueAnimation = false;
+		}
+		else
+		{
+			isQueueAnimation = true;
+			this.animation.PlayQueued(state.name);
+		}
+	}
+	
+	// if immedilate == true,  play the animation right now,
+	// else play it in queue
+	void PlayAnimationCrossFade(AnimationState state, bool immedilate)
+	{
+		if(immedilate)
+		{
+//			Debug.Log(state.name);
+			//this.animation.Stop();
 			this.animation.CrossFade(state.name,0.2f);
+		//	this.animation.Play(state.name);
 			UpdateAnimationState(state.name);
 			
 			isQueueAnimation = false;
@@ -220,7 +237,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 		switch(PlayerDataClass.playerAniCmdNext)
 		{
 		case PlayerDataClass.PlayerActionCommand.Player_Run:
-			PlayAnimation(mRun,immedilate);
+			PlayAnimationCrossFade(mRun,immedilate);
 			if(immedilate
 				||moveScript.curMovementState == PlayerMoveBase.PlayerMovementState.Run)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Run);
@@ -228,7 +245,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 			break;		
 		
 		case PlayerDataClass.PlayerActionCommand.Player_Trot:
-			PlayAnimation(mRun,immedilate);
+			PlayAnimationCrossFade(mRun,immedilate);
 			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Trot);
@@ -239,7 +256,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack1);
-			PlayAnimation(mAttack1,immedilate);
+			PlayAnimationCrossFade(mAttack1,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
@@ -247,7 +264,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack2);
-			PlayAnimation(mAttack2,immedilate);
+			PlayAnimationCrossFade(mAttack2,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
@@ -255,7 +272,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack3);
-			PlayAnimation(mAttack3,immedilate);
+			PlayAnimationCrossFade(mAttack3,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
@@ -263,14 +280,13 @@ public class PlayerAnimationControl : MonoBehaviour {
 			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack4);
-			PlayAnimation(mAttack4,immedilate);
+			PlayAnimationCrossFade(mAttack4,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 
 		case PlayerDataClass.PlayerActionCommand.Player_Skill1:
-			
 			if(immedilate)
-				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
+				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Skill1);
 			PlayAnimation(mSkill1,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
@@ -279,7 +295,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.BeHit);
-			PlayAnimation(mBeHit,immedilate);
+			PlayAnimationCrossFade(mBeHit,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
@@ -287,7 +303,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
-			PlayAnimation(mDie,immedilate);
+			PlayAnimationCrossFade(mDie,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
@@ -295,7 +311,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
-			PlayAnimation(mIdel,immedilate);
+			PlayAnimationCrossFade(mIdel,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
@@ -303,7 +319,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
-			PlayAnimation(mSkillIdel,immedilate);
+			PlayAnimationCrossFade(mSkillIdel,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
@@ -311,7 +327,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Walk);
-			PlayAnimation(mWalk,immedilate);
+			PlayAnimationCrossFade(mWalk,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;		
 		
@@ -319,7 +335,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Jump);
-			PlayAnimation(mJump,immedilate);
+			PlayAnimationCrossFade(mJump,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 		
@@ -327,7 +343,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Rush);
-			PlayAnimation(mRush,immedilate);
+			PlayAnimationCrossFade(mRush,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 		
@@ -335,7 +351,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Catch);
-			PlayAnimation(mCatch,immedilate);
+			PlayAnimationCrossFade(mCatch,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
@@ -418,11 +434,6 @@ public class PlayerAnimationControl : MonoBehaviour {
 	void FinishSkill(int skillId)
 	{
 		isSkillPlaying = false;
-	}
-	
-	void SkillIdelFinish()
-	{
-		//ready to start skill
 	}
 	
 	void SkillShootPoint(int skillId)

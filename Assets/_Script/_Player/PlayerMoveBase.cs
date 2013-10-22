@@ -30,6 +30,8 @@ public class PlayerMoveBase : MonoBehaviour {
 		Attack3Over,
 		Attack4,
 		Attack4Over,
+		Skill1,
+		Skill1Over,
 		BeHit,
 		BeHitOver,
 		Jump,
@@ -56,6 +58,7 @@ public class PlayerMoveBase : MonoBehaviour {
 	PlayerMovementStruct player_Attack2;
 	PlayerMovementStruct player_Attack3;
 	PlayerMovementStruct player_Attack4;
+	PlayerMovementStruct player_Skill1;
 	PlayerMovementStruct player_BeHit;
 	PlayerMovementStruct player_Jump;
 	PlayerMovementStruct player_Rush;
@@ -114,7 +117,12 @@ public class PlayerMoveBase : MonoBehaviour {
 		player_Attack4.startSpeed = 20;
 		player_Attack4.acceleration = -50;
 		player_Attack4.leftTime =1.6f;
-		player_Attack4.realLeftTime = player_Attack4.leftTime;
+		player_Attack4.realLeftTime = player_Attack4.leftTime;		
+		
+		player_Skill1.startSpeed = 0;
+		player_Skill1.acceleration = 0;
+		player_Skill1.leftTime =1.2f;
+		player_Skill1.realLeftTime = player_Skill1.leftTime;
 		
 		player_BeHit.startSpeed = 0;
 		player_BeHit.acceleration = 0;
@@ -278,6 +286,13 @@ public class PlayerMoveBase : MonoBehaviour {
 			mTime = Time.time;
 			break;
 			
+		case PlayerMovementState.Skill1:
+			mSpeed = player_Skill1.startSpeed;
+			mAcceleration = player_Skill1.acceleration;
+			mMoveTimeLeft = player_Skill1.leftTime;
+			mTime = Time.time;
+			break;			
+			
 		case PlayerMovementState.BeHit:
 			mSpeed = player_BeHit.startSpeed;
 			mAcceleration = player_BeHit.acceleration;
@@ -346,6 +361,10 @@ public class PlayerMoveBase : MonoBehaviour {
 		case PlayerMovementState.Attack4:
 			curMovementState = PlayerMovementState.Attack4Over;
 			break;
+			
+		case PlayerMovementState.Skill1:
+			curMovementState = PlayerMovementState.Skill1Over;
+			break;			
 			
 		case PlayerMovementState.BeHit:
 			curMovementState = PlayerMovementState.BeHitOver;
