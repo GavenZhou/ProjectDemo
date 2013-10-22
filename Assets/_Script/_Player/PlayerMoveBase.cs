@@ -3,6 +3,14 @@ using System.Collections;
 
 public class PlayerMoveBase : MonoBehaviour {
 	
+	public enum PlayerRunTurnState
+	{
+		Turning,
+		Stop,
+	};
+	
+	public PlayerRunTurnState mRunTurnState = PlayerRunTurnState.Stop;
+	
 	public enum PlayerMovementState
 	{
 		None,
@@ -36,6 +44,7 @@ public class PlayerMoveBase : MonoBehaviour {
 		public float startSpeed;
 		public float acceleration; // + -
 		public float leftTime;  // -1 forever
+		public float realLeftTime;
 	}
 	
 	PlayerMovementStruct player_Idel;
@@ -69,52 +78,83 @@ public class PlayerMoveBase : MonoBehaviour {
 		player_Idel.startSpeed = 0;
 		player_Idel.acceleration = 0;
 		player_Idel.leftTime = -1;
+		player_Idel.realLeftTime = player_Idel.leftTime;
 		
 		player_Run.startSpeed = 8;
 		player_Run.acceleration = -2;
 		player_Run.leftTime = 2;
+		player_Run.realLeftTime = player_Run.leftTime;
 		
 		player_Trot.startSpeed = 8;
 		player_Trot.acceleration = -3;
 		player_Trot.leftTime = 0.5f;
+		player_Trot.realLeftTime = player_Trot.leftTime;
 		
 		player_Walk.startSpeed = 2.5f;
 		player_Walk.acceleration = -1.0f;
 		player_Walk.leftTime = 1.5f;
+		player_Walk.realLeftTime = player_Walk.leftTime;
 		
-		player_Attack1.startSpeed = 10;
+		player_Attack1.startSpeed = 12;
 		player_Attack1.acceleration = -30;
-		player_Attack1.leftTime =0.9f;
+		player_Attack1.leftTime =1.0f;
+		player_Attack1.realLeftTime = player_Attack1.leftTime;
 		
-		player_Attack2.startSpeed = 10;
+		player_Attack2.startSpeed = 15;
 		player_Attack2.acceleration = -30; 
-		player_Attack2.leftTime = 0.9f;
+		player_Attack2.leftTime = 1.1f;
+		player_Attack2.realLeftTime = player_Attack2.leftTime;
 		
 		player_Attack3.startSpeed = 15;
 		player_Attack3.acceleration = -30;
-		player_Attack3.leftTime = 0.9f;
+		player_Attack3.leftTime = 1.1f;
+		player_Attack3.realLeftTime = player_Attack3.leftTime;
 		
 		player_Attack4.startSpeed = 20;
 		player_Attack4.acceleration = -50;
-		player_Attack4.leftTime = 1.4f;
+		player_Attack4.leftTime =1.6f;
+		player_Attack4.realLeftTime = player_Attack4.leftTime;
 		
 		player_BeHit.startSpeed = 0;
 		player_BeHit.acceleration = 0;
 		player_BeHit.leftTime = 0.5f;
+		player_BeHit.realLeftTime = player_BeHit.leftTime;
 		
 		player_Jump.startSpeed = 20;
 		player_Jump.acceleration = -40;
 		player_Jump.leftTime =0.4f;
+		player_Idel.realLeftTime = player_Idel.leftTime;
 		
 		player_Rush.startSpeed = 40;
 		player_Rush.acceleration = -90;
 		player_Rush.leftTime = 0.5f;
+		player_Rush.realLeftTime = player_Rush.leftTime;
 		
 		player_Catch.startSpeed = 0;
 		player_Catch.acceleration = 0;
 		player_Catch.leftTime = 0.3f;
+		player_Catch.realLeftTime = player_Catch.leftTime;
 	}
 	
+	
+	public void SetAttackMoveTime(byte attackId, float time)
+	{
+		switch(attackId)
+		{
+		case 1:
+			player_Attack1.leftTime = player_Attack1.realLeftTime -time;
+			break;
+		case 2:
+			player_Attack1.leftTime = player_Attack2.realLeftTime -time;
+			break;
+		case 3:
+			player_Attack1.leftTime = player_Attack3.realLeftTime -time;
+			break;
+		case 4:
+			player_Attack1.leftTime = player_Attack4.realLeftTime -time;
+			break;
+		}
+	}
 	
 	// Use this for initialization
 	void Start () {
@@ -136,7 +176,15 @@ public class PlayerMoveBase : MonoBehaviour {
 		
 		if(curMovementState == PlayerMovementState.Run)
 		{
-			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection.normalized), Time.deltaTime * 10);
+			Quaternion targetRotation = Quaternion.LookRotation(lookDirection.normalized);
+			transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
+			
+			if(transform.rotation != targetRotation)
+				mRunTurnState = PlayerRunTurnState.Turning;
+			else
+			{
+				mRunTurnState = PlayerRunTurnState.Stop;
+			}
 		}
 	}
 	
@@ -165,7 +213,7 @@ public class PlayerMoveBase : MonoBehaviour {
 	
 	public void UpdateMovementState()
 	{
-//		Debug.Log("UpdateMovementState     "+curMovementState);
+		Debug.Log("UpdateMovementState     "+curMovementState);
 		
 		switch(curMovementState)
 		{

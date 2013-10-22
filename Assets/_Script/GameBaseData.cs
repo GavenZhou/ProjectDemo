@@ -7,7 +7,11 @@ namespace GameBaseData
 	
 	public class PlayerDataClass
 	{  
+		public static Vector3 targetAttackPos = Vector3.zero;
+		
 		public static bool isSpecialAttack;
+		
+		public static bool isChangeToRun;
 		
 		// 20 monster at most
 		//todo
