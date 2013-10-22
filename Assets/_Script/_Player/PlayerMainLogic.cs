@@ -274,9 +274,15 @@ public class PlayerMainLogic : MonoBehaviour {
 				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
 			mTarget = null;
 			break;	
+			
+		case PlayerMoveBase.PlayerMovementState.Skill1Over:
+			PlayerDataClass.AttackStart = false;
+			if(PlayerDataClass.isChangeToRun == false)
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
+			mTarget = null;
+			break;
 		
 		case PlayerMoveBase.PlayerMovementState.JumpOver:
-	//		Debug.Log("Player_Trot  JumpOver");
 			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
 			mTarget = null;
 			break;
@@ -321,7 +327,6 @@ public class PlayerMainLogic : MonoBehaviour {
 				if(directionIcon.renderer.enabled == true)
 				{
 					directionIcon.renderer.enabled = false;
-					Time.timeScale = 1;
 					return;
 				}
 				
@@ -486,13 +491,12 @@ public class PlayerMainLogic : MonoBehaviour {
 	
 	public void OnStartSkill(int skillId)
 	{
-		Time.timeScale = 1;
 		directionIcon.renderer.enabled = false;
-		ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,false);
 	}
 
 	public void OnSkillShootPoint(int skillId)
 	{
+		Time.timeScale = 1;
         player.PlaySkill(skillId);
 	}
 
