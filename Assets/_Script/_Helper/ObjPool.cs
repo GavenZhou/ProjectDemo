@@ -103,7 +103,7 @@ public class GameObjectPool {
 
     public GameObject Request() {
         if (idx < 0) {
-            Debug.LogError("Error: the pool do not have enough free item.");
+            Debug.LogWarning("Warning: the pool do not have enough free item.");
             return null;
         }
 
@@ -114,15 +114,19 @@ public class GameObjectPool {
 
     public GameObject Request(Vector3 _pos) {
         GameObject result = Request();
-        result.SetActive(true);
-        result.transform.position = new Vector3(_pos.x, _pos.y, _pos.z);
+        if (result != null) {
+            result.SetActive(true);
+            result.transform.position = new Vector3(_pos.x, _pos.y, _pos.z);
+        }
         return result;
     }
 
     public GameObject Request(Vector3 _pos, Quaternion _rot) {
         GameObject result = Request();
-        result.transform.position = _pos;
-        result.transform.rotation = _rot;
+        if (result != null) {
+            result.transform.position = _pos;
+            result.transform.rotation = _rot;
+        }
         return result;
     }
 

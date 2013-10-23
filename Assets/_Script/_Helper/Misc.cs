@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public static class Misc {
 
@@ -22,5 +22,36 @@ public static class Misc {
             inside = true;
         }
         return inside;
+    }
+
+    public static List<Vector3> GetConeArcPoints(Vector3 _center, Vector3 _forward, float _radius, float _totoalDegree, int _segments = 12) {
+
+        // 
+        _totoalDegree = Mathf.Clamp(_totoalDegree, 0, 360);
+        
+        Quaternion _rot = Quaternion.identity;
+        float step = _totoalDegree * Mathf.Deg2Rad / _segments;
+        float deta = 0f;
+        float theta = 0f;
+        Vector3 up = Vector3.Cross(Vector3.right, _forward);
+        if (up.y < 0) {
+            theta = Mathf.Acos(Vector3.Dot(Vector3.right, _forward));
+        }
+        else {
+            theta = -1 * Mathf.Acos(Vector3.Dot(Vector3.right, _forward));
+        }
+
+        List<Vector3> points = new List<Vector3>();
+        Vector3 last1 = _center + _rot * (_radius * new Vector3(Mathf.Cos(theta), 0.0f, Mathf.Sin(theta)));
+        Vector3 last2 = last1;
+        points.Add(last1);
+        deta += step;
+
+        for (int i = 1; i <= _segments; ++i) {
+            last1 = _center + _rot * (_radius * new Vector3(Mathf.Cos(theta + deta), 0.0f, Mathf.Sin(theta + deta)));
+            points.Add(last1);
+            deta += step;
+        }
+        return points;
     }
 }

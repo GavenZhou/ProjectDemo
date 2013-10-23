@@ -73,7 +73,9 @@ public class Spawner : MonoBehaviour {
         else {
             mob = mobPool2.Request<Mob>(_pos);
         }
-        mob.OnSpawn();
+        if (mob != null) {
+            mob.OnSpawn();
+        }
         return mob;
     }
 

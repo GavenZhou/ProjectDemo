@@ -29,4 +29,8 @@ public static class LayerManager {
     public static int GroundMask {
         get { return groundMask; }
     }
+
+    public static int ObstacleTest {
+        get { return wallMask | obstacleMask; }
+    }
 }
