@@ -129,15 +129,6 @@ public static class CombatUtility {
 
     static int mobID = 0;
     static int maxMobTemplate = 2;
-    static Vector3[] mobBornLoctions
-        = {
-            new Vector3(16f, 0, 16f),
-            new Vector3(18f, 0, 18f),
-            new Vector3(16f, 0, 18f),
-            new Vector3(18f, 0, 16f),
-            new Vector3(20f, 0, 20f),
-          };
-
     public static int GenNextMobID() {
         return ++mobID;
     }
@@ -148,7 +139,9 @@ public static class CombatUtility {
         List<Vector3> locs = null;
         if (GetSuitableMobLocation(out locs)) {
             int loction = Random.Range(0, locs.Count - 1);
-            return Spawner.instance.SpawnMob(Random.Range(0, maxMobTemplate), locs[loction]);
+
+            int temp = Random.Range(0, maxMobTemplate);
+            return Spawner.instance.SpawnMob(temp, locs[loction]);
         }
         return null;
     }
@@ -164,22 +157,30 @@ public static class CombatUtility {
         return false;
     }
 
-    static float minDistance = 2.0f;
+    static float minDistance = 1.0f;
+    static float spawnRange = 12.0f;
     static bool GetSuitableMobLocation(out List<Vector3> _locs) {
 
         _locs = new List<Vector3>();
-        List<Mob> mobs = SceneMng.instance.GetSceneObjsWithPred<Mob>(m => !m.IsDied);
+        Transform transform = SceneMng.instance.mainPlayer.transform;
 
-        foreach (Vector3 vec in mobBornLoctions) {
-            bool suitable = true;
-            foreach (Mob m in mobs) {
-                float magnitude = new Vector2(m.transform.position.x - vec.x, m.transform.position.z - vec.z).sqrMagnitude;
-                if (magnitude <= minDistance * minDistance) {
-                    suitable = false;
-                    break;
+        // 怪物出生点
+        List<Vector3> vecs = Misc.GetConeArcPoints(transform.position, transform.forward, spawnRange, 360.0f);
+        List<Mob> mobs = SceneMng.instance.GetSceneObjsWithPred<Mob>(m => !m.IsDied);
+        RaycastHit hitInfo;
+
+        foreach (Vector3 pos in vecs) {
+            bool suitable = !Physics.Raycast(pos + new Vector3(0, 3, 0), Vector3.down, out hitInfo, 10.0f, LayerManager.ObstacleTest);
+            if (suitable) {
+                foreach (Mob m in mobs) {
+                    float magnitude = new Vector2(m.transform.position.x - pos.x, m.transform.position.z - pos.z).sqrMagnitude;
+                    if (magnitude <= minDistance * minDistance) {
+                        suitable = false;
+                        break;
+                    }
                 }
+                if (suitable) _locs.Add(pos);
             }
-            if (suitable) _locs.Add(vec);
         }
         return _locs.Count != 0;
     }

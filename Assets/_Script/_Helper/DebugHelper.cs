@@ -7,11 +7,11 @@ public class GizmosHelper
         DrawConeArc(_rot, _center, Vector3.right, _radius, 360.0f);
     }
 
-    public static void DrawConeArc(Quaternion _rot, Vector3 _center, Vector3 _forward, float _radius, float _angle) {
+    public static void DrawConeArc(Quaternion _rot, Vector3 _center, Vector3 _forward, float _radius, float _degree) {
 
-        _angle = Mathf.Clamp(_angle, 0, 360);
-        float segments = 32.0f;
-        float step = _angle * Mathf.Deg2Rad / segments;
+        _degree = Mathf.Clamp(_degree, 0, 360);
+        int segments = 32;
+        float step = _degree * Mathf.Deg2Rad / segments;
         float deta = 0f;
         float theta = 0f;
         Vector3 up = Vector3.Cross(Vector3.right, _forward);
