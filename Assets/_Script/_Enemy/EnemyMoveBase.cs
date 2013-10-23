@@ -15,6 +15,10 @@ public class EnemyMoveBase : MonoBehaviour {
 		AttackOver,
 		BeHit,
 		BeHitOver,
+		BeBlowUp,
+		BeBlowUpOver,
+		GetUp,
+		GetUpOver,
 		Dead,
 	};
 	
@@ -30,6 +34,8 @@ public class EnemyMoveBase : MonoBehaviour {
 	EnemyMovementStruct enemy_Walk;
 	EnemyMovementStruct enemy_Attack;
 	EnemyMovementStruct enemy_BeHit;
+	EnemyMovementStruct enemy_BeBlowUp;
+	EnemyMovementStruct enemy_GetUp;
 	
 	
 	
@@ -54,6 +60,14 @@ public class EnemyMoveBase : MonoBehaviour {
 		enemy_BeHit.startSpeed = -4;
 		enemy_BeHit.acceleration = 10;
 		enemy_BeHit.leftTime = 0.5f;
+		
+		enemy_BeBlowUp.startSpeed = -4;
+		enemy_BeBlowUp.acceleration = 10;
+		enemy_BeBlowUp.leftTime = 0.7f;
+		
+		enemy_GetUp.startSpeed = 0;
+		enemy_GetUp.acceleration = 0;
+		enemy_GetUp.leftTime = 0.5f;
 	}
 	
 	
@@ -91,6 +105,14 @@ public class EnemyMoveBase : MonoBehaviour {
 		Vector3 pos = player.transform.position-transform.position;
 		pos.y = 0;
 		//todo
+		
+		
+		if(curMovementState == EnemyMovementState.BeBlowUp
+			||curMovementState == EnemyMovementState.GetUp
+			||curMovementState == EnemyMovementState.GetUpOver
+			||curMovementState == EnemyMovementState.BeBlowUpOver)
+			return;
+		
 		if(Vector3.Distance(transform.position,player.transform.position) > 1)
 		{	
 			if(transform.position.y != 0)
@@ -100,7 +122,7 @@ public class EnemyMoveBase : MonoBehaviour {
 				transform.position = tempPos;
 			}
 //			Debug.Log(transform.position.y + " = "+pos.y);
-			this.transform.forward = Vector3.RotateTowards(transform.position,pos,0.01f*200,1000);
+			this.transform.forward = Vector3.RotateTowards(transform.position,pos,Time.deltaTime*200,1000);
 		}
 		
 	}
@@ -110,7 +132,7 @@ public class EnemyMoveBase : MonoBehaviour {
 	{
 		//todo
 		if(mSpeed != 0)
-			this.transform.Translate(0,0,0.01f*Random.Range(mSpeed-1,mSpeed+1));
+			this.transform.Translate(0,0,Time.deltaTime*Random.Range(mSpeed-1,mSpeed+1));
 	}
 	
 	void MoveStop()
@@ -121,6 +143,12 @@ public class EnemyMoveBase : MonoBehaviour {
 			break;
 		case EnemyMovementState.BeHit:
 			curMovementState = EnemyMovementState.BeHitOver;
+			break;	
+		case EnemyMovementState.BeBlowUp:
+			curMovementState = EnemyMovementState.BeBlowUpOver;
+			break;
+		case EnemyMovementState.GetUp:
+			curMovementState = EnemyMovementState.GetUpOver;
 			break;
 		case EnemyMovementState.Attack:
 			curMovementState = EnemyMovementState.AttackOver;
@@ -154,6 +182,18 @@ public class EnemyMoveBase : MonoBehaviour {
 		case EnemyMovementState.BeHit:
 			mSpeed = enemy_BeHit.startSpeed;
 			mMoveTimeLeft = enemy_BeHit.leftTime;
+			mTime = Time.time;
+			break;	
+		
+		case EnemyMovementState.BeBlowUp:
+			mSpeed = enemy_BeBlowUp.startSpeed;
+			mMoveTimeLeft = enemy_BeBlowUp.leftTime;
+			mTime = Time.time;
+			break;	
+		
+		case EnemyMovementState.GetUp:
+			mSpeed = enemy_GetUp.startSpeed;
+			mMoveTimeLeft = enemy_GetUp.leftTime;
 			mTime = Time.time;
 			break;
 			

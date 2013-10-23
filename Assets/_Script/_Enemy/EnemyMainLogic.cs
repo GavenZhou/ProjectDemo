@@ -21,12 +21,21 @@ public class EnemyMainLogic : MonoBehaviour {
 		Run,
 		Attack,
 		BeHit,
+		BeBlowUp,
+		GetUp,
 		Die,
 		BeCatch,
 		Dead,
 	};
 	 
 	public EnemyState mState = EnemyState.Patrol;
+	
+	
+	public GameObject hurtParticale;
+	public GameObject deadParticale;
+	
+	particleControl hurtP;
+	particleControl deadP;
 	
 	private Transform player;
 	
@@ -43,6 +52,12 @@ public class EnemyMainLogic : MonoBehaviour {
 		enemyAnimationScript = GetComponentInChildren<EnemyAnimationControl>() as EnemyAnimationControl;
 		enemyMoveBaseScript = gameObject.GetComponent<EnemyMoveBase>() as EnemyMoveBase;
 		mob = gameObject.GetComponent<Mob>();
+		
+		if(hurtParticale != null)
+			hurtP = (particleControl)hurtParticale.GetComponent<particleControl>();
+		
+		if(deadParticale != null)
+			deadP = (particleControl)deadParticale.GetComponent<particleControl>();
 	}
 
     public void Init() {
@@ -67,7 +82,9 @@ public class EnemyMainLogic : MonoBehaviour {
 		
 		if(mState == EnemyState.Die)
 		{
-	//		Debug.Log("be dead");
+			if(deadP != null)
+				deadP.turnOn = true;
+			
 			ChangeAnimationByState(EnemyState.Die,true);
 			mState = EnemyState.Dead;
 			return;
@@ -139,7 +156,12 @@ public class EnemyMainLogic : MonoBehaviour {
 	{
 		switch(enemyMoveBaseScript.curMovementState)
 		{
+		case EnemyMoveBase.EnemyMovementState.BeBlowUpOver:
+			ChangeAnimationByState(EnemyState.GetUp,true);
+			break;
+			
 		case EnemyMoveBase.EnemyMovementState.BeHitOver:
+		case EnemyMoveBase.EnemyMovementState.GetUpOver:
 			mState = EnemyState.Hover;
 			break;
 		}
@@ -149,6 +171,8 @@ public class EnemyMainLogic : MonoBehaviour {
 	{
 		if(state == EnemyState.BeHit)
 		{
+			if(hurtP != null && Random.Range(1,99)%2 == 0)
+				hurtP.turnOn = true;
 			mAttackTime = Time.time;
 			CancelInvoke("MobAttack");
 		}

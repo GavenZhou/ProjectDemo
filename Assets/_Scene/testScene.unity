@@ -30621,6 +30621,7 @@ MonoBehaviour:
   mobPool2:
     prefab: {fileID: 100090, guid: 6b7cd4ddfa557a14cbb0948892be276e, type: 2}
     size: 10
+    size: 0
   dropItemPool:
     prefab: {fileID: 100000, guid: ae3b32ff8b7eee54caabff04230390d8, type: 2}
     size: 10
@@ -33374,6 +33375,7 @@ MonoBehaviour:
   mobDetectorBegin: .5
   mobDetectorSpan: .5
   maxMobInScene: 10
+  maxMobInScene: 2
   totalMobCount: 50
 --- !u!1 &1853398169
 GameObject:
