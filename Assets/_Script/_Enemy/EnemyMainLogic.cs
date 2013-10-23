@@ -67,7 +67,7 @@ public class EnemyMainLogic : MonoBehaviour {
 		
 		if(mState == EnemyState.Die)
 		{
-			Debug.Log("be dead");
+	//		Debug.Log("be dead");
 			ChangeAnimationByState(EnemyState.Die,true);
 			mState = EnemyState.Dead;
 			return;

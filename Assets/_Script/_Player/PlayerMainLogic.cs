@@ -70,7 +70,8 @@ public class PlayerMainLogic : MonoBehaviour {
         if(mTarget == null 
 			&& (moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Run
 			||moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Trot
-			||moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Walk)) 
+			||moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Walk
+			||moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Idel)) 
 		{
 			if(PlayerDataClass.isChangeToRun == true)
             	mTarget = player.GetNearestAttackTarget(PlayerDataClass.targetAttackPos-transform.position);// transform.forward);
@@ -104,10 +105,9 @@ public class PlayerMainLogic : MonoBehaviour {
 		
 		if(mTarget != null&& PlayerDataClass.AttackStart == false)
 		{
-			
 			if(PlayerDataClass.isChangeToRun == false)
 			{
-//				Debug.Log("here...........");
+				//Debug.Log("here...........");
 				//turn to the target
 				TargetTheEnemy(mTarget.position);
 				PlayerDataClass.AttackStart = true;
@@ -238,6 +238,7 @@ public class PlayerMainLogic : MonoBehaviour {
 		case PlayerMoveBase.PlayerMovementState.BeHitOver:
 			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true);
 			mTarget = null;
+			PlayerDataClass.AttackStart = false;
 			break;
 			
 		case PlayerMoveBase.PlayerMovementState.Attack1Over:
