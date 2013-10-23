@@ -141,7 +141,7 @@ public class EnemyMoveBase : MonoBehaviour {
 	
 	void Y_Move()
 	{
-		ySpeed -= 0.2f;
+		ySpeed -= 0.6f;
 		this.transform.Translate(0,ySpeed*Time.deltaTime,0);
 	}
 	
@@ -198,7 +198,7 @@ public class EnemyMoveBase : MonoBehaviour {
 		case EnemyMovementState.BeBlowUp:
 			mSpeed = enemy_BeBlowUp.startSpeed;
 			mMoveTimeLeft = enemy_BeBlowUp.leftTime;
-			ySpeed = 6;
+			ySpeed = 11;
 			mTime = Time.time;
 			break;	
 		
