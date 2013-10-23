@@ -110,7 +110,7 @@ public class PlayerAnimationControl : MonoBehaviour {
 //		mSkillIdel = this.animation["1_001"];
 //		mSkillIdel.layer = 4;
 		
-		mSkill1 = this.animation["1_1101"];
+		mSkill1 = this.animation["1_2101"];
 		mSkill1.layer = 6;
 		
 		mBeHit = this.animation["1_501"];

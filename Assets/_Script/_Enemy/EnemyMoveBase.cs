@@ -37,6 +37,7 @@ public class EnemyMoveBase : MonoBehaviour {
 	EnemyMovementStruct enemy_BeBlowUp;
 	EnemyMovementStruct enemy_GetUp;
 	
+	float ySpeed = 0;
 	
 	
 	void InitalizeEnemyMovementStruct()
@@ -97,6 +98,8 @@ public class EnemyMoveBase : MonoBehaviour {
 		if(Time.time - mTime < mMoveTimeLeft || mMoveTimeLeft < 0)
 		{
 			Move();
+			if(curMovementState == EnemyMovementState.BeBlowUp)
+				Y_Move();
 		}
 		else
 		{
@@ -133,6 +136,13 @@ public class EnemyMoveBase : MonoBehaviour {
 		//todo
 		if(mSpeed != 0)
 			this.transform.Translate(0,0,Time.deltaTime*Random.Range(mSpeed-1,mSpeed+1));
+	}
+	
+	
+	void Y_Move()
+	{
+		ySpeed -= 0.2f;
+		this.transform.Translate(0,ySpeed*Time.deltaTime,0);
 	}
 	
 	void MoveStop()
@@ -188,6 +198,7 @@ public class EnemyMoveBase : MonoBehaviour {
 		case EnemyMovementState.BeBlowUp:
 			mSpeed = enemy_BeBlowUp.startSpeed;
 			mMoveTimeLeft = enemy_BeBlowUp.leftTime;
+			ySpeed = 6;
 			mTime = Time.time;
 			break;	
 		
