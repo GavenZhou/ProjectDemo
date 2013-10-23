@@ -49,7 +49,6 @@ public class PlayerAnimationControl : MonoBehaviour {
 	AnimationState mRun;
 	AnimationState mWalk;
 	AnimationState mIdel;
-	AnimationState mSkillIdel;
 	AnimationState mAttack1;
 	AnimationState mAttack2;
 	AnimationState mAttack3;
@@ -106,9 +105,6 @@ public class PlayerAnimationControl : MonoBehaviour {
 		
 		mAttack4 = this.animation["1_104"];
 		mAttack4.layer = 3;
-		
-//		mSkillIdel = this.animation["1_001"];
-//		mSkillIdel.layer = 4;
 		
 		mSkill1 = this.animation["1_2101"];
 		mSkill1.layer = 6;
@@ -231,13 +227,17 @@ public class PlayerAnimationControl : MonoBehaviour {
 	
 	// only call by other script
 	// get the cmd from "PlayerBaseControl", then play the animtion
-	public void UpdateCmdFromControl(bool immedilate)
+	public void UpdateCmdFromControl(bool immedilate, bool isCrossFade)
 	{
 //		Debug.Log("UpdateCmdFromControl ======   "+PlayerDataClass.playerAniCmdNext);
 		switch(PlayerDataClass.playerAniCmdNext)
 		{
 		case PlayerDataClass.PlayerActionCommand.Player_Run:
-			PlayAnimationCrossFade(mRun,immedilate);
+			if(isCrossFade)
+				PlayAnimationCrossFade(mRun,immedilate);
+			else
+				PlayAnimation(mRun,immedilate);
+			
 			if(immedilate
 				||moveScript.curMovementState == PlayerMoveBase.PlayerMovementState.Run)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Run);
@@ -245,7 +245,11 @@ public class PlayerAnimationControl : MonoBehaviour {
 			break;		
 		
 		case PlayerDataClass.PlayerActionCommand.Player_Trot:
-			PlayAnimationCrossFade(mRun,immedilate);
+			if(isCrossFade)
+				PlayAnimationCrossFade(mRun,immedilate);
+			else
+				PlayAnimation(mRun,immedilate);
+			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Trot);
 			PlayerDataClass.PlayerNextActionReset();
@@ -254,14 +258,24 @@ public class PlayerAnimationControl : MonoBehaviour {
 		case PlayerDataClass.PlayerActionCommand.Player_Attack1:
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack1);
-			PlayAnimationCrossFade(mAttack1,immedilate);
+			
+			if(isCrossFade)
+				PlayAnimationCrossFade(mAttack1,immedilate);
+			else
+				PlayAnimation(mAttack1,immedilate);
+			
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Player_Attack2:
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack2);
-			PlayAnimationCrossFade(mAttack2,immedilate);
+			
+			if(isCrossFade)
+				PlayAnimationCrossFade(mAttack2,immedilate);
+			else
+				PlayAnimation(mAttack2,immedilate);
+			
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
@@ -269,86 +283,122 @@ public class PlayerAnimationControl : MonoBehaviour {
 			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack3);
-			PlayAnimationCrossFade(mAttack3,immedilate);
+			
+			if(isCrossFade)
+				PlayAnimationCrossFade(mAttack3,immedilate);
+			else
+				PlayAnimation(mAttack3,immedilate);
+			
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Player_Attack4:
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Attack4);
-			PlayAnimationCrossFade(mAttack4,immedilate);
+			
+			if(isCrossFade)
+				PlayAnimationCrossFade(mAttack4,immedilate);
+			else
+				PlayAnimation(mAttack4,immedilate);
+			
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 
 		case PlayerDataClass.PlayerActionCommand.Player_Skill1:
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Skill1);
-			PlayAnimation(mSkill1,immedilate);
+			
+			if(isCrossFade)
+				PlayAnimationCrossFade(mSkill1,immedilate);
+			else
+				PlayAnimation(mCatch,immedilate);
+			
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Player_BeHit:
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.BeHit);
-			PlayAnimationCrossFade(mBeHit,immedilate);
+			
+			if(isCrossFade)
+				PlayAnimationCrossFade(mBeHit,immedilate);
+			else
+				PlayAnimation(mBeHit,immedilate);
+			
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Player_Die:
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
-			PlayAnimationCrossFade(mDie,immedilate);
+			
+			if(isCrossFade)
+				PlayAnimationCrossFade(mDie,immedilate);
+			else
+				PlayAnimation(mDie,immedilate);
+			
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Player_Idel:
-			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
-			PlayAnimationCrossFade(mIdel,immedilate);
-			PlayerDataClass.PlayerNextActionReset();
-			break;
 			
-		case PlayerDataClass.PlayerActionCommand.Plyaer_SkillIdel:
+			if(isCrossFade)
+				PlayAnimationCrossFade(mIdel,immedilate);
+			else
+				PlayAnimation(mIdel,immedilate);
 			
-			if(immedilate)
-				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Idel);
-			PlayAnimationCrossFade(mSkillIdel,immedilate);
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 			
 		case PlayerDataClass.PlayerActionCommand.Player_Walk:
-			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Walk);
-			PlayAnimationCrossFade(mWalk,immedilate);
+			
+			if(isCrossFade)
+				PlayAnimationCrossFade(mWalk,immedilate);
+			else
+				PlayAnimation(mWalk,immedilate);
+			
 			PlayerDataClass.PlayerNextActionReset();
 			break;		
 		
 		case PlayerDataClass.PlayerActionCommand.Player_Jump:
-			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Jump);
-			PlayAnimationCrossFade(mJump,immedilate);
+			
+			if(isCrossFade)
+				PlayAnimationCrossFade(mJump,immedilate);
+			else
+				PlayAnimation(mJump,immedilate);
+			
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 		
 		case PlayerDataClass.PlayerActionCommand.Player_Rush:
-			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Rush);
-			PlayAnimationCrossFade(mRush,immedilate);
+			
+			if(isCrossFade)
+				PlayAnimationCrossFade(mRush,immedilate);
+			else
+				PlayAnimation(mRush,immedilate);
+			
 			PlayerDataClass.PlayerNextActionReset();
 			break;
 		
 		case PlayerDataClass.PlayerActionCommand.Player_Catch:
-			
 			if(immedilate)
 				ChangeMovementStateByAnimation(PlayerMoveBase.PlayerMovementState.Catch);
-			PlayAnimationCrossFade(mCatch,immedilate);
+			
+			if(isCrossFade)
+				PlayAnimationCrossFade(mCatch,immedilate);
+			else
+				PlayAnimation(mCatch,immedilate);
+				
 			PlayerDataClass.PlayerNextActionReset();
 			break;
-			
 			
 		default:
 			break;

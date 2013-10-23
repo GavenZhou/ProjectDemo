@@ -66,6 +66,10 @@ public class PlayerMainLogic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		
+		CheckMoveState();
+		if(moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.BeHit)
+			return;
 
         if(mTarget == null 
 			&& (moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Run
@@ -107,7 +111,6 @@ public class PlayerMainLogic : MonoBehaviour {
 		{
 			if(PlayerDataClass.isChangeToRun == false)
 			{
-				//Debug.Log("here...........");
 				//turn to the target
 				TargetTheEnemy(mTarget.position);
 				PlayerDataClass.AttackStart = true;
@@ -117,7 +120,6 @@ public class PlayerMainLogic : MonoBehaviour {
 			}
 		}
 		
-		CheckMoveState();
 	}
 	
 	void AttackAfterRun()
@@ -133,7 +135,7 @@ public class PlayerMainLogic : MonoBehaviour {
 				aniControlScript.SetAttackAnimationTime(2,0);
 				moveBaseScript.SetAttackMoveTime(2,0);
 				mAttackCdTime = Time.time;
-				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack2,true);
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack2,true,true);
 				break;
 				
 			case 2:
@@ -143,7 +145,7 @@ public class PlayerMainLogic : MonoBehaviour {
 				aniControlScript.SetAttackAnimationTime(3,0);
 				moveBaseScript.SetAttackMoveTime(3,0);
 				mAttackCdTime = Time.time;
-				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack3,true);
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack3,true,true);
 				break;
 				
 			case 3:
@@ -153,7 +155,7 @@ public class PlayerMainLogic : MonoBehaviour {
 				aniControlScript.SetAttackAnimationTime(4,0);
 				moveBaseScript.SetAttackMoveTime(4,0);
 				mAttackCdTime = Time.time;
-				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack4,true);
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack4,true,true);
 				break;
 			}
 		}
@@ -161,7 +163,7 @@ public class PlayerMainLogic : MonoBehaviour {
 		{
 			aniControlScript.attackIdNow = 1;
 			mAttackCdTime = Time.time;
-			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack1,true);
+			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack1,true,true);
 		}
 	}
 	
@@ -176,7 +178,7 @@ public class PlayerMainLogic : MonoBehaviour {
 //			Debug.Log("lianxu Player_Attack2");
 			aniControlScript.SetAttackAnimationTime(2,0.2f);
 			moveBaseScript.SetAttackMoveTime(2,0.2f);
-			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack2,true);
+			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack2,true,true);
 			break;
 			
 		case 2:
@@ -185,7 +187,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			mAttackCdTime = Time.time;
 			aniControlScript.SetAttackAnimationTime(3,0.2f);
 			moveBaseScript.SetAttackMoveTime(3,0.2f);
-			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack3,true);
+			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack3,true,true);
 			break;
 			
 		case 3:
@@ -195,7 +197,7 @@ public class PlayerMainLogic : MonoBehaviour {
 			mAttackCdTime = Time.time;
 			aniControlScript.SetAttackAnimationTime(4,0.2f);
 			moveBaseScript.SetAttackMoveTime(4,0.2f);
-			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack4,true);
+			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack4,true,true);
 			break;
 			
 		case 4:
@@ -226,19 +228,20 @@ public class PlayerMainLogic : MonoBehaviour {
 		{
 		case PlayerMoveBase.PlayerMovementState.RunOver:
 		case PlayerMoveBase.PlayerMovementState.TrotOver:
-			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Walk,true);
+			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Walk,true,true);
 			mTarget = null;
 			break;
 			
 		case PlayerMoveBase.PlayerMovementState.WalkOver:
-			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true);
+			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true,true);
 			mTarget = null;
 			break;
 			
 		case PlayerMoveBase.PlayerMovementState.BeHitOver:
-			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true);
-			mTarget = null;
+			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true,true);
+		//	mTarget = null;
 			PlayerDataClass.AttackStart = false;
+			PlayerDataClass.isChangeToRun = false;
 			break;
 			
 		case PlayerMoveBase.PlayerMovementState.Attack1Over:
@@ -247,7 +250,10 @@ public class PlayerMainLogic : MonoBehaviour {
 			PlayerDataClass.AttackStart = false;
 			aniControlScript.SetAttackAnimationTime(2,0);
 			if(PlayerDataClass.isChangeToRun == false)
-				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true,true);
+			else
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true,true);
+				
 			mTarget = null;
 			break;
 			
@@ -257,7 +263,9 @@ public class PlayerMainLogic : MonoBehaviour {
 			PlayerDataClass.AttackStart = false;
 			aniControlScript.SetAttackAnimationTime(3,0);
 			if(PlayerDataClass.isChangeToRun == false)
-				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true,true);
+			else
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true,true);
 			mTarget = null;
 			break;
 			
@@ -267,46 +275,52 @@ public class PlayerMainLogic : MonoBehaviour {
 			PlayerDataClass.AttackStart = false;
 			aniControlScript.SetAttackAnimationTime(4,0);
 			if(PlayerDataClass.isChangeToRun == false)
-				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true,true);
+			else
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true,true);
 			mTarget = null;
 			break;		
 		
 		case PlayerMoveBase.PlayerMovementState.Attack4Over:
 			PlayerDataClass.AttackStart = false;
 			if(PlayerDataClass.isChangeToRun == false)
-				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true,true);
+			else
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true,true);
 			mTarget = null;
 			break;	
 			
 		case PlayerMoveBase.PlayerMovementState.Skill1Over:
 			PlayerDataClass.AttackStart = false;
 			if(PlayerDataClass.isChangeToRun == false)
-				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true,true);
+			else
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true,true);
 			mTarget = null;
 			break;
 		
 		case PlayerMoveBase.PlayerMovementState.JumpOver:
-			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
+			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true,true);
 			mTarget = null;
 			break;
 			
 		case PlayerMoveBase.PlayerMovementState.RushOver:
-			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Catch,true);
+			ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Catch,true,true);
 			mTarget = null;
 			break;
 			
 		case PlayerMoveBase.PlayerMovementState.CatchOver:
-	//		ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true);
+	//		ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true,true);
 	//		colliderBaseScript.mTarget = null;
 			break;
 			
 		}
 	}
 	
-	public void ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand cmd, bool immedilate)
+	public void ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand cmd, bool immedilate, bool isCrossFade)
 	{
 		PlayerDataClass.PlayerNextActionSet(cmd);
-		aniControlScript.UpdateCmdFromControl(immedilate);
+		aniControlScript.UpdateCmdFromControl(immedilate,isCrossFade);
 	}
 	
 	// only call by other script
@@ -350,18 +364,17 @@ public class PlayerMainLogic : MonoBehaviour {
 						float dis = Vector3.Distance(targetPos,transform.position);
 						if(dis < 1)
 						{				
-							ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true);
+							ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Idel,true,true);
 						}
 						else
 						{
 							moveBaseScript.targetPos = targetPos;
 							if(moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Run)
 							{
-								ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,false);
-								
+								ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,false,true);
 							}
 							else
-								ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,true);
+								ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,true,true);
 						}
 					}
 					else
@@ -382,7 +395,7 @@ public class PlayerMainLogic : MonoBehaviour {
 					moveBaseScript.targetPos = targetPos;
 				//	Debug.Log("xxxxxxx");
 					PlayerDataClass.isChangeToRun = true;
-					ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,false);
+					ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Run,false,false);
 				}
 			}
 			break;
@@ -401,16 +414,16 @@ public class PlayerMainLogic : MonoBehaviour {
 				SetPlayerToRun(targetPos-this.transform.position);	
 				if(aniControlScript.isSkillPlaying == false)
 				{
-					ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Jump,true);
+					ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Jump,true,true);
 				}				
 			}
 			break;
 			
 		case TouchState.AFingerHold:
 			if(moveBaseScript.curMovementState == PlayerMoveBase.PlayerMovementState.Attack3)
-				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack3,false);
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack3,false,true);
 			else
-				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack3,true);
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Attack3,true,true);
 				
         //    mTouchState = TouchState.None;
 			break;	
@@ -418,7 +431,7 @@ public class PlayerMainLogic : MonoBehaviour {
 		case TouchState.AFingerHoldStop:
 		//	Debug.Log("Trot here");
 			if(PlayerDataClass.isChangeToRun == false)
-				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true);
+				ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Trot,true,true);
             mTouchState = TouchState.None;
 			break;
 			
@@ -498,7 +511,7 @@ public class PlayerMainLogic : MonoBehaviour {
 	//	Debug.Log("reset zero");
 		moveBaseScript.targetPos = Vector3.zero;
 		Time.timeScale = 0.2f;
-		ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Skill1,true);
+		ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand.Player_Skill1,true,false);
 		directionIcon.renderer.enabled = true;
 		aniControlScript.isSkillPlaying = true;
         skill1Sfx.GetComponent<particleControl>().turnOn = true;

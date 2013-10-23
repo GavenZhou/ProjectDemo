@@ -385,6 +385,7 @@ public class PlayerMoveBase : MonoBehaviour {
 			break;			
 			
 		case PlayerMovementState.BeHit:
+			Debug.Log("xxxxxx");
 			curMovementState = PlayerMovementState.BeHitOver;
 			break;
 			

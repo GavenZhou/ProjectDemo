@@ -72,11 +72,11 @@ public class Player : Actor {
         Hp -= (int)(25 * (float)_param);
         bool isdead = base.Hurt(_object, _param);
 		if(isdead)
-			playerMainLogic.ChangeAnimationByActionCmd(GameBaseData.PlayerDataClass.PlayerActionCommand.Player_Die,true);
+			playerMainLogic.ChangeAnimationByActionCmd(GameBaseData.PlayerDataClass.PlayerActionCommand.Player_Die,true,true);
 		else
 		{
 			playerMainLogic.mContinueAttack = false;
-			playerMainLogic.ChangeAnimationByActionCmd(GameBaseData.PlayerDataClass.PlayerActionCommand.Player_BeHit,true);
+			playerMainLogic.ChangeAnimationByActionCmd(GameBaseData.PlayerDataClass.PlayerActionCommand.Player_BeHit,true,false);
 		}
 		return isdead;
     }

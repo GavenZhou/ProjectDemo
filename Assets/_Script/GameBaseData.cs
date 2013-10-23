@@ -54,7 +54,6 @@ namespace GameBaseData
 			Player_Trot,
 			Player_Walk,
 			Player_Idel,
-			Plyaer_SkillIdel,
 			Player_Die,
 			Player_BeHit,
 			Player_Attack1,
