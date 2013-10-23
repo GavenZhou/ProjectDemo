@@ -85,6 +85,9 @@ public class EnemyMainLogic : MonoBehaviour {
 			if(deadP != null)
 				deadP.turnOn = true;
 			
+			if(hurtP != null)
+				hurtP.turnOn = true;
+			
 			ChangeAnimationByState(EnemyState.Die,true);
 			mState = EnemyState.Dead;
 			return;
@@ -171,7 +174,7 @@ public class EnemyMainLogic : MonoBehaviour {
 	{
 		if(state == EnemyState.BeHit)
 		{
-			if(hurtP != null && Random.Range(1,99)%2 == 0)
+			if(hurtP != null && Random.Range(1,99)%3 == 0)
 				hurtP.turnOn = true;
 			mAttackTime = Time.time;
 			CancelInvoke("MobAttack");

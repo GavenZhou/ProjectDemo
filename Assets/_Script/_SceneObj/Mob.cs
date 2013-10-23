@@ -104,7 +104,7 @@ public class Mob : Actor, ISpawn
             enemyMainLogic.mState = EnemyMainLogic.EnemyState.Die;
         else
 		{
-			if(Random.Range(0,99)%2 == 1)
+			if(Random.Range(0,99)%3 == 1)
          	   enemyMainLogic.ChangeAnimationByState(EnemyMainLogic.EnemyState.BeHit, true);
 			else
 			   enemyMainLogic.ChangeAnimationByState(EnemyMainLogic.EnemyState.BeBlowUp, true);
