@@ -10,6 +10,8 @@ public class EnemyAnimationControl : MonoBehaviour {
 	AnimationState mIdel;
 	AnimationState mAttack;
 	AnimationState mBeHit;
+	AnimationState mBlowUp;
+	AnimationState mGetUp;
 	AnimationState mDie;
 	AnimationState mSkill;
 	
@@ -35,6 +37,12 @@ public class EnemyAnimationControl : MonoBehaviour {
 		
 		mBeHit = this.animation["501"];
 		mBeHit.layer = 2;
+		
+		mBlowUp = this.animation["502"];
+		mBlowUp.layer = 2;
+		
+		mGetUp = this.animation["503"];
+		mGetUp.layer = 2;
 		
 		mDie = this.animation["504"];
 		mDie.layer = 3;
@@ -84,44 +92,47 @@ public class EnemyAnimationControl : MonoBehaviour {
 		switch(mainLogicScript.mState)
 		{
 		case EnemyMainLogic.EnemyState.Attack:
-            //Debug.Log("mAttack");
 			PlayAnimation(mAttack,immedilate);
 			ChangeMoveState(EnemyMoveBase.EnemyMovementState.Attack);
 			break;
 
 		case EnemyMainLogic.EnemyState.BeHit:
 			PlayAnimation(mBeHit,immedilate);
-            //Debug.Log("mBeHit");
 			ChangeMoveState(EnemyMoveBase.EnemyMovementState.BeHit);
+			break;	
+		
+		case EnemyMainLogic.EnemyState.BeBlowUp:
+			PlayAnimation(mBlowUp,immedilate);
+			ChangeMoveState(EnemyMoveBase.EnemyMovementState.BeBlowUp);
+			break;
+			
+		case EnemyMainLogic.EnemyState.GetUp:
+			PlayAnimation(mGetUp,immedilate);
+			ChangeMoveState(EnemyMoveBase.EnemyMovementState.GetUp);
 			break;
 			
 		case EnemyMainLogic.EnemyState.Die:
 			PlayAnimation(mDie,immedilate);
-            //Debug.Log("mDie");
 			ChangeMoveState(EnemyMoveBase.EnemyMovementState.Dead);
 			break;
 			
 		case EnemyMainLogic.EnemyState.Hover:
 			PlayAnimation(mIdel,immedilate);
-            //Debug.Log("mWalk");
 			ChangeMoveState(EnemyMoveBase.EnemyMovementState.Idel);
 			break;
 			
 		case EnemyMainLogic.EnemyState.Idel:
 			PlayAnimation(mIdel,immedilate);
-            //Debug.Log("mIdel");
 			ChangeMoveState(EnemyMoveBase.EnemyMovementState.Idel);
 			break;
 			
 		case EnemyMainLogic.EnemyState.Patrol:
 			PlayAnimation(mWalk,immedilate);
-            //Debug.Log("mWalk");
 			ChangeMoveState(EnemyMoveBase.EnemyMovementState.Walk);
 			break;
 			
 		case EnemyMainLogic.EnemyState.Run:
 			PlayAnimation(mWalk,immedilate);
-            //Debug.Log("mRun");
 			ChangeMoveState(EnemyMoveBase.EnemyMovementState.Run);
 			break;	
 		}

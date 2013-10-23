@@ -103,7 +103,12 @@ public class Mob : Actor, ISpawn
         if (isdead)
             enemyMainLogic.mState = EnemyMainLogic.EnemyState.Die;
         else
-            enemyMainLogic.ChangeAnimationByState(EnemyMainLogic.EnemyState.BeHit, true);
+		{
+			if(Random.Range(0,99)%2 == 1)
+         	   enemyMainLogic.ChangeAnimationByState(EnemyMainLogic.EnemyState.BeHit, true);
+			else
+			   enemyMainLogic.ChangeAnimationByState(EnemyMainLogic.EnemyState.BeBlowUp, true);
+		}
 
         audioSource.PlayOneShot(audioClipInjury);
         return isdead;

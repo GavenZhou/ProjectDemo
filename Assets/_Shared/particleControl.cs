@@ -16,6 +16,7 @@ public class particleControl : MonoBehaviour {
 	void Update () {
 		if(turnOn)
 		{
+			Debug.Log("turn");
 			turnOn = false;
 			PlayParticle();
 		}
