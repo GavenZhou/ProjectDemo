@@ -23,7 +23,6 @@ public class EnemyMainLogic : MonoBehaviour {
 		BeHit,
 		Die,
 		BeCatch,
-		Dead,
 	};
 	 
 	public EnemyState mState = EnemyState.Patrol;
@@ -31,7 +30,13 @@ public class EnemyMainLogic : MonoBehaviour {
 	private Transform player;
 	
 	private EnemyAnimationControl enemyAnimationScript;
+<<<<<<< HEAD
 	private EnemyMoveBase enemyMoveBaseScript;
+=======
+	
+	
+	private float mAttackTime;
+>>>>>>> parent of cde666f... 怪物受精
     private Mob mob;
 	
 	private float mAttackTime;
@@ -40,9 +45,16 @@ public class EnemyMainLogic : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		player = GameObject.FindGameObjectWithTag("player").transform;
+<<<<<<< HEAD
 		enemyAnimationScript = GetComponentInChildren<EnemyAnimationControl>() as EnemyAnimationControl;
 		enemyMoveBaseScript = gameObject.GetComponent<EnemyMoveBase>() as EnemyMoveBase;
 		mob = gameObject.GetComponent<Mob>();
+=======
+		enemyAnimationScript = (EnemyAnimationControl)this.transform.FindChild(modelName).GetComponent<EnemyAnimationControl>();
+        mob = gameObject.AddComponent<Mob>();
+        mob.Init(CombatUtility.GenNextMobID());
+        SceneMng.instance.AddSceneObj(mob);
+>>>>>>> parent of cde666f... 怪物受精
 	}
 
     public void Init() {
@@ -55,23 +67,6 @@ public class EnemyMainLogic : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if(mState == EnemyState.Dead)
-		{
-			enemyAnimationScript.enabled = false;
-			this.transform.collider.enabled = false;
-			this.transform.rigidbody.isKinematic = true;
-			//enemyMoveBaseScript.enabled = false;
-			//Destroy(this.gameObject,2);
-			return;
-		}
-		
-		if(mState == EnemyState.Die)
-		{
-			Debug.Log("be dead");
-			ChangeAnimationByState(EnemyState.Die,true);
-			mState = EnemyState.Dead;
-			return;
-		}
 		switch(mState)
 		{
 		case EnemyState.Patrol:
@@ -102,7 +97,7 @@ public class EnemyMainLogic : MonoBehaviour {
 			}
 			if(IsReadyToAttack())
 			{
-				Attack(true);
+				ChangeAnimationByState(EnemyState.Attack,true);
 				return;
 			}
 			break;
@@ -122,7 +117,7 @@ public class EnemyMainLogic : MonoBehaviour {
 			}
 			if(IsReadyToAttack())
 			{
-				Attack(true);
+				ChangeAnimationByState(EnemyState.Attack,false);
 				return;
 			}
 			else
@@ -131,6 +126,7 @@ public class EnemyMainLogic : MonoBehaviour {
 			}
 			break;
 		}
+<<<<<<< HEAD
 		CheckEnemyMovementState();
 	}
 	
@@ -143,6 +139,8 @@ public class EnemyMainLogic : MonoBehaviour {
 			mState = EnemyState.Hover;
 			break;
 		}
+=======
+>>>>>>> parent of cde666f... 怪物受精
 	}
 	
 	public void ChangeAnimationByState(EnemyState state, bool immedilate)
@@ -175,6 +173,7 @@ public class EnemyMainLogic : MonoBehaviour {
 		float dis = Vector3.Distance(this.transform.position, pos);
 		return dis;
 	}
+<<<<<<< HEAD
 	
 	
 	void Attack(bool immedilate)
@@ -191,4 +190,6 @@ public class EnemyMainLogic : MonoBehaviour {
 		mob.Attack();
 	}
 	
+=======
+>>>>>>> parent of cde666f... 怪物受精
 }

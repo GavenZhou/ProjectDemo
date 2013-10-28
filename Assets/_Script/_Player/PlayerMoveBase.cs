@@ -82,6 +82,7 @@ public class PlayerMoveBase : MonoBehaviour {
 		player_Walk.acceleration = -1.0f;
 		player_Walk.leftTime = 1.5f;
 		
+<<<<<<< HEAD
 		player_Attack1.startSpeed = 10;
 		player_Attack1.acceleration = -30;
 		player_Attack1.leftTime =0.9f;
@@ -93,6 +94,19 @@ public class PlayerMoveBase : MonoBehaviour {
 		player_Attack3.startSpeed = 15;
 		player_Attack3.acceleration = -30;
 		player_Attack3.leftTime = 0.9f;
+=======
+		player_Attack1.startSpeed = 20;
+		player_Attack1.acceleration = -90;
+		player_Attack1.leftTime =0.6f;
+		
+		player_Attack2.startSpeed = 30;
+		player_Attack2.acceleration = -90; 
+		player_Attack2.leftTime = 0.8f;
+		
+		player_Attack3.startSpeed = 35;
+		player_Attack3.acceleration = -90;
+		player_Attack3.leftTime = 0.8f;
+>>>>>>> parent of cde666f... 怪物受精
 		
 		player_Attack4.startSpeed = 20;
 		player_Attack4.acceleration = -50;

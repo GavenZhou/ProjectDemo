@@ -97,8 +97,13 @@ public class EnemyAnimationControl : MonoBehaviour {
 			
 		case EnemyMainLogic.EnemyState.Die:
 			PlayAnimation(mDie,immedilate);
+<<<<<<< HEAD
             //Debug.Log("mDie");
 			ChangeMoveState(EnemyMoveBase.EnemyMovementState.Dead);
+=======
+			Debug.Log("mDie");
+			ChangeMoveState(EnemyMoveBase.EnemyMovementState.Idel);
+>>>>>>> parent of cde666f... 怪物受精
 			break;
 			
 		case EnemyMainLogic.EnemyState.Hover:

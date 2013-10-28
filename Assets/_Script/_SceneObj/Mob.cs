@@ -87,6 +87,7 @@ public class Mob : Actor, ISpawn
 
         Vector3 _pos = transform.position;
         Vector3 _dir = transform.forward;
+		enemyMainLogic.ChangeAnimationByState(EnemyMainLogic.EnemyState.BeHit,true);
         CombatUtility.CombatParam_AttackRange param = CombatUtility.GetConeParam(_pos, _dir, attackAngle * Mathf.Deg2Rad, attackRadius);
         List<Player> targets = CombatUtility.GetInteractiveObjects<Player>(SceneMng.instance, ref param);
         foreach (Player actor in targets) {
@@ -96,6 +97,7 @@ public class Mob : Actor, ISpawn
         }
     }
 
+<<<<<<< HEAD
     public override bool Hurt(SceneObj _object, object _param) {
         Hp -= (int)(25 * (float)_param);
         UpdateHudText();
@@ -107,6 +109,11 @@ public class Mob : Actor, ISpawn
 
         audioSource.PlayOneShot(audioClipInjury);
         return isdead;
+=======
+    public override void Hurt(SceneObj _object) {
+        Hp -= 10;
+        base.Hurt(_object);
+>>>>>>> parent of cde666f... 怪物受精
     }
 
     public override void Dead(SceneObj _object) {

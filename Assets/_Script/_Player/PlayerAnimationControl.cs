@@ -336,7 +336,21 @@ public class PlayerAnimationControl : MonoBehaviour {
 	
 	void FinishSkill(int skillId)
 	{
+<<<<<<< HEAD
 		isSkillPlaying = false;
+=======
+        main.OnStartToAttack(attackId);
+
+		switch(attackId)
+		{
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		}
+>>>>>>> parent of cde666f... 怪物受精
 	}
 	
 	void SkillIdelFinish()

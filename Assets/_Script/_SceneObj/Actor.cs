@@ -36,12 +36,14 @@ public class Actor : SceneObj {
 
     }
 
+<<<<<<< HEAD
     public virtual bool Hurt(SceneObj _object, object _param) {
+=======
+    public virtual void Hurt(SceneObj _object) {
+>>>>>>> parent of cde666f... 怪物受精
         if (Hp <= 0) {
             Dead(_object);
-			return true;
         }
-		return false;
     }
 
     public virtual void Dead(SceneObj _object) {

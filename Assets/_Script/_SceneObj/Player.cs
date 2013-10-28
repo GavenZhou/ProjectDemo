@@ -68,6 +68,7 @@ public class Player : Actor {
         }
     }
 
+<<<<<<< HEAD
     public override bool Hurt(SceneObj _object, object _param) {
         Hp -= (int)(25 * (float)_param);
         bool isdead = base.Hurt(_object, _param);
@@ -79,6 +80,12 @@ public class Player : Actor {
 			playerMainLogic.ChangeAnimationByActionCmd(GameBaseData.PlayerDataClass.PlayerActionCommand.Player_BeHit,true);
 		}
 		return isdead;
+=======
+    public override void Hurt(SceneObj _object) {
+        Hp -= 20;
+		playerMainLogic.ChangeAnimationByActionCmd(GameBaseData.PlayerDataClass.PlayerActionCommand.Player_BeHit,true);
+        base.Hurt(_object);
+>>>>>>> parent of cde666f... 怪物受精
     }
 
     public override void Dead(SceneObj _object) {

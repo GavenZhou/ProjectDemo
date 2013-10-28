@@ -15,7 +15,6 @@ public class EnemyMoveBase : MonoBehaviour {
 		AttackOver,
 		BeHit,
 		BeHitOver,
-		Dead,
 	};
 	
 	struct EnemyMovementStruct
@@ -77,8 +76,6 @@ public class EnemyMoveBase : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if(curMovementState == EnemyMovementState.Dead)
-			return;
 		
 		if(Time.time - mTime < mMoveTimeLeft || mMoveTimeLeft < 0)
 		{
