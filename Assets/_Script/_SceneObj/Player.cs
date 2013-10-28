@@ -12,6 +12,7 @@ public class Player : Actor {
     float attackX = 0.5f;
     float attackY = 10f;
 
+<<<<<<< HEAD
     PlayerMainLogic playerMainLogic;
     PlayerAnimationControl aniControlScript;
 
@@ -30,6 +31,12 @@ public class Player : Actor {
     public override void Init(int _id) {
 
         //
+=======
+    public List<Mob> interativeMobs = new List<Mob>();
+
+    public override void Init(int _id) {
+        type = SceneObjType.Player;
+>>>>>>> parent of 5e133d7... 击退
         base.Init(_id);
         type = SceneObjType.Player;        
         Hp = MaxHp = 1000;
@@ -69,6 +76,7 @@ public class Player : Actor {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public override bool Hurt(SceneObj _object, object _param) {
         Hp -= (int)(25 * (float)_param);
         bool isdead = base.Hurt(_object, _param);
@@ -90,6 +98,10 @@ public class Player : Actor {
 
     public override void Dead(SceneObj _object) {
         base.Dead(_object);
+=======
+    public override void Hurt() {
+        base.Hurt();
+>>>>>>> parent of 5e133d7... 击退
     }
 
     public virtual void PlaySkill(int _skillID) {

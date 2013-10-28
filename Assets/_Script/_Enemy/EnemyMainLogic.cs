@@ -72,14 +72,16 @@ public class EnemyMainLogic : MonoBehaviour {
 		case EnemyState.Patrol:
 			if(DistanceFromPlayer() < mPatrolAreaDistance)
 			{
-				ChangeAnimationByState(EnemyState.Run,true);
+				mState = EnemyState.Run;
+				enemyAnimationScript.UpdateEnemyStateForAnimation(true);
 			}
 			break;
 		
 		case EnemyState.Run:
 			if(DistanceFromPlayer() < mHoverAreaDistance)
 			{
-				ChangeAnimationByState(EnemyState.Hover,true);
+				mState = EnemyState.Hover;
+				enemyAnimationScript.UpdateEnemyStateForAnimation(true);
 			}
 			break;
 			
@@ -87,17 +89,20 @@ public class EnemyMainLogic : MonoBehaviour {
 			float dis = DistanceFromPlayer(); 
 			if(dis > mPatrolAreaDistance)
 			{
-				ChangeAnimationByState(EnemyState.Patrol,true);
+				mState = EnemyState.Patrol;
+				enemyAnimationScript.UpdateEnemyStateForAnimation(true);
 				return;
 			}
 			if(dis > mHoverAreaDistance)
 			{
-				ChangeAnimationByState(EnemyState.Run,true);
+				mState = EnemyState.Run;
+				enemyAnimationScript.UpdateEnemyStateForAnimation(true);
 				return;
 			}
 			if(IsReadyToAttack())
 			{
-				ChangeAnimationByState(EnemyState.Attack,true);
+				mState = EnemyState.Attack;
+				enemyAnimationScript.UpdateEnemyStateForAnimation(true);
 				return;
 			}
 			break;
@@ -107,22 +112,26 @@ public class EnemyMainLogic : MonoBehaviour {
 			float dis1 = DistanceFromPlayer(); 
 			if(dis1 > mPatrolAreaDistance)
 			{
-				ChangeAnimationByState(EnemyState.Patrol,false);
+				mState = EnemyState.Patrol;
+				enemyAnimationScript.UpdateEnemyStateForAnimation(false);
 				return;
 			}
 			if(dis1 > mHoverAreaDistance)
 			{
-				ChangeAnimationByState(EnemyState.Run,false);
+				mState = EnemyState.Run;
+				enemyAnimationScript.UpdateEnemyStateForAnimation(false);
 				return;
 			}
 			if(IsReadyToAttack())
 			{
-				ChangeAnimationByState(EnemyState.Attack,false);
+				mState = EnemyState.Attack;
+				enemyAnimationScript.UpdateEnemyStateForAnimation(false);
 				return;
 			}
 			else
 			{
-				ChangeAnimationByState(EnemyState.Hover,false);
+				mState = EnemyState.Hover;
+				enemyAnimationScript.UpdateEnemyStateForAnimation(false);
 			}
 			break;
 		}
@@ -143,6 +152,7 @@ public class EnemyMainLogic : MonoBehaviour {
 >>>>>>> parent of cde666f... 怪物受精
 	}
 	
+<<<<<<< HEAD
 	public void ChangeAnimationByState(EnemyState state, bool immedilate)
 	{
 		if(state == EnemyState.BeHit)
@@ -154,6 +164,8 @@ public class EnemyMainLogic : MonoBehaviour {
 		enemyAnimationScript.UpdateEnemyStateForAnimation(immedilate);
 	}
 	
+=======
+>>>>>>> parent of 5e133d7... 击退
 	bool IsReadyToAttack()
 	{
 		if(Time.time - mAttackTime > Random.Range(mAttackCdTime-1,mAttackCdTime+1))

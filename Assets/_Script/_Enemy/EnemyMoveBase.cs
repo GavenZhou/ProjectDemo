@@ -30,8 +30,6 @@ public class EnemyMoveBase : MonoBehaviour {
 	EnemyMovementStruct enemy_Attack;
 	EnemyMovementStruct enemy_BeHit;
 	
-	
-	
 	void InitalizeEnemyMovementStruct()
 	{
 		enemy_Idel.startSpeed = 0;
@@ -40,18 +38,23 @@ public class EnemyMoveBase : MonoBehaviour {
 		
 		enemy_Run.startSpeed = 2;
 		enemy_Run.acceleration = -3;
-		enemy_Run.leftTime = -1;
+		enemy_Run.leftTime = 2;
 		
 		enemy_Walk.startSpeed = 1;
 		enemy_Walk.acceleration = 0;
-		enemy_Walk.leftTime = -1;
+		enemy_Walk.leftTime = 1f;
 		
 		enemy_Attack.startSpeed = 0;
 		enemy_Attack.acceleration = -90;
 		enemy_Attack.leftTime =0.6f;
 		
+<<<<<<< HEAD
 		enemy_BeHit.startSpeed = -8;
 		enemy_BeHit.acceleration = 10;
+=======
+		enemy_BeHit.startSpeed = -4;
+		enemy_BeHit.acceleration = 2.5f;
+>>>>>>> parent of 5e133d7... 击退
 		enemy_BeHit.leftTime = 0.5f;
 	}
 	
@@ -62,8 +65,6 @@ public class EnemyMoveBase : MonoBehaviour {
 	private GameObject player;
 	
 	private float mSpeed;
-	private float mMoveTimeLeft = 0;
-	private float mTime;
 	
 	// Use this for initialization
 	void Start () {
@@ -76,17 +77,13 @@ public class EnemyMoveBase : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+		//todo
+		if(mSpeed != 0)
+			this.transform.Translate(0,0,Time.deltaTime*Random.Range(mSpeed-1,mSpeed+1));
 		
-		if(Time.time - mTime < mMoveTimeLeft || mMoveTimeLeft < 0)
-		{
-			Move();
-		}
-		else
-		{
-			MoveStop();
-		}
 		Vector3 pos = player.transform.position-transform.position;
 		pos.y = 0;
+	
 		//todo
 		if(Vector3.Distance(transform.position,player.transform.position) > 1)
 		{	
@@ -103,6 +100,7 @@ public class EnemyMoveBase : MonoBehaviour {
 	}
 	
 	
+<<<<<<< HEAD
 	void Move()
 	{
 		//todo
@@ -132,38 +130,30 @@ public class EnemyMoveBase : MonoBehaviour {
 	}
 	
 	
+=======
+>>>>>>> parent of 5e133d7... 击退
 	public void UpdateMovementState()
 	{
 		switch(curMovementState)
 		{
 		case EnemyMovementState.Attack:
 			mSpeed = enemy_Attack.startSpeed;
-			mMoveTimeLeft = enemy_Attack.leftTime;
-			mTime = Time.time;
 			break;
 			
 		case EnemyMovementState.Idel:
 			mSpeed = enemy_Idel.startSpeed;
-			mMoveTimeLeft = enemy_Idel.leftTime;
-			mTime = Time.time;
 			break;
 			
 		case EnemyMovementState.BeHit:
 			mSpeed = enemy_BeHit.startSpeed;
-			mMoveTimeLeft = enemy_BeHit.leftTime;
-			mTime = Time.time;
 			break;
 			
 		case EnemyMovementState.Run:
 			mSpeed = enemy_Run.startSpeed;
-			mMoveTimeLeft = enemy_Run.leftTime;
-			mTime = Time.time;
 			break;
 			
 		case EnemyMovementState.Walk:
 			mSpeed = enemy_Walk.startSpeed;
-			mMoveTimeLeft = enemy_Walk.leftTime;
-			mTime = Time.time;
 			break;
 		}
 	}

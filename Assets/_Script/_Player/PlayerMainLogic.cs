@@ -268,7 +268,12 @@ public class PlayerMainLogic : MonoBehaviour {
 		}
 	}
 	
+<<<<<<< HEAD
 	public void ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand cmd, bool immedilate)
+=======
+	
+	void ChangeAnimationByActionCmd(PlayerDataClass.PlayerActionCommand cmd, bool immedilate)
+>>>>>>> parent of 5e133d7... 击退
 	{
 //		Debug.Log("ChangeAnimationByActionCmd =====  "+cmd);
 		PlayerDataClass.PlayerNextActionSet(cmd);

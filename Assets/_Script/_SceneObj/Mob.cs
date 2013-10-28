@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
+<<<<<<< HEAD
 
 public class Mob : Actor, ISpawn
 {
@@ -56,6 +57,13 @@ public class Mob : Actor, ISpawn
     public override void Init(int _id) {
 
         // 
+=======
+public class Mob : Actor {
+
+
+    public override void Init(int _id) {
+        type = SceneObjType.Player;
+>>>>>>> parent of 5e133d7... å‡»é€€
         base.Init(_id);
 
         type = SceneObjType.Mob;
@@ -85,6 +93,7 @@ public class Mob : Actor, ISpawn
         //
         base.Attack();
 
+<<<<<<< HEAD
         Vector3 _pos = transform.position;
         Vector3 _dir = transform.forward;
 		enemyMainLogic.ChangeAnimationByState(EnemyMainLogic.EnemyState.BeHit,true);
@@ -155,6 +164,10 @@ public class Mob : Actor, ISpawn
 
         // µôÂä¼ÆËã
         CombatUtility.DropGenerator(_pos);
+=======
+    public override void Hurt() {
+        base.Hurt();
+>>>>>>> parent of 5e133d7... å‡»é€€
     }
 
     void InitHudText() {
