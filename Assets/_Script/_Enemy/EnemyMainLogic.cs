@@ -155,11 +155,14 @@ public class EnemyMainLogic : MonoBehaviour {
 <<<<<<< HEAD
 	public void ChangeAnimationByState(EnemyState state, bool immedilate)
 	{
+<<<<<<< HEAD
 		if(state == EnemyState.BeHit)
 		{
 			mAttackTime = Time.time;
 			CancelInvoke("MobAttack");
 		}
+=======
+>>>>>>> parent of 0d1c908... 出招变慢
 		mState = state;
 		enemyAnimationScript.UpdateEnemyStateForAnimation(immedilate);
 	}
@@ -192,13 +195,6 @@ public class EnemyMainLogic : MonoBehaviour {
 	{
 		//Debug.Log("Monster attack now!!");
 		ChangeAnimationByState(EnemyState.Attack,immedilate);
-		Invoke("MobAttack",0.8f);	
-	}
-	
-	
-	void MobAttack()
-	{
-		CancelInvoke("MobAttack");
 		mob.Attack();
 	}
 	

@@ -20515,8 +20515,13 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
+<<<<<<< HEAD
   m_IsActive: 1
 --- !u!4 &1011814141
+=======
+  m_IsActive: 0
+--- !u!4 &1016441228
+>>>>>>> parent of 0d1c908... 出招变慢
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 400042, guid: cedafa8b0e2d95d4b8c64ee624464624, type: 3}
@@ -45401,6 +45406,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_IsActive: 1
 <<<<<<< HEAD
 --- !u!114 &1822128055
@@ -45408,6 +45414,9 @@ GameObject:
 =======
   m_IsActive: 0
 >>>>>>> parent of 5e133d7... 击退
+=======
+  m_IsActive: 0
+>>>>>>> parent of 0d1c908... 出招变慢
 --- !u!4 &1798865298
 Transform:
   m_ObjectHideFlags: 0
