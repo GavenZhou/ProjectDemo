@@ -60,7 +60,7 @@ public class Player : Actor {
             return;
         }
 
-        List<Mob> targets = CombatUtility.GetInteractiveMobs(SceneMng.instance, ref param);
+        List<Mob> targets = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
         foreach (Mob m in targets) {
             if (!m.IsDied) {
                 m.Hurt(this, 1.0f);
@@ -92,7 +92,7 @@ public class Player : Actor {
 
         param = CombatUtility.GetCircleParam(_pos, attackRadius);
 
-        List<Mob> targets = CombatUtility.GetInteractiveMobs(SceneMng.instance, ref param);
+        List<Mob> targets = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
         foreach (Mob m in targets) {
             if (!m.IsDied) {
                 m.Hurt(this, 1.5f);
@@ -107,9 +107,9 @@ public class Player : Actor {
         CombatUtility.CombatParam_AttackRange param
             = CombatUtility.GetConeParam(_pos, _dir, attackAngle * Mathf.Deg2Rad, attackRadius);
 
-        List<Mob> targets = CombatUtility.GetInteractiveMobs(SceneMng.instance, ref param);
-        Mob mob = CombatUtility.GetNearestObject<Mob>(SceneMng.instance, transform, ref targets);
-        return mob != null ? mob.transform : null;
+        List<Mob> targets = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
+        Mob m = CombatUtility.GetNearestObject<Mob>(SceneMng.instance, transform, ref targets);
+        return m != null ? m.transform : null;
     }
 
 
@@ -141,14 +141,14 @@ public class Player : Actor {
             GizmosHelper.DrawConeArc(Quaternion.identity, _pos, _dir, attackRadius, attackAngle);
 
             CombatUtility.CombatParam_AttackRange param = CombatUtility.GetConeParam(_pos, _dir, attackAngle * Mathf.Deg2Rad, attackRadius);
-            interativeMobs = CombatUtility.GetInteractiveMobs(SceneMng.instance, ref param);
+            interativeMobs = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
         }
         else if (attackRangeType == CombatUtility.AttackRangeType.Circle) {
             
             GizmosHelper.DrawCircle(Quaternion.identity, _pos, attackRadius);
 
             CombatUtility.CombatParam_AttackRange param = CombatUtility.GetCircleParam(_pos, attackRadius);
-            interativeMobs = CombatUtility.GetInteractiveMobs(SceneMng.instance, ref param);
+            interativeMobs = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
         }
         else if (attackRangeType == CombatUtility.AttackRangeType.Rectangle) {
 
@@ -163,7 +163,7 @@ public class Player : Actor {
             Gizmos.DrawLine(_left + _dir * attackY, _right + _dir * attackY);
 
             CombatUtility.CombatParam_AttackRange param = CombatUtility.GetRectangleParam(_pos, _dir, attackX, attackY);
-            interativeMobs = CombatUtility.GetInteractiveMobs(SceneMng.instance, ref param);
+            interativeMobs = CombatUtility.GetInteractiveObjects<Mob>(SceneMng.instance, ref param);
         }
 
         Gizmos.color = Color.red;

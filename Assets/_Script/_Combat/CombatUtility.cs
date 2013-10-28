@@ -81,16 +81,11 @@ public static class CombatUtility {
         return param;
     }
 
-    public static List<Mob> GetInteractiveMobs(SceneMng _scene, ref CombatParam_AttackRange _param) {
-
-        return GetInteractiveObjects<Mob>(_scene, ref _param, m => !m.IsDied);
-    }
-
-    public static List<T> GetInteractiveObjects<T>(SceneMng _scene, ref CombatParam_AttackRange _param, System.Func<T, bool> _pred = null) where T : SceneObj {
+    public static List<T> GetInteractiveObjects<T>(SceneMng _scene, ref CombatParam_AttackRange _param) where T : SceneObj {
 
         List<T> objs = new List<T>();
         if (_scene != null && _param.prep != null) {
-            List<T> sceneObjs = _scene.GetSceneObjsWithPred<T>(_pred);
+            List<T> sceneObjs = _scene.GetSceneObjs<T>();
             foreach (T obj in sceneObjs) {
                 if (_param.prep(obj.transform.position)) {
                     objs.Add(obj);
